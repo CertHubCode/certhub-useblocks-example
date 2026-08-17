@@ -93,6 +93,7 @@ def write_certification_summary_rst(report: VerificationReport) -> Path:
 * Verified: {t['verified']} / {t['system_requirements']}
 * Passed tests: {t['passed']}
 * Failed tests: {t['failed']}
+* Validation: manual (not in engineering gate)
 
 .. list-table:: Per-requirement chain (SYSREQ → DOUT → code → VERIF → result)
    :header-rows: 1

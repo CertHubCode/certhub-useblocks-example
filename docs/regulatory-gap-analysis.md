@@ -92,7 +92,7 @@ Legend: **Done** = Cadence can show it for Sterilisator 20A · **Partial** = pre
 | Architecture / detailed design docs | Gap | Thin simulation code; no formal SW architecture KT in pack |
 | Design reviews | CertHub | Not in evidence pack |
 | Verification protocols + results | Partial / Done | VERIF content in CertHub; execution in pytest/JUnit/Sphinx |
-| Validation protocols + results | Partial | VALID synced; not closing gate; often linked to SYSREQ not UREQ |
+| Validation protocols + results | Partial | VALID synced; **not in the engineering gate** (manual / N/A KPI on the dashboard); often linked to SYSREQ not UREQ |
 | Traceability matrix | Done | Sphinx matrices + (after fix) needflow graph + ubCode chain report |
 | Risk ↔ requirements | CertHub | Keep in CertHub; optional future: show risk IDs as links only |
 
@@ -144,10 +144,11 @@ These are the improvements that belong in Cadence code/docs (implementation trac
 5. **This gap analysis** — pack mapped to EU/US checklists; CertHub boundaries explicit (**done**).
 6. **Optional later (still repo):**
    - Per-feature CodeLinks on `DOUT_001`–`004` instead of only `DOUT_018`
-   - Include VALID in gate or an explicit “validation gap” KPI
-   - SBOM + lockfile hash in `evidence/` MANIFEST
-   - PDF/LaTeX builder if customers need a single signed PDF twin
    - Stronger UREQ↔VALID title join once sterilizer UREQs are clean in CertHub
+   - PDF/LaTeX builder if customers need a single signed PDF twin
+
+CertHub content cleanup (legacy DOUT links, UNITREQ text):
+[`docs/certhub-content-cleanup.md`](certhub-content-cleanup.md).
 
 ### 5.2 Additional steps outside “random Sphinx polish” (CertHub + QMS)
 

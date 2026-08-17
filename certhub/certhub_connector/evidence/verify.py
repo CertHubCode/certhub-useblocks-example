@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field
 from enum import Enum
@@ -161,18 +162,84 @@ def _verifs_for_sysreq(export: CertHubExport, sysreq_id: str) -> list[str]:
     return found
 
 
+def _tokens(text: str) -> set[str]:
+    """Alphanumeric tokens; keep short tokens (ui) and light stemming."""
+    tokens: set[str] = set()
+    for part in re.findall(r"[A-Za-z]{2,}", text):
+        low = part.lower()
+        tokens.add(low)
+        if low.endswith("s") and len(low) > 3:
+            tokens.add(low[:-1])
+        if low.endswith("ing") and len(low) > 6:
+            tokens.add(low[:-3])
+    return tokens
+
+
+def _is_test_location(location: str) -> bool:
+    path = location.split(":", 1)[0].replace("\\", "/")
+    name = Path(path).name
+    return "/tests/" in f"/{path}/" or name.startswith("test_")
+
+
+# Domain hints so SYSREQ_002/003/004 do not all report temperature_within_range
+# (first CodeLinks hit on DOUT_018).
+_VERIF_HINTS: dict[str, tuple[str, ...]] = {
+    "VERIF_001": ("temperature",),
+    "VERIF_002": ("duration", "minutes", "reported"),
+    "VERIF_003": ("ui", "messages", "label", "english", "interface"),
+    "VERIF_004": ("footprint", "enclosure", "dimensions"),
+}
+
+
 def _pick_implementation(
     impl_map: dict[str, list[str]],
     dout_ids: list[str],
+    verif_ids: list[str] | None = None,
+    extra_hints: str = "",
 ) -> tuple[str | None, str | None]:
+    """Pick the DOUT CodeLinks site that best matches this SYSREQ's VERIFs."""
+    candidates: list[tuple[str, str]] = []
     for dout_id in dout_ids:
-        locations = impl_map.get(dout_id, [])
-        if locations:
-            return dout_id, locations[0]
-    product_locations = impl_map.get(SAMMD_PRODUCT_DOUT_ID, [])
-    if product_locations:
-        return SAMMD_PRODUCT_DOUT_ID, product_locations[0]
-    return None, None
+        for location in impl_map.get(dout_id, []):
+            candidates.append((dout_id, location))
+    if not candidates:
+        for location in impl_map.get(SAMMD_PRODUCT_DOUT_ID, []):
+            candidates.append((SAMMD_PRODUCT_DOUT_ID, location))
+    if not candidates:
+        return None, None
+
+    source = [(dout_id, loc) for dout_id, loc in candidates if not _is_test_location(loc)]
+    pool = source or candidates
+
+    verif_ids = verif_ids or []
+    extra_tokens = _tokens(extra_hints)
+
+    def best_in_pool(hint_tokens: set[str]) -> tuple[tuple[str, str], int]:
+        def score(item: tuple[str, str]) -> int:
+            return len(_tokens(item[1]) & hint_tokens)
+
+        winner = max(pool, key=score)
+        return winner, score(winner)
+
+    if not verif_ids:
+        if not extra_tokens:
+            return pool[0]
+        winner, _scored = best_in_pool(extra_tokens)
+        return winner
+
+    best_item = pool[0]
+    best_score = -1
+    for verif_id in verif_ids:
+        hints = extra_tokens | _tokens(verif_id)
+        hints.update(_VERIF_HINTS.get(verif_id, ()))
+        for location in impl_map.get(verif_id, []):
+            if "def " in location:
+                hints |= _tokens(location)
+        item, scored = best_in_pool(hints)
+        if scored > best_score:
+            best_score = scored
+            best_item = item
+    return best_item
 
 
 def verify_certification(
@@ -202,7 +269,12 @@ def verify_certification(
             )
             continue
 
-        dout_id, implementation = _pick_implementation(impl_map, dout_ids)
+        dout_id, implementation = _pick_implementation(
+            impl_map,
+            dout_ids,
+            verif_ids,
+            extra_hints=f"{sysreq.title} {sysreq.description}",
+        )
         if not implementation:
             verdicts.append(
                 RequirementVerdict(
@@ -290,6 +362,7 @@ def verify_certification(
         "verified": verified,
         "passed": passed_tests,
         "failed": failed_tests,
+        "validation_gate": 0,
     }
 
     return VerificationReport(
@@ -336,5 +409,7 @@ def format_verification_report(report: VerificationReport) -> str:
     lines.append("")
     lines.append(f"Passed                        {t['passed']}")
     lines.append(f"Failed                        {t['failed']}")
+    lines.append("")
+    lines.append("Validation                    MANUAL (not in engineering gate)")
     lines.append("")
     return "\n".join(lines)

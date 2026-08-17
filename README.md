@@ -1,10 +1,108 @@
+[![Cadence evidence](https://github.com/CertHubCode/certhub-useblocks-example/actions/workflows/cadence-evidence.yml/badge.svg)](https://github.com/CertHubCode/certhub-useblocks-example/actions/workflows/cadence-evidence.yml)
+[![Unit tests](https://github.com/CertHubCode/certhub-useblocks-example/actions/workflows/cadence-unit-tests.yml/badge.svg)](https://github.com/CertHubCode/certhub-useblocks-example/actions/workflows/cadence-unit-tests.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 # Cadence — CertHub SaMD Engineering Loop
 
-Cadence is CertHub’s official SaMD Engineering Loop showcase: controlled
-requirements stay in CertHub; this repo syncs them into Sphinx-Needs; then
-useblocks (Needs / CodeLinks / Test-Reports) builds an evidence pack from
-real Git work on the **Sterilisator 20A** example SaMD (prod SoR: System
-Requirements).
+Cadence is CertHub’s public example of an **engineering evidence loop**:
+controlled requirements stay in CertHub; this repo syncs them into Sphinx-Needs;
+useblocks (Needs / CodeLinks / Test-Reports) builds an evidence pack from real
+Git work on the fictional **Sterilisator 20A** SaMD.
+
+```mermaid
+flowchart LR
+  CertHub[CertHub SoR] -->|make sync| Needs[Sphinx-Needs]
+  Needs --> Gate[pytest plus CodeLinks plus gate]
+  Gate --> Pack[evidence pack]
+  Pack -->|full tag vX.Y.Z only| Record[CertHub Release Record]
+```
+
+## Prerequisites
+
+- Python 3.12+
+- [uv](https://docs.astral.sh/uv/)
+- A CertHub API key (`CERTHUB_API_KEY`) for `make sync`
+- Optional: PlantUML on PATH (or `make ensure-plantuml`) for needflow graphs
+- Optional: CodeLinks CLI — `scripts/run_codelinks.py` falls back to `@need-ids:` grep
+
+## Quickstart
+
+```bash
+git clone https://github.com/CertHubCode/certhub-useblocks-example.git
+cd certhub-useblocks-example
+make install
+cp .env.example .env          # set CERTHUB_API_KEY
+make sync                     # CertHub → Sphinx-Needs
+make show                     # tests + CodeLinks + gate + open dashboard
+```
+
+Expect **VERIFIED** and all four `SYSREQ_*` PASS. Then see the gate fail:
+
+```bash
+make break && make show       # RED — VERIF_002 cycle time
+make fix && make show         # back to GREEN
+```
+
+Committed [`certhub.toml`](certhub.toml) is the **showcase tenant**. To point at
+your own product, copy [`certhub.toml.example`](certhub.toml.example) and follow
+[docs/onboarding.md](docs/onboarding.md).
+
+## CI and release
+
+```mermaid
+flowchart LR
+  PR[PR or push] --> Unit[cadence-unit-tests.yml]
+  PR --> Evidence[cadence-evidence.yml]
+  Evidence --> Sync[make sync]
+  Sync --> Pack[make evidence]
+  Pack --> Art[Upload artifact]
+  Tag["vX.Y.Z tag"] --> Rel[cadence-release.yml]
+  Rel --> Push[Release Record in CertHub]
+```
+
+| Workflow | When | CertHub write? |
+|----------|------|----------------|
+| `cadence-unit-tests.yml` | Every PR / push | No — no API key required (fork-safe) |
+| `cadence-evidence.yml` | PR / main | No — uploads `evidence/` artifact (`CERTHUB_API_KEY` secret required) |
+| `cadence-release.yml` | Tag `v*.*.*` | **Yes**, on full `vX.Y.Z` only (not RC) |
+
+**Repository setup:** GitHub → Settings → Secrets → Actions → `CERTHUB_API_KEY`.
+Forks do not inherit that secret; unit tests still run. Details:
+[docs/onboarding.md](docs/onboarding.md).
+
+## Traceability model
+
+```text
+SYSREQ → DOUT (product: DOUT_018) → @need-ids: on source → VERIF → pytest / JUnit
+```
+
+| SYSREQ | Code | Test |
+|--------|------|------|
+| SYSREQ_001 temperature | `src/sterilisator_20a/cycle/controller.py` | VERIF_001 |
+| SYSREQ_002 cycle time | `src/sterilisator_20a/cycle/controller.py` | VERIF_002 |
+| SYSREQ_003 English UI | `src/sterilisator_20a/ui/messages.py` | VERIF_003 |
+| SYSREQ_004 footprint | `src/sterilisator_20a/enclosure/footprint.py` | VERIF_004 |
+
+Full table and showcase limitations: [docs/traceability-map.md](docs/traceability-map.md).
+
+After `make show`, open `sphinx/build/html/dashboard.html` and
+`traceability.html`:
+
+![Assurance dashboard](docs/assets/dashboard.png)
+
+![Traceability matrix](docs/assets/traceability.png)
+
+![Release evidence / gate report](docs/assets/release-evidence.png)
+
+## Showcase limitations
+
+- **One product design output.** Source markers use `DOUT_018`. Procedure and
+  legacy catalog DOUTs in CertHub are filtered out of the Sphinx graph.
+- **VALID is manual.** Validation protocols sync into the pack but do not close
+  the engineering gate.
+- **CertHub catalog noise.** Some UNITREQ / UREQ / DOUT rows on the showcase
+  tenant are leftover from other demo products. See
+  [docs/certhub-content-cleanup.md](docs/certhub-content-cleanup.md).
 
 ## Boundary
 
@@ -16,23 +114,22 @@ Requirements).
 `make show` / `make evidence` never write to CertHub. Only `push-evidence --push`
 (or the release workflow) POSTs one Release Record row.
 
-## Walkthrough
+## Docs
 
-Step-by-step runbook (GREEN → RED → evidence → release → CertHub UI / change requirement):
-[`docs/walkthrough.md`](docs/walkthrough.md). After release, follow the printed Release Record URL;
-`make open-requirements` opens the System Requirements SoR for a live edit → re-sync.
-
-## Regulatory scope (EU / US)
-
-Cadence is the **engineering evidence twin** (SYSREQ → DOUT → code → VERIF → gate → Release Record), not a full DHR or EU Technical Documentation pack. Risk, GSPR, CER, PMS, and approvals stay in CertHub.
-
-Checklist of what this repo delivers today vs additional CertHub/QMS steps:
-[`docs/regulatory-gap-analysis.md`](docs/regulatory-gap-analysis.md).
+| Doc | What |
+|-----|------|
+| [docs/walkthrough.md](docs/walkthrough.md) | GREEN → RED → evidence → release → CertHub UI |
+| [docs/onboarding.md](docs/onboarding.md) | Showcase tenant vs your own KT ids |
+| [docs/architecture.md](docs/architecture.md) | Data flow |
+| [docs/troubleshooting.md](docs/troubleshooting.md) | Sync, CI forks, PlantUML, ubCode |
+| [docs/regulatory-gap-analysis.md](docs/regulatory-gap-analysis.md) | What Cadence proves vs what stays in CertHub |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How to change this example |
+| [SECURITY.md](SECURITY.md) | Secrets and vulnerability reports |
 
 ## Commands
 
 ```bash
-cp .env.example .env   # set CERTHUB_API_KEY; edit certhub.toml for tenant URLs/KTs
+cp .env.example .env   # set CERTHUB_API_KEY; edit certhub.toml for your tenant
 # Switch prod/dev by commenting ONE flat block in certhub.toml (+ matching API key)
 # CI: store the same key as GitHub Actions secret CERTHUB_API_KEY
 
@@ -138,8 +235,8 @@ If activation fails with “Could not find license key”, confirm with useblock
 |------|------|
 | `certhub/` | Connector, sync snapshots, outbound JSON |
 | `certhub/certhub_connector/{cli,config,api,sync,evidence}/` | Hand-written Cadence connector (CLI, config, API wrappers, sync/transform, evidence) |
-| `certhub/certhub_connector/api/clients/` | Generated OpenAPI HTTP clients (Tech Doc + Records + Tracer) |
-| `certhub/certhub_connector/api/api_models/` | Generated Pydantic models from OpenAPI |
+| `certhub/certhub_connector/api/clients/` | Generated OpenAPI HTTP clients (`make generate-api`; do not edit by hand). Most endpoints are unused; Cadence calls a small wrapper in `api/client.py`. |
+| `certhub/certhub-api.http` | Dev-only REST Client scratchpad against the showcase tenant |
 | `evidence/` | CI evidence pack (gitignored): result, junit, `docs/` (Sphinx HTML), MANIFEST |
 | `schemas/` | Fetched OpenAPI specs |
 | `sphinx/source/` | Hand-written Sphinx assurance pages (dashboard, catalogs, traceability, release evidence) |
@@ -189,5 +286,6 @@ If activation fails with “Could not find license key”, confirm with useblock
 - First-class: release-number, release-id (commit), generated-at, evidence-url
 - Notes (`details`): short plain-text summary (status, compact totals, req id+status lines, result SHA)
 - GitHub workflows (repo root):
+  - `cadence-unit-tests.yml` — PR/main, no CertHub
   - `cadence-evidence.yml` — PR/main → artifacts only
-  - `cadence-release.yml` — `vX.Y.Z` / `v*-rc*` → always evidence artifact; CertHub POST only on full release
+  - `cadence-release.yml` — `vX.Y.Z` / `v*-rc*` → evidence artifact + GitHub Release; CertHub POST only on full release

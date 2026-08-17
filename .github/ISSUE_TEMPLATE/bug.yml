@@ -1,0 +1,25 @@
+name: Bug report
+description: Something in the Cadence loop does not work
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: Command, expected vs actual.
+    validations:
+      required: true
+  - type: dropdown
+    id: tenant
+    attributes:
+      label: Tenant
+      options:
+        - Showcase certhub.toml (default)
+        - My own certhub.toml
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs (redact API keys)
+      render: shell

@@ -121,20 +121,35 @@ def _write_needextend(records: list[dict]) -> None:
         "",
     ]
     for need_id in sorted(by_need):
-        rec = by_need[need_id][0]
-        filepath = rec.get("filepath", "")
-        row = 1
-        start = (rec.get("source_map") or {}).get("start") or {}
-        if isinstance(start, dict) and "row" in start:
-            row = int(start["row"]) + 1
-        remote = str(rec.get("remote_url") or "").strip()
+        seen: set[tuple[str, int]] = set()
+        local_urls: list[str] = []
+        remote_urls: list[str] = []
+        impl_files: list[str] = []
+        for rec in by_need[need_id]:
+            filepath = str(rec.get("filepath") or "")
+            row = 1
+            start = (rec.get("source_map") or {}).get("start") or {}
+            if isinstance(start, dict) and "row" in start:
+                row = int(start["row"]) + 1
+            key = (filepath, row)
+            if not filepath or key in seen:
+                continue
+            seen.add(key)
+            local_urls.append(f"../../{filepath}#L{row}")
+            remote = str(rec.get("remote_url") or "").strip()
+            if remote:
+                remote_urls.append(remote)
+            if filepath not in impl_files:
+                impl_files.append(filepath)
+        if not impl_files:
+            continue
         block = [
             f".. needextend:: {need_id}",
-            f"   :local-url: ../../{filepath}#L{row}",
-            f"   :impl-file: {filepath}",
+            f"   :local-url: {'; '.join(local_urls)}",
+            f"   :impl-file: {'; '.join(impl_files)}",
         ]
-        if remote:
-            block.append(f"   :remote-url: {remote}")
+        if remote_urls:
+            block.append(f"   :remote-url: {'; '.join(remote_urls)}")
         block.append("")
         lines.extend(block)
     NEEDEXTEND_RST.write_text("\n".join(lines) + "\n", encoding="utf-8")

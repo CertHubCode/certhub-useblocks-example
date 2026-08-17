@@ -1,5 +1,10 @@
 # Engineering proof is not a regulatory record
 
+> Unpublished marketing draft. Not user documentation. Keep out of the README
+> until it is edited and published elsewhere.
+
+**How CertHub and a Sphinx-Needs evidence loop close the gap between Git and submission for SaMD teams**
+
 **How CertHub and a Sphinx-Needs evidence loop close the gap between Git and submission for SaMD teams**
 
 ---

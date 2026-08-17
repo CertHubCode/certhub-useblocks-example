@@ -59,6 +59,8 @@ jobs:
     needs: gate
     if: needs.gate.outputs.build_evidence == 'true'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -94,3 +96,18 @@ jobs:
         run: |
           baseline="${{ needs.gate.outputs.baseline }}"
           make push-evidence BASELINE="${baseline}"
+
+      - name: Zip evidence pack
+        if: github.event_name == 'push' && needs.gate.outputs.is_release == 'true'
+        run: zip -r evidence.zip evidence
+
+      - name: Create GitHub Release
+        if: github.event_name == 'push' && needs.gate.outputs.is_release == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: evidence.zip
+          generate_release_notes: true
+          body: |
+            Engineering evidence pack for this baseline (Sphinx HTML under `docs/`).
+            CertHub Release Record is posted only for full `vX.Y.Z` tags (not RC).
+

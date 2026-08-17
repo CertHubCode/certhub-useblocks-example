@@ -62,6 +62,9 @@ def test_package_evidence_includes_sphinx_docs(
     assert "docs" in manifest.artifact_hashes
     assert len(manifest.artifact_hashes["docs"]) == 64
     assert "certhub_result.json" in manifest.artifact_hashes
+    assert "uv.lock" in manifest.artifact_hashes
+    assert manifest.lockfile_sha256
+    assert len(manifest.lockfile_sha256) == 64
 
 
 def test_package_evidence_requires_sphinx_html(

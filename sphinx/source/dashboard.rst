@@ -61,6 +61,13 @@ Executed         :need_count:`type == "testcase" and is_need`
 Failed share     :need_count:`type == "testcase" and result == "failure" ? type == "testcase"`
 ================ ============================================================
 
+Validation (non-blocking)
+-------------------------
+
+``VALID_*`` protocols are **manual evidence in CertHub**. They appear in this
+pack for completeness. They do **not** close the SYSREQ → VERIF engineering
+gate (KPI: N/A / manual). See :doc:`validation`.
+
 Execution results
 -----------------
 

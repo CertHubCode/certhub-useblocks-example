@@ -2,7 +2,9 @@ Validation
 ==========
 
 Validation activities from CertHub (intended-use evidence). These are distinct
-from automated **Verification** (pytest / JUnit).
+from automated **Verification** (pytest / JUnit). **VALID_* do not close the
+certification gate** — they remain manual protocols in CertHub. The dashboard
+KPI is ``manual`` / N/A.
 
 .. include:: generated/validations.rst
 

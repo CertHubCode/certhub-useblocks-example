@@ -17,6 +17,7 @@ from certhub_connector.config.paths import (
     evidence_dir,
     git_head_commit,
     junit_path,
+    project_root,
     sphinx_html_dir,
 )
 from certhub_connector.evidence.report import generate_report
@@ -35,6 +36,7 @@ class EvidenceManifest(BaseModel):
     evidence_url: str | None = None
     artifact_hashes: dict[str, str] = Field(default_factory=dict)
     totals: dict[str, int] = Field(default_factory=dict)
+    lockfile_sha256: str | None = None
 
     @field_validator("git_commit", "generated_at", "certification_status")
     @classmethod
@@ -145,6 +147,10 @@ def package_evidence(
         for name in copied
     }
     hashes["docs"] = _sha256_tree(docs_dir)
+    lockfile = project_root() / "uv.lock"
+    lockfile_sha256 = _sha256_file(lockfile) if lockfile.is_file() else None
+    if lockfile_sha256:
+        hashes["uv.lock"] = lockfile_sha256
     generated_at = datetime.now(timezone.utc).isoformat()
     run_id = os.environ.get("GITHUB_RUN_ID", "").strip() or None
     evidence_url = resolve_evidence_url()
@@ -156,6 +162,7 @@ def package_evidence(
         evidence_url=evidence_url,
         artifact_hashes=hashes,
         totals=dict(report.totals),
+        lockfile_sha256=lockfile_sha256,
     )
     manifest_path = out_dir / "MANIFEST.json"
     manifest_path.write_text(

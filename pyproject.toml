@@ -49,3 +49,10 @@ markers = [
 ]
 addopts = "-q"
 junit_family = "xunit1"
+
+[tool.ruff]
+target-version = "py312"
+exclude = [
+    "certhub/certhub_connector/api/clients",
+    "certhub/certhub_connector/api/api_models",
+]

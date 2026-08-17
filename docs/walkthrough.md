@@ -121,6 +121,10 @@ After `make tag-release` or `make confirm`, follow the printed URL (or run):
 make open-release-record
 ```
 
+Download the workflow artifact named `evidence-*` from the GitHub Actions run
+(Actions → Cadence release evidence → Artifacts) and open `docs/dashboard.html`
+inside the zip. That is the same pack the Release Record `evidence-url` points at.
+
 Point at release-number, commit, evidence-url, and the plain-text Notes.  
 Say: “Same gate as every PR. Only this tag made it a controlled row.”
 

@@ -1,4 +1,5 @@
 sphinx/build/
+sphinx/source/.ub_cache/
 sphinx/utils/plantuml.jar
 reports/junit.xml
 reports/codelinks_analysis.json

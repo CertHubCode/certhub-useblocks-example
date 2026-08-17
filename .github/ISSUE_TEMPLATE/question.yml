@@ -1,0 +1,10 @@
+name: Question
+description: How do I run or adopt Cadence?
+labels: ["question"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+    validations:
+      required: true

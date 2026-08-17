@@ -1,0 +1,36 @@
+# Copy to certhub.toml and fill in your tenant.
+# Records API uses KT *revision* ids. Dashboard URLs use KT *history* ids
+# (knowledgeTopicId), plus product/KU history path segments.
+#
+# How to find these values: see docs/onboarding.md.
+# The committed certhub.toml is the working CertHub showcase tenant.
+
+techdoc_base_url = "https://techdoc.example.certhub.tech"
+records_base_url = "https://records.example.certhub.tech"
+tracer_base_url = "https://tracer.example.certhub.tech"
+
+# Requirements Engineering content KTs (V-Model left + V&V right).
+user_requirements_kt_id = "REPLACE_USER_REQUIREMENTS_KT_REVISION_ID"
+system_requirements_kt_id = "REPLACE_SYSTEM_REQUIREMENTS_KT_REVISION_ID"
+component_requirements_kt_id = "REPLACE_COMPONENT_REQUIREMENTS_KT_REVISION_ID"
+unit_requirements_kt_id = "REPLACE_UNIT_REQUIREMENTS_KT_REVISION_ID"
+design_output_kt_id = "REPLACE_DESIGN_OUTPUT_KT_REVISION_ID"
+verification_kt_id = "REPLACE_VERIFICATION_KT_REVISION_ID"
+validation_kt_id = "REPLACE_VALIDATION_KT_REVISION_ID"
+
+# Release evidence write-back (Release Record multi-record KT)
+release_record_kt_id = "REPLACE_RELEASE_RECORD_KT_REVISION_ID"
+
+# Dashboard UI
+dashboard_base_url = "https://app.certhub.de"
+product_history_id = "REPLACE_PRODUCT_HISTORY_ID"
+ku_history_id = "REPLACE_KU_HISTORY_ID"
+product_version = "0.1"
+user_requirements_kt_history_id = "REPLACE_USER_REQUIREMENTS_KT_HISTORY_ID"
+system_requirements_kt_history_id = "REPLACE_SYSTEM_REQUIREMENTS_KT_HISTORY_ID"
+component_requirements_kt_history_id = "REPLACE_COMPONENT_REQUIREMENTS_KT_HISTORY_ID"
+unit_requirements_kt_history_id = "REPLACE_UNIT_REQUIREMENTS_KT_HISTORY_ID"
+design_output_kt_history_id = "REPLACE_DESIGN_OUTPUT_KT_HISTORY_ID"
+verification_kt_history_id = "REPLACE_VERIFICATION_KT_HISTORY_ID"
+validation_kt_history_id = "REPLACE_VALIDATION_KT_HISTORY_ID"
+release_record_kt_history_id = "REPLACE_RELEASE_RECORD_KT_HISTORY_ID"
