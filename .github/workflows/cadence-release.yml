@@ -103,7 +103,7 @@ jobs:
 
       - name: Create GitHub Release
         if: github.event_name == 'push' && needs.gate.outputs.is_release == 'true'
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: evidence.zip
           generate_release_notes: true
