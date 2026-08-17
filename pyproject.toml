@@ -10,7 +10,7 @@ dependencies = [
     "httpx>=0.27,<1",
     "attrs>=23.0",
     "sphinx>=7.4,<10",
-    "sphinx-needs[plotting]==8.3.0",
+    "sphinx-needs[plotting]==8.3.1",
     "sphinx-codelinks==1.4.0",
     "sphinx-test-reports==1.4.0",
     "furo>=2024.8.6",

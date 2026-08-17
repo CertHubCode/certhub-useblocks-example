@@ -166,7 +166,7 @@ requires-dist = [
     { name = "rich", specifier = ">=15.0.0" },
     { name = "sphinx", specifier = ">=7.4,<10" },
     { name = "sphinx-codelinks", specifier = "==1.4.0" },
-    { name = "sphinx-needs", extras = ["plotting"], specifier = "==8.3.0" },
+    { name = "sphinx-needs", extras = ["plotting"], specifier = "==8.3.1" },
     { name = "sphinx-test-reports", specifier = "==1.4.0" },
     { name = "sphinxcontrib-plantuml", specifier = ">=0.27" },
 ]
@@ -277,7 +277,7 @@ resolution-markers = [
     "python_full_version < '3.13'",
 ]
 dependencies = [
-    { name = "python-magic", version = "0.4.24", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
+    { name = "python-magic", version = "0.4.24", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/76/cd/6e4c79d4a25e3b6542d1a3728b3e2b2c4650e3f8c3cde950aaecc6f64764/comment_parser-1.2.4.tar.gz", hash = "sha256:4e03c421c07d146f5a4d248423820347f3589f60d17acea55f7fb5683faffa22", size = 8350, upload-time = "2022-01-26T04:50:40.828Z" }
 
@@ -290,7 +290,7 @@ resolution-markers = [
     "python_full_version == '3.13.*'",
 ]
 dependencies = [
-    { name = "python-magic", version = "0.4.27", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.13'" },
+    { name = "python-magic", version = "0.4.27", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/37/6a/354d8e640b5f90996ac07c002189a552226a0ddaad85efd14863166aaa14/comment_parser-1.2.5.tar.gz", hash = "sha256:5606b769228cafce03d538e361472896581b386f3bc44bd62f4b61ff45ff05ec", size = 8852, upload-time = "2024-12-25T05:08:14.618Z" }
 wheels = [
@@ -1875,7 +1875,7 @@ wheels = [
 
 [[package]]
 name = "sphinx-needs"
-version = "8.3.0"
+version = "8.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jsonschema-rs" },
@@ -1887,9 +1887,9 @@ dependencies = [
     { name = "sphinxcontrib-jquery" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f5/a5/d5f38f8b46d1d198c47b67e54e48b31b9b4f18ff42908b96c4609aa5b4a4/sphinx_needs-8.3.0.tar.gz", hash = "sha256:e305ea42293ce7a44214529ca50b28f069baad19e6602fe048156b4edf95cd35", size = 27675972, upload-time = "2026-07-08T12:33:29.483Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/53/9e/1264611eedd3e4149a520af9ec07bc146d6af6749f3000ab4ad583fd6cf9/sphinx_needs-8.3.1.tar.gz", hash = "sha256:ecc9807c06dd3698ecf78d3a6c0867a3bbaed56204f8cbc21fdd3e1282c2d2bb", size = 27678227, upload-time = "2026-08-11T19:32:34.699Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1f/30/73b94ef5ae28c3523be1d23f9fb0a060c5f4d1d892218f2ba540a1d84525/sphinx_needs-8.3.0-py3-none-any.whl", hash = "sha256:b4b61c3a4295457bc070b38217f87375a427f0472f9206e1f0cf44db1fd9e8de", size = 2711969, upload-time = "2026-07-08T12:33:26.658Z" },
+    { url = "https://files.pythonhosted.org/packages/3c/e4/004adde6c1e4a40e750174ad8fee646b3065ce68c5a5e61a808c097e6f5f/sphinx_needs-8.3.1-py3-none-any.whl", hash = "sha256:cca706698cbb0c2fac5c8bf21fc30cd825473f97123783713cf5c9a9d01216c2", size = 2712423, upload-time = "2026-08-11T19:32:31.062Z" },
 ]
 
 [package.optional-dependencies]
