@@ -1,0 +1,662 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Requirements" href="requirements.html"><link rel="prev" title="Sterilisator 20A — Assurance Evidence" href="index.html">
+
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>Assurance Dashboard - Sterilisator 20A — Assurance Evidence</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/modern.css?v=803738c0" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-test-results/common.css?v=b0886eb3" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="_static/needs_furo.css?v=bbe25ff9" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Sterilisator 20A — Assurance Evidence</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  <span class="sidebar-brand-text">Sterilisator 20A — Assurance Evidence</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Assurance pack</span></p>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Assurance Dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design-output.html">Design Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verification.html">Verification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="validation.html">Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="traceability.html">Traceability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release-evidence.html">Release Evidence</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/dashboard.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="assurance-dashboard">
+<h1>Assurance Dashboard<a class="headerlink" href="#assurance-dashboard" title="Link to this heading">¶</a></h1>
+<p>Management view of the certification gate for this build. Drill into
+<a class="reference internal" href="requirements.html"><span class="doc">Requirements</span></a>, <a class="reference internal" href="design-output.html"><span class="doc">Design Output</span></a>, <a class="reference internal" href="verification.html"><span class="doc">Verification</span></a>, <a class="reference internal" href="validation.html"><span class="doc">Validation</span></a>,
+<a class="reference internal" href="traceability.html"><span class="doc">Traceability</span></a>, or <a class="reference internal" href="release-evidence.html"><span class="doc">Release Evidence</span></a> for detail.</p>
+<section id="what-this-pack-is-for-medical-device">
+<h2>What this pack is for (medical device)<a class="headerlink" href="#what-this-pack-is-for-medical-device" title="Link to this heading">¶</a></h2>
+<p><strong>Sterilisator 20A</strong> is the example <strong>SaMD</strong> (Software as a Medical Device) under
+test. This HTML pack is the <strong>engineering evidence twin</strong> for one git baseline:
+controlled design inputs from CertHub, linked to implementation and automated
+verification.</p>
+<div class="table-wrapper colwidths-given docutils container" id="id1">
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Regulatory meaning of this evidence pack</span><a class="headerlink" href="#id1" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 28.0%" />
+<col style="width: 72.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Regulatory use</p></th>
+<th class="head"><p>Meaning in this dashboard</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Design / development evidence</strong>
+(legacy <strong>DHF</strong>; ISO 13485 <strong>DDF</strong> §7.3.10; EU MDR Annex II design / V&amp;V)</p></td>
+<td><p>The chain SYSREQ → Design Output → CodeLinks → VERIF → JUnit proves
+<em>this build was designed and verified</em> — not the full risk file, CER,
+or GSPR checklist.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Per-release production record</strong>
+(legacy <strong>DHR</strong>; ISO 13485 §7.5 production / release records)</p></td>
+<td><p>On full tag <code class="docutils literal notranslate"><span class="pre">vX.Y.Z</span></code>, the gate result posts to CertHub <strong>Release
+Record</strong> (version, commit, evidence URL, Notes): thin proof that this
+software unit was released green.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Not in this pack</strong></p></td>
+<td><p>Risk (ISO 14971), GSPR, clinical evaluation, labeling, PMS / PMCF, and
+formal approvals stay in <strong>CertHub</strong>. Detail:
+<code class="docutils literal notranslate"><span class="pre">docs/regulatory-gap-analysis.md</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="note admonition">
+<p class="admonition-title">Regulatory boundary</p>
+<p>Auditors use this pack to answer: <em>for this baseline, which requirement is
+implemented where, and which test passed?</em> Controlled regulatory content and
+release authorization live in CertHub — this dashboard does not replace a
+full Technical Documentation or Device History File.</p>
+</div>
+</section>
+<section id="gate-status">
+<h2>Gate status<a class="headerlink" href="#gate-status" title="Link to this heading">¶</a></h2>
+<p><strong>Certification status: BLOCKED</strong></p>
+<div class="danger admonition">
+<p class="admonition-title">Gate BLOCKED</p>
+<p>Certification is blocked for this build. See <a class="reference internal" href="verification.html"><span class="doc">Verification</span></a> and <a class="reference internal" href="traceability.html"><span class="doc">Traceability</span></a> for gaps.</p>
+</div>
+<ul class="simple">
+<li><p>System Requirements: 4</p></li>
+<li><p>Design Outputs: 19</p></li>
+<li><p>Verifications: 4</p></li>
+<li><p>Validations: 4</p></li>
+<li><p>Implemented: 4 / 4</p></li>
+<li><p>Verified: 3 / 4</p></li>
+<li><p>Passed tests: 3</p></li>
+<li><p>Failed tests: 1</p></li>
+</ul>
+<div class="table-wrapper colwidths-given docutils container" id="id2">
+<table class="docutils align-default" id="id2">
+<caption><span class="caption-text">Per-requirement chain (SYSREQ → DOUT → code → VERIF → result)</span><a class="headerlink" href="#id2" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 13.0%" />
+<col style="width: 15.2%" />
+<col style="width: 13.0%" />
+<col style="width: 30.4%" />
+<col style="width: 15.2%" />
+<col style="width: 13.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Requirement</p></th>
+<th class="head"><p>Status</p></th>
+<th class="head"><p>Design Output</p></th>
+<th class="head"><p>Implementation (code)</p></th>
+<th class="head"><p>Verification</p></th>
+<th class="head"><p>Result</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SYSREQ_001</p></td>
+<td><p>verified</p></td>
+<td><p>DOUT_018</p></td>
+<td><p>src/sterilisator_20a/cycle/controller.py:def temperature_within_range(peak_temperature_c: float) -&gt; bool:</p></td>
+<td><p>VERIF_001</p></td>
+<td><p>PASSED</p></td>
+</tr>
+<tr class="row-odd"><td><p>SYSREQ_002</p></td>
+<td><p>failed</p></td>
+<td><p>DOUT_018</p></td>
+<td><p>src/sterilisator_20a/cycle/controller.py:def temperature_within_range(peak_temperature_c: float) -&gt; bool:</p></td>
+<td><p>VERIF_002</p></td>
+<td><p>FAILED</p></td>
+</tr>
+<tr class="row-even"><td><p>SYSREQ_003</p></td>
+<td><p>verified</p></td>
+<td><p>DOUT_018</p></td>
+<td><p>src/sterilisator_20a/cycle/controller.py:def temperature_within_range(peak_temperature_c: float) -&gt; bool:</p></td>
+<td><p>VERIF_003, VERIF_004</p></td>
+<td><p>PASSED</p></td>
+</tr>
+<tr class="row-odd"><td><p>SYSREQ_004</p></td>
+<td><p>verified</p></td>
+<td><p>DOUT_018</p></td>
+<td><p>src/sterilisator_20a/cycle/controller.py:def temperature_within_range(peak_temperature_c: float) -&gt; bool:</p></td>
+<td><p>VERIF_001, VERIF_004</p></td>
+<td><p>PASSED</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="kpis">
+<h2>KPIs<a class="headerlink" href="#kpis" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Measure</p></th>
+<th class="head"><p>Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>System Reqs</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-odd"><td><p>Design Output</p></td>
+<td><p>19</p></td>
+</tr>
+<tr class="row-even"><td><p>Verification</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-odd"><td><p>Validation</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-even"><td><p>Executed</p></td>
+<td><p>33</p></td>
+</tr>
+<tr class="row-odd"><td><p>Failed share</p></td>
+<td><p>3.0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="execution-results">
+<h2>Execution results<a class="headerlink" href="#execution-results" title="Link to this heading">¶</a></h2>
+<img alt="_images/need_pie_d6e81.svg" id="needpie-dashboard-0" src="_images/need_pie_d6e81.svg" />
+</section>
+<section id="artifact-inventory">
+<h2>Artifact inventory<a class="headerlink" href="#artifact-inventory" title="Link to this heading">¶</a></h2>
+<img alt="Needs by type" id="needbar-dashboard-0" src="_images/need_bar_3a54b.svg" />
+</section>
+<section id="traceability-flow">
+<h2>Traceability flow<a class="headerlink" href="#traceability-flow" title="Link to this heading">¶</a></h2>
+<p>System Requirement → Design Output → Verification (<code class="docutils literal notranslate"><span class="pre">links</span></code> / <code class="docutils literal notranslate"><span class="pre">verifies</span></code>).</p>
+<figure class="align-center" id="needflow-dashboard-0">
+<p class="plantuml">
+<object data="_images/plantuml-d7c6c3d852d8e3ebd1b227c442ed4a7a911174f4.svg" type="image/svg+xml" style="width:1819px;height:1524px;background:#FFFFFF;">
+<a href="_images/plantuml-d7c6c3d852d8e3ebd1b227c442ed4a7a911174f4.png"><img src="_images/plantuml-d7c6c3d852d8e3ebd1b227c442ed4a7a911174f4.png" alt="&#64;startuml
+
+' Nodes definition 
+
+node &quot;&lt;size:12&gt;System Requirements&lt;/size&gt;\n**Sterilization**\n**temperature**\n**range is better**\n&lt;size:10&gt;SYSREQ_001&lt;/size&gt;&quot; as SYSREQ_001 [[../requirements.html#SYSREQ_001]] #BFD8D2
+node &quot;&lt;size:12&gt;System Requirements&lt;/size&gt;\n**Sterilization**\n**cycle time**\n&lt;size:10&gt;SYSREQ_002&lt;/size&gt;&quot; as SYSREQ_002 [[../requirements.html#SYSREQ_002]] #BFD8D2
+node &quot;&lt;size:12&gt;System Requirements&lt;/size&gt;\n**User interface**\n**labeling**\n&lt;size:10&gt;SYSREQ_003&lt;/size&gt;&quot; as SYSREQ_003 [[../requirements.html#SYSREQ_003]] #BFD8D2
+node &quot;&lt;size:12&gt;System Requirements&lt;/size&gt;\n**Device**\n**footprint**\n&lt;size:10&gt;SYSREQ_004&lt;/size&gt;&quot; as SYSREQ_004 [[../requirements.html#SYSREQ_004]] #BFD8D2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**Temperature**\n**verification**\n&lt;size:10&gt;DOUT_001&lt;/size&gt;&quot; as DOUT_001 [[../design-output.html#DOUT_001]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**Cycle time**\n**verification**\n&lt;size:10&gt;DOUT_002&lt;/size&gt;&quot; as DOUT_002 [[../design-output.html#DOUT_002]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**UI display test**\n&lt;size:10&gt;DOUT_003&lt;/size&gt;&quot; as DOUT_003 [[../design-output.html#DOUT_003]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**Footprint**\n**measurement**\n&lt;size:10&gt;DOUT_004&lt;/size&gt;&quot; as DOUT_004 [[../design-output.html#DOUT_004]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**SteamPro 1000**\n&lt;size:10&gt;DOUT_005&lt;/size&gt;&quot; as DOUT_005 [[../design-output.html#DOUT_005]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**AutoclaveX**\n&lt;size:10&gt;DOUT_006&lt;/size&gt;&quot; as DOUT_006 [[../design-output.html#DOUT_006]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**BioSafe S50**\n&lt;size:10&gt;DOUT_007&lt;/size&gt;&quot; as DOUT_007 [[../design-output.html#DOUT_007]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**EcoSteril A2**\n&lt;size:10&gt;DOUT_008&lt;/size&gt;&quot; as DOUT_008 [[../design-output.html#DOUT_008]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**SteriliMax 300**\n&lt;size:10&gt;DOUT_009&lt;/size&gt;&quot; as DOUT_009 [[../design-output.html#DOUT_009]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**MedAuto G2**\n&lt;size:10&gt;DOUT_010&lt;/size&gt;&quot; as DOUT_010 [[../design-output.html#DOUT_010]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**UltraSteam M5**\n&lt;size:10&gt;DOUT_011&lt;/size&gt;&quot; as DOUT_011 [[../design-output.html#DOUT_011]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**SafeSter Z10**\n&lt;size:10&gt;DOUT_012&lt;/size&gt;&quot; as DOUT_012 [[../design-output.html#DOUT_012]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**ProClean S80**\n&lt;size:10&gt;DOUT_013&lt;/size&gt;&quot; as DOUT_013 [[../design-output.html#DOUT_013]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**AccuSteril 400**\n&lt;size:10&gt;DOUT_014&lt;/size&gt;&quot; as DOUT_014 [[../design-output.html#DOUT_014]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**EcoSteam L1**\n&lt;size:10&gt;DOUT_015&lt;/size&gt;&quot; as DOUT_015 [[../design-output.html#DOUT_015]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**MedSteril P7**\n&lt;size:10&gt;DOUT_016&lt;/size&gt;&quot; as DOUT_016 [[../design-output.html#DOUT_016]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**HydroSter 320**\n&lt;size:10&gt;DOUT_017&lt;/size&gt;&quot; as DOUT_017 [[../design-output.html#DOUT_017]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**Sterilizer 20A**\n&lt;size:10&gt;DOUT_018&lt;/size&gt;&quot; as DOUT_018 [[../design-output.html#DOUT_018]] #FEDCD2
+node &quot;&lt;size:12&gt;Design Output&lt;/size&gt;\n**SteamSter E1**\n&lt;size:10&gt;DOUT_019&lt;/size&gt;&quot; as DOUT_019 [[../design-output.html#DOUT_019]] #FEDCD2
+node &quot;&lt;size:12&gt;Verification&lt;/size&gt;\n**Temperature**\n**accuracy test**\n&lt;size:10&gt;VERIF_001&lt;/size&gt;&quot; as VERIF_001 [[../verification.html#VERIF_001]] #DCB239
+node &quot;&lt;size:12&gt;Verification&lt;/size&gt;\n**Cycle time test**\n&lt;size:10&gt;VERIF_002&lt;/size&gt;&quot; as VERIF_002 [[../verification.html#VERIF_002]] #DCB239
+node &quot;&lt;size:12&gt;Verification&lt;/size&gt;\n**UI readability**\n**test**\n&lt;size:10&gt;VERIF_003&lt;/size&gt;&quot; as VERIF_003 [[../verification.html#VERIF_003]] #DCB239
+node &quot;&lt;size:12&gt;Verification&lt;/size&gt;\n**Footprint**\n**compatibility**\n**test**\n&lt;size:10&gt;VERIF_004&lt;/size&gt;&quot; as VERIF_004 [[../verification.html#VERIF_004]] #DCB239
+node &quot;&lt;size:12&gt;Validation&lt;/size&gt;\n**Temperature**\n**validation**\n&lt;size:10&gt;VALID_001&lt;/size&gt;&quot; as VALID_001 [[../validation.html#VALID_001]] #E9C46A
+node &quot;&lt;size:12&gt;Validation&lt;/size&gt;\n**Cycle time**\n**validation**\n&lt;size:10&gt;VALID_002&lt;/size&gt;&quot; as VALID_002 [[../validation.html#VALID_002]] #E9C46A
+node &quot;&lt;size:12&gt;Validation&lt;/size&gt;\n**UI validation**\n&lt;size:10&gt;VALID_003&lt;/size&gt;&quot; as VALID_003 [[../validation.html#VALID_003]] #E9C46A
+node &quot;&lt;size:12&gt;Validation&lt;/size&gt;\n**Footprint**\n**validation**\n&lt;size:10&gt;VALID_004&lt;/size&gt;&quot; as VALID_004 [[../validation.html#VALID_004]] #E9C46A
+
+' Connection definition 
+
+SYSREQ_001 --&gt; VERIF_001: links to\n
+SYSREQ_002 --&gt; VERIF_002: links to\n
+SYSREQ_003 --&gt; VERIF_003: links to\n
+SYSREQ_003 --&gt; VERIF_004: links to\n
+SYSREQ_004 --&gt; VERIF_001: links to\n
+SYSREQ_004 --&gt; VERIF_004: links to\n
+DOUT_002 --&gt; VERIF_001: links to\n
+DOUT_002 --&gt; VERIF_003: links to\n
+DOUT_015 --&gt; SYSREQ_004: links to\n
+DOUT_016 --&gt; SYSREQ_003: links to\n
+DOUT_017 --&gt; SYSREQ_002: links to\n
+DOUT_018 --&gt; SYSREQ_001: links to\n
+DOUT_018 --&gt; VALID_001: links to\n
+DOUT_018 --&gt; VERIF_001: links to\n
+VERIF_001 --&gt; DOUT_002: links to\n
+VERIF_001 --&gt; DOUT_018: links to\n
+VERIF_001 --&gt; SYSREQ_001: links to\n
+VERIF_001 --&gt; SYSREQ_004: links to\n
+VERIF_001 --&gt; SYSREQ_001: verifies\n
+VERIF_001 --&gt; SYSREQ_004: verifies\n
+VERIF_002 --&gt; SYSREQ_002: links to\n
+VERIF_002 --&gt; SYSREQ_002: verifies\n
+VERIF_003 --&gt; DOUT_002: links to\n
+VERIF_003 --&gt; SYSREQ_003: links to\n
+VERIF_003 --&gt; SYSREQ_003: verifies\n
+VERIF_004 --&gt; SYSREQ_003: links to\n
+VERIF_004 --&gt; SYSREQ_004: links to\n
+VERIF_004 --&gt; SYSREQ_003: verifies\n
+VERIF_004 --&gt; SYSREQ_004: verifies\n
+VALID_001 --&gt; DOUT_018: links to\n
+
+' Legend definition
+legend
+|= Color |= Type |
+|&lt;back:#C8E6C9&gt; #C8E6C9 &lt;/back&gt;| User Requirements |
+|&lt;back:#BFD8D2&gt; #BFD8D2 &lt;/back&gt;| System Requirements |
+|&lt;back:#A8DADC&gt; #A8DADC &lt;/back&gt;| Component Requirements |
+|&lt;back:#89C2D9&gt; #89C2D9 &lt;/back&gt;| Unit Requirements |
+|&lt;back:#FEDCD2&gt; #FEDCD2 &lt;/back&gt;| Design Output |
+|&lt;back:#DCB239&gt; #DCB239 &lt;/back&gt;| Verification |
+|&lt;back:#E9C46A&gt; #E9C46A &lt;/back&gt;| Validation |
+|&lt;back:#ffffff&gt; #ffffff &lt;/back&gt;| Src-Trace |
+|&lt;back:#ffffff&gt; #ffffff &lt;/back&gt;| Test-File |
+|&lt;back:#cccccc&gt; #cccccc &lt;/back&gt;| Test-Suite |
+|&lt;back:#999999&gt; #999999 &lt;/back&gt;| Test-Case |
+|&lt;back:#cccccc&gt; #cccccc &lt;/back&gt;| Issue |
+|&lt;back:#aaaaaa&gt; #aaaaaa &lt;/back&gt;| PullRequest |
+|&lt;back:#888888&gt; #888888 &lt;/back&gt;| Commit |
+endlegend
+
+&#64;enduml" style="width: 1818.0px; height: 1523.0px"/></a>
+
+</object></p>
+<figcaption>
+<p><span class="caption-text"><a class="reference external" href="_images/plantuml-d7c6c3d852d8e3ebd1b227c442ed4a7a911174f4.svg">V-model excerpt</a></span><a class="headerlink" href="#needflow-dashboard-0" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="system-requirements-overview">
+<h2>System Requirements overview<a class="headerlink" href="#system-requirements-overview" title="Link to this heading">¶</a></h2>
+<span id="needtable-dashboard-0"></span><table class="NEEDS_DATATABLES docutils align-default" id="needtable-dashboard-0-table_node">
+<caption><span class="caption-text">System Requirements</span><a class="headerlink" href="#needtable-dashboard-0-table_node" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 14.3%" />
+<col style="width: 42.9%" />
+<col style="width: 14.3%" />
+<col style="width: 14.3%" />
+<col style="width: 14.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Title</p></th>
+<th class="head"><p>Priority</p></th>
+<th class="head"><p>Status</p></th>
+<th class="head"><p>External Id</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="requirements.html#SYSREQ_001">SYSREQ_001</a></p></td>
+<td class="needs_title"><p>Sterilization temperature range is better</p></td>
+<td class="needs_priority"><p>medium</p></td>
+<td class="needs_status"><p>approved</p></td>
+<td class="needs_external_id"><p>69c2d6756406f437042965e5</p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="requirements.html#SYSREQ_002">SYSREQ_002</a></p></td>
+<td class="needs_title"><p>Sterilization cycle time</p></td>
+<td class="needs_priority"><p>medium</p></td>
+<td class="needs_status"><p>approved</p></td>
+<td class="needs_external_id"><p>69c2d6756406f437042965e6</p></td>
+</tr>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="requirements.html#SYSREQ_003">SYSREQ_003</a></p></td>
+<td class="needs_title"><p>User interface labeling</p></td>
+<td class="needs_priority"><p>high</p></td>
+<td class="needs_status"><p>approved</p></td>
+<td class="needs_external_id"><p>69c2d6756406f437042965e7</p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="requirements.html#SYSREQ_004">SYSREQ_004</a></p></td>
+<td class="needs_title"><p>Device footprint</p></td>
+<td class="needs_priority"><p>low</p></td>
+<td class="needs_status"><p>approved</p></td>
+<td class="needs_external_id"><p>69c2d6756406f437042965e8</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="further-reading">
+<h2>Further reading<a class="headerlink" href="#further-reading" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="requirements.html"><span class="doc">Requirements</span></a> — requirement hierarchy (User → System → Component → Unit)</p></li>
+<li><p><a class="reference internal" href="design-output.html"><span class="doc">Design Output</span></a> — design outputs and CodeLinks to source</p></li>
+<li><p><a class="reference internal" href="verification.html"><span class="doc">Verification</span></a> — verification activities and JUnit results</p></li>
+<li><p><a class="reference internal" href="validation.html"><span class="doc">Validation</span></a> — validation protocols</p></li>
+<li><p><a class="reference internal" href="traceability.html"><span class="doc">Traceability</span></a> — linked needflow graph, matrices, CodeLinks, gap legend</p></li>
+<li><p><a class="reference internal" href="release-evidence.html"><span class="doc">Release Evidence</span></a> — outbound Release Record payload</p></li>
+</ul>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="requirements.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Requirements</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, CertHub / Cadence
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Assurance Dashboard</a><ul>
+<li><a class="reference internal" href="#what-this-pack-is-for-medical-device">What this pack is for (medical device)</a></li>
+<li><a class="reference internal" href="#gate-status">Gate status</a></li>
+<li><a class="reference internal" href="#kpis">KPIs</a></li>
+<li><a class="reference internal" href="#execution-results">Execution results</a></li>
+<li><a class="reference internal" href="#artifact-inventory">Artifact inventory</a></li>
+<li><a class="reference internal" href="#traceability-flow">Traceability flow</a></li>
+<li><a class="reference internal" href="#system-requirements-overview">System Requirements overview</a></li>
+<li><a class="reference internal" href="#further-reading">Further reading</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/jquery.js?v=5d32c60e"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+    <script src="_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+    <script src="_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+    <script src="_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+    <script src="_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    </body>
+</html>

@@ -1,0 +1,198 @@
+from http import HTTPStatus
+from typing import Any, cast
+from urllib.parse import quote
+
+import httpx
+
+from ... import errors
+from ...client import AuthenticatedClient, Client
+from ...models.http_validation_error import HTTPValidationError
+from ...models.knowledge_topic_detail_response import KnowledgeTopicDetailResponse
+from ...types import UNSET, Response, Unset
+
+
+def _get_kwargs(
+    knowledge_topic_id: str,
+    *,
+    include_use_case_config: bool | Unset = False,
+) -> dict[str, Any]:
+
+    params: dict[str, Any] = {}
+
+    params["include_use_case_config"] = include_use_case_config
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+
+    _kwargs: dict[str, Any] = {
+        "method": "get",
+        "url": "/kt/{knowledge_topic_id}".format(
+            knowledge_topic_id=quote(str(knowledge_topic_id), safe=""),
+        ),
+        "params": params,
+    }
+
+    return _kwargs
+
+
+def _parse_response(
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> Any | HTTPValidationError | KnowledgeTopicDetailResponse | None:
+    if response.status_code == 200:
+        response_200 = KnowledgeTopicDetailResponse.from_dict(response.json())
+
+        return response_200
+
+    if response.status_code == 404:
+        response_404 = cast(Any, None)
+        return response_404
+
+    if response.status_code == 422:
+        response_422 = HTTPValidationError.from_dict(response.json())
+
+        return response_422
+
+    if client.raise_on_unexpected_status:
+        raise errors.UnexpectedStatus(response.status_code, response.content)
+    else:
+        return None
+
+
+def _build_response(
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> Response[Any | HTTPValidationError | KnowledgeTopicDetailResponse]:
+    return Response(
+        status_code=HTTPStatus(response.status_code),
+        content=response.content,
+        headers=response.headers,
+        parsed=_parse_response(client=client, response=response),
+    )
+
+
+def sync_detailed(
+    knowledge_topic_id: str,
+    *,
+    client: AuthenticatedClient | Client,
+    include_use_case_config: bool | Unset = False,
+) -> Response[Any | HTTPValidationError | KnowledgeTopicDetailResponse]:
+    """Get Kt
+
+    Args:
+        knowledge_topic_id (str):  Example: 5eb7cf5a86d9755df3a6c593.
+        include_use_case_config (bool | Unset): When true, compute and attach use_case_config
+            (columns + completeness banner) for a multi-record use-case topic (runs a product-wide
+            topics aggregation). Off by default so generic resolvers (e.g. Tracer) skip the cost.
+            Default: False.
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Any | HTTPValidationError | KnowledgeTopicDetailResponse]
+    """
+
+    kwargs = _get_kwargs(
+        knowledge_topic_id=knowledge_topic_id,
+        include_use_case_config=include_use_case_config,
+    )
+
+    response = client.get_httpx_client().request(
+        **kwargs,
+    )
+
+    return _build_response(client=client, response=response)
+
+
+def sync(
+    knowledge_topic_id: str,
+    *,
+    client: AuthenticatedClient | Client,
+    include_use_case_config: bool | Unset = False,
+) -> Any | HTTPValidationError | KnowledgeTopicDetailResponse | None:
+    """Get Kt
+
+    Args:
+        knowledge_topic_id (str):  Example: 5eb7cf5a86d9755df3a6c593.
+        include_use_case_config (bool | Unset): When true, compute and attach use_case_config
+            (columns + completeness banner) for a multi-record use-case topic (runs a product-wide
+            topics aggregation). Off by default so generic resolvers (e.g. Tracer) skip the cost.
+            Default: False.
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Any | HTTPValidationError | KnowledgeTopicDetailResponse
+    """
+
+    return sync_detailed(
+        knowledge_topic_id=knowledge_topic_id,
+        client=client,
+        include_use_case_config=include_use_case_config,
+    ).parsed
+
+
+async def asyncio_detailed(
+    knowledge_topic_id: str,
+    *,
+    client: AuthenticatedClient | Client,
+    include_use_case_config: bool | Unset = False,
+) -> Response[Any | HTTPValidationError | KnowledgeTopicDetailResponse]:
+    """Get Kt
+
+    Args:
+        knowledge_topic_id (str):  Example: 5eb7cf5a86d9755df3a6c593.
+        include_use_case_config (bool | Unset): When true, compute and attach use_case_config
+            (columns + completeness banner) for a multi-record use-case topic (runs a product-wide
+            topics aggregation). Off by default so generic resolvers (e.g. Tracer) skip the cost.
+            Default: False.
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[Any | HTTPValidationError | KnowledgeTopicDetailResponse]
+    """
+
+    kwargs = _get_kwargs(
+        knowledge_topic_id=knowledge_topic_id,
+        include_use_case_config=include_use_case_config,
+    )
+
+    response = await client.get_async_httpx_client().request(**kwargs)
+
+    return _build_response(client=client, response=response)
+
+
+async def asyncio(
+    knowledge_topic_id: str,
+    *,
+    client: AuthenticatedClient | Client,
+    include_use_case_config: bool | Unset = False,
+) -> Any | HTTPValidationError | KnowledgeTopicDetailResponse | None:
+    """Get Kt
+
+    Args:
+        knowledge_topic_id (str):  Example: 5eb7cf5a86d9755df3a6c593.
+        include_use_case_config (bool | Unset): When true, compute and attach use_case_config
+            (columns + completeness banner) for a multi-record use-case topic (runs a product-wide
+            topics aggregation). Off by default so generic resolvers (e.g. Tracer) skip the cost.
+            Default: False.
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Any | HTTPValidationError | KnowledgeTopicDetailResponse
+    """
+
+    return (
+        await asyncio_detailed(
+            knowledge_topic_id=knowledge_topic_id,
+            client=client,
+            include_use_case_config=include_use_case_config,
+        )
+    ).parsed

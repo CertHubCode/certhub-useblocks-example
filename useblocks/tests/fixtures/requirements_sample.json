@@ -1,0 +1,138 @@
+[
+  {
+    "_id": "6a7701ffcd5640b4bf28b05e",
+    "name": "Requirements-1",
+    "form": {"components": [], "id": "form_1", "type": "default", "schemaVersion": 19},
+    "version": "1.0",
+    "data": {
+      "name": "REQ_001 — Sterilization temperature range is better",
+      "description": "Device shall achieve and maintain sterilization temperature of 121°C ± 2°C",
+      "type": "functional",
+      "checklist_kgd0ri": ["Equipment"],
+      "source": "Functional & Performance Requirements",
+      "priority": "high",
+      "justification": "Sterilization efficacy depends on controlled temperature"
+    },
+    "read_only": false,
+    "metadata": {"tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"},
+    "context": {
+      "linked_product": "69b9899f4252b7481003afaa",
+      "linked_sop": null,
+      "form_id": null,
+      "global_element_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe5",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10a",
+      "linked_document": null,
+      "group_id": null
+    },
+    "audit_info": {
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "timestamp_created": "2026-08-10T12:00:00.000000",
+      "user_id_last_updated": null,
+      "timestamp_last_updated": null,
+      "last_action": "created"
+    }
+  },
+  {
+    "_id": "6a7701ffcd5640b4bf28b05f",
+    "name": "Requirements-2",
+    "form": {"components": [], "id": "form_1", "type": "default", "schemaVersion": 19},
+    "version": "1.0",
+    "data": {
+      "name": "REQ_002 — Sterilization cycle time",
+      "description": "Total cycle time shall not exceed 60 minutes",
+      "type": "functional",
+      "checklist_kgd0ri": ["Monitoring and Measurement"],
+      "source": "Functional & Performance Requirements",
+      "priority": "high",
+      "justification": "Clinical workflow requires predictable cycle duration"
+    },
+    "read_only": false,
+    "metadata": {"tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"},
+    "context": {
+      "linked_product": "69b9899f4252b7481003afaa",
+      "linked_sop": null,
+      "form_id": null,
+      "global_element_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe5",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10a",
+      "linked_document": null,
+      "group_id": null
+    },
+    "audit_info": {
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "timestamp_created": "2026-08-10T12:00:01.000000",
+      "user_id_last_updated": null,
+      "timestamp_last_updated": null,
+      "last_action": "created"
+    }
+  },
+  {
+    "_id": "6a7701ffcd5640b4bf28b060",
+    "name": "Requirements-3",
+    "form": {"components": [], "id": "form_1", "type": "default", "schemaVersion": 19},
+    "version": "1.0",
+    "data": {
+      "name": "REQ_003 — User interface labeling",
+      "description": "User interface shall display cycle status and alerts in English",
+      "type": "regulatory",
+      "checklist_kgd0ri": ["Other"],
+      "source": "Stakeholder Input",
+      "priority": "medium",
+      "justification": "Operators must understand cycle status and alerts"
+    },
+    "read_only": false,
+    "metadata": {"tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"},
+    "context": {
+      "linked_product": "69b9899f4252b7481003afaa",
+      "linked_sop": null,
+      "form_id": null,
+      "global_element_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe5",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10a",
+      "linked_document": null,
+      "group_id": null
+    },
+    "audit_info": {
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "timestamp_created": "2026-08-10T12:00:02.000000",
+      "user_id_last_updated": null,
+      "timestamp_last_updated": null,
+      "last_action": "created"
+    }
+  },
+  {
+    "_id": "6a7701ffcd5640b4bf28b061",
+    "name": "Requirements-4",
+    "form": {"components": [], "id": "form_1", "type": "default", "schemaVersion": 19},
+    "version": "1.0",
+    "data": {
+      "name": "REQ_004 — Device footprint",
+      "description": "Overall external dimensions shall not exceed 50 cm x 40 cm x 35 cm",
+      "type": "Physical",
+      "checklist_kgd0ri": ["Equipment"],
+      "source": "Environmental Constraints",
+      "priority": "medium",
+      "justification": "Device must fit typical clinical bench space"
+    },
+    "read_only": false,
+    "metadata": {"tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"},
+    "context": {
+      "linked_product": "69b9899f4252b7481003afaa",
+      "linked_sop": null,
+      "form_id": null,
+      "global_element_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe5",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10a",
+      "linked_document": null,
+      "group_id": null
+    },
+    "audit_info": {
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "timestamp_created": "2026-08-10T12:00:03.000000",
+      "user_id_last_updated": null,
+      "timestamp_last_updated": null,
+      "last_action": "created"
+    }
+  }
+]

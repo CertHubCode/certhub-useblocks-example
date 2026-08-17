@@ -1,0 +1,322 @@
+[
+  {
+    "filepath": "src/sterilisator_20a/cycle/controller.py",
+    "need_ids": [
+      "DOUT_018"
+    ],
+    "tagged_scope": "def temperature_within_range(peak_temperature_c: float) -> bool:",
+    "marker": "@need-ids:",
+    "type": "need-id-refs",
+    "source_map": {
+      "start": {
+        "row": 22,
+        "column": 12
+      },
+      "end": {
+        "row": 22,
+        "column": 20
+      }
+    },
+    "remote_url": "https://github.com/CertHubCode/DeveloperProductivity/blob/c693c75ab5c659b98a3b9c8e7c6300ac0558ecda/small-pocs/useblocks/src/sterilisator_20a/cycle/controller.py#L23"
+  },
+  {
+    "filepath": "src/sterilisator_20a/cycle/controller.py",
+    "need_ids": [
+      "DOUT_018"
+    ],
+    "tagged_scope": "def reported_cycle_duration_minutes(measured_minutes: float) -> float:",
+    "marker": "@need-ids:",
+    "type": "need-id-refs",
+    "source_map": {
+      "start": {
+        "row": 30,
+        "column": 12
+      },
+      "end": {
+        "row": 30,
+        "column": 20
+      }
+    },
+    "remote_url": "https://github.com/CertHubCode/DeveloperProductivity/blob/c693c75ab5c659b98a3b9c8e7c6300ac0558ecda/small-pocs/useblocks/src/sterilisator_20a/cycle/controller.py#L31"
+  },
+  {
+    "filepath": "src/sterilisator_20a/cycle/controller.py",
+    "need_ids": [
+      "DOUT_018"
+    ],
+    "tagged_scope": "def cycle_within_time_budget(duration_minutes: float) -> bool:",
+    "marker": "@need-ids:",
+    "type": "need-id-refs",
+    "source_map": {
+      "start": {
+        "row": 41,
+        "column": 12
+      },
+      "end": {
+        "row": 41,
+        "column": 20
+      }
+    },
+    "remote_url": "https://github.com/CertHubCode/DeveloperProductivity/blob/c693c75ab5c659b98a3b9c8e7c6300ac0558ecda/small-pocs/useblocks/src/sterilisator_20a/cycle/controller.py#L42"
+  },
+  {
+    "filepath": "src/sterilisator_20a/cycle/controller.py",
+    "need_ids": [
+      "DOUT_018"
+    ],
+    "tagged_scope": "def run_sterilization_cycle(",
+    "marker": "@need-ids:",
+    "type": "need-id-refs",
+    "source_map": {
+      "start": {
+        "row": 48,
+        "column": 12
+      },
+      "end": {
+        "row": 48,
+        "column": 20
+      }
+    },
+    "remote_url": "https://github.com/CertHubCode/DeveloperProductivity/blob/c693c75ab5c659b98a3b9c8e7c6300ac0558ecda/small-pocs/useblocks/src/sterilisator_20a/cycle/controller.py#L49"
+  },
+  {
+    "filepath": "src/sterilisator_20a/enclosure/footprint.py",
+    "need_ids": [
+      "DOUT_018"
+    ],
+    "tagged_scope": "def device_dimensions_cm() -> DimensionsCm:",
+    "marker": "@need-ids:",
+    "type": "need-id-refs",
+    "source_map": {
+      "start": {
+        "row": 16,
+        "column": 12
+      },
+      "end": {
+        "row": 16,
+        "column": 20
+      }
+    },
+    "remote_url": "https://github.com/CertHubCode/DeveloperProductivity/blob/c693c75ab5c659b98a3b9c8e7c6300ac0558ecda/small-pocs/useblocks/src/sterilisator_20a/enclosure/footprint.py#L17"
+  },
+  {
+    "filepath": "src/sterilisator_20a/enclosure/footprint.py",
+    "need_ids": [
+      "DOUT_018"
+    ],
+    "tagged_scope": "def footprint_within_limits(dimensions: DimensionsCm | None = None) -> bool:",
+    "marker": "@need-ids:",
+    "type": "need-id-refs",
+    "source_map": {
+      "start": {
+        "row": 22,
+        "column": 12
+      },
+      "end": {
+        "row": 22,
+        "column": 20
+      }
+    },
+    "remote_url": "https://github.com/CertHubCode/DeveloperProductivity/blob/c693c75ab5c659b98a3b9c8e7c6300ac0558ecda/small-pocs/useblocks/src/sterilisator_20a/enclosure/footprint.py#L23"
+  },
+  {
+    "filepath": "src/sterilisator_20a/tests/test_sterilisator.py",
+    "need_ids": [
+      "VERIF_001"
+    ],
+    "tagged_scope": "",
+    "marker": "@need-ids:",
+    "type": "need-id-refs",
+    "source_map": {
+      "start": {
+        "row": 22,
+        "column": 12
+      },
+      "end": {
+        "row": 22,
+        "column": 21
+      }
+    },
+    "remote_url": "https://github.com/CertHubCode/DeveloperProductivity/blob/c693c75ab5c659b98a3b9c8e7c6300ac0558ecda/small-pocs/useblocks/src/sterilisator_20a/tests/test_sterilisator.py#L23"
+  },
+  {
+    "filepath": "src/sterilisator_20a/tests/test_sterilisator.py",
+    "need_ids": [
+      "VERIF_002"
+    ],
+    "tagged_scope": "",
+    "marker": "@need-ids:",
+    "type": "need-id-refs",
+    "source_map": {
+      "start": {
+        "row": 45,
+        "column": 12
+      },
+      "end": {
+        "row": 45,
+        "column": 21
+      }
+    },
+    "remote_url": "https://github.com/CertHubCode/DeveloperProductivity/blob/c693c75ab5c659b98a3b9c8e7c6300ac0558ecda/small-pocs/useblocks/src/sterilisator_20a/tests/test_sterilisator.py#L46"
+  },
+  {
+    "filepath": "src/sterilisator_20a/tests/test_sterilisator.py",
+    "need_ids": [
+      "VERIF_003"
+    ],
+    "tagged_scope": "",
+    "marker": "@need-ids:",
+    "type": "need-id-refs",
+    "source_map": {
+      "start": {
+        "row": 63,
+        "column": 12
+      },
+      "end": {
+        "row": 63,
+        "column": 21
+      }
+    },
+    "remote_url": "https://github.com/CertHubCode/DeveloperProductivity/blob/c693c75ab5c659b98a3b9c8e7c6300ac0558ecda/small-pocs/useblocks/src/sterilisator_20a/tests/test_sterilisator.py#L64"
+  },
+  {
+    "filepath": "src/sterilisator_20a/tests/test_sterilisator.py",
+    "need_ids": [
+      "VERIF_004"
+    ],
+    "tagged_scope": "",
+    "marker": "@need-ids:",
+    "type": "need-id-refs",
+    "source_map": {
+      "start": {
+        "row": 79,
+        "column": 12
+      },
+      "end": {
+        "row": 79,
+        "column": 21
+      }
+    },
+    "remote_url": "https://github.com/CertHubCode/DeveloperProductivity/blob/c693c75ab5c659b98a3b9c8e7c6300ac0558ecda/small-pocs/useblocks/src/sterilisator_20a/tests/test_sterilisator.py#L80"
+  },
+  {
+    "filepath": "src/sterilisator_20a/ui/messages.py",
+    "need_ids": [
+      "DOUT_018"
+    ],
+    "tagged_scope": "def ui_messages() -> dict[str, str]:",
+    "marker": "@need-ids:",
+    "type": "need-id-refs",
+    "source_map": {
+      "start": {
+        "row": 7,
+        "column": 12
+      },
+      "end": {
+        "row": 7,
+        "column": 20
+      }
+    },
+    "remote_url": "https://github.com/CertHubCode/DeveloperProductivity/blob/c693c75ab5c659b98a3b9c8e7c6300ac0558ecda/small-pocs/useblocks/src/sterilisator_20a/ui/messages.py#L8"
+  },
+  {
+    "filepath": "src/sterilisator_20a/ui/messages.py",
+    "need_ids": [
+      "DOUT_018"
+    ],
+    "tagged_scope": "def ui_labels_are_english(messages: dict[str, str] | None = None) -> bool:",
+    "marker": "@need-ids:",
+    "type": "need-id-refs",
+    "source_map": {
+      "start": {
+        "row": 18,
+        "column": 12
+      },
+      "end": {
+        "row": 18,
+        "column": 20
+      }
+    },
+    "remote_url": "https://github.com/CertHubCode/DeveloperProductivity/blob/c693c75ab5c659b98a3b9c8e7c6300ac0558ecda/small-pocs/useblocks/src/sterilisator_20a/ui/messages.py#L19"
+  },
+  {
+    "filepath": "src/sterilisator_20a/tests/test_sterilisator.py",
+    "need_ids": [
+      "VERIF_001"
+    ],
+    "tagged_scope": "",
+    "marker": "@need-ids:",
+    "type": "need-id-refs",
+    "source_map": {
+      "start": {
+        "row": 22,
+        "column": 12
+      },
+      "end": {
+        "row": 22,
+        "column": 21
+      }
+    },
+    "remote_url": "https://github.com/CertHubCode/DeveloperProductivity/blob/c693c75ab5c659b98a3b9c8e7c6300ac0558ecda/small-pocs/useblocks/src/sterilisator_20a/tests/test_sterilisator.py#L23"
+  },
+  {
+    "filepath": "src/sterilisator_20a/tests/test_sterilisator.py",
+    "need_ids": [
+      "VERIF_002"
+    ],
+    "tagged_scope": "",
+    "marker": "@need-ids:",
+    "type": "need-id-refs",
+    "source_map": {
+      "start": {
+        "row": 45,
+        "column": 12
+      },
+      "end": {
+        "row": 45,
+        "column": 21
+      }
+    },
+    "remote_url": "https://github.com/CertHubCode/DeveloperProductivity/blob/c693c75ab5c659b98a3b9c8e7c6300ac0558ecda/small-pocs/useblocks/src/sterilisator_20a/tests/test_sterilisator.py#L46"
+  },
+  {
+    "filepath": "src/sterilisator_20a/tests/test_sterilisator.py",
+    "need_ids": [
+      "VERIF_003"
+    ],
+    "tagged_scope": "",
+    "marker": "@need-ids:",
+    "type": "need-id-refs",
+    "source_map": {
+      "start": {
+        "row": 63,
+        "column": 12
+      },
+      "end": {
+        "row": 63,
+        "column": 21
+      }
+    },
+    "remote_url": "https://github.com/CertHubCode/DeveloperProductivity/blob/c693c75ab5c659b98a3b9c8e7c6300ac0558ecda/small-pocs/useblocks/src/sterilisator_20a/tests/test_sterilisator.py#L64"
+  },
+  {
+    "filepath": "src/sterilisator_20a/tests/test_sterilisator.py",
+    "need_ids": [
+      "VERIF_004"
+    ],
+    "tagged_scope": "",
+    "marker": "@need-ids:",
+    "type": "need-id-refs",
+    "source_map": {
+      "start": {
+        "row": 79,
+        "column": 12
+      },
+      "end": {
+        "row": 79,
+        "column": 21
+      }
+    },
+    "remote_url": "https://github.com/CertHubCode/DeveloperProductivity/blob/c693c75ab5c659b98a3b9c8e7c6300ac0558ecda/small-pocs/useblocks/src/sterilisator_20a/tests/test_sterilisator.py#L80"
+  }
+]

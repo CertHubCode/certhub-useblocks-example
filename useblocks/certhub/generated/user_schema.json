@@ -1,0 +1,217 @@
+{
+  "components": [
+    {
+      "id": "Field_0c2tk5s",
+      "key": "name",
+      "label": "Name",
+      "layout": {
+        "columns": null,
+        "row": "Row_0k66naa"
+      },
+      "type": "textfield"
+    },
+    {
+      "description": "State the need as a single, unambiguous, verifiable statement.",
+      "id": "Field_17d51ao",
+      "key": "description",
+      "label": "Description / Requirement Statement",
+      "layout": {
+        "columns": null,
+        "row": "Row_17neq4p"
+      },
+      "type": "textarea"
+    },
+    {
+      "id": "Field_ur_rationale",
+      "key": "rationale",
+      "label": "Rationale / Intended Use",
+      "layout": {
+        "columns": null,
+        "row": "Row_ur_rationale"
+      },
+      "type": "textarea"
+    },
+    {
+      "id": "Field_ur_source",
+      "key": "source",
+      "label": "Type",
+      "layout": {
+        "columns": null,
+        "row": "Row_ur_source"
+      },
+      "type": "select",
+      "values": [
+        {
+          "label": "Fucntional",
+          "value": "Fucntional"
+        },
+        {
+          "label": "Non-Functional",
+          "value": "Non-Functional"
+        },
+        {
+          "label": "Quality",
+          "value": "Quality"
+        },
+        {
+          "label": "Interface",
+          "value": "Interface"
+        },
+        {
+          "label": "Marketing",
+          "value": "Marketing"
+        },
+        {
+          "label": "Customer Service",
+          "value": "Customer Service"
+        },
+        {
+          "label": "Maintenance",
+          "value": "Maintenance"
+        },
+        {
+          "label": "Regulatory",
+          "value": "Regulatory"
+        },
+        {
+          "label": "Other",
+          "value": "Other"
+        },
+        {
+          "label": "n/a",
+          "value": "n/a"
+        }
+      ]
+    },
+    {
+      "conditional": {
+        "hide": "=not(source = \"Other\")"
+      },
+      "id": "Field_ur_source_other",
+      "key": "ur_source_other",
+      "label": "specify Other",
+      "layout": {
+        "columns": null,
+        "row": "Row_ur_source_other"
+      },
+      "type": "textfield"
+    },
+    {
+      "id": "Field_ur_priority",
+      "key": "priority",
+      "label": "Priority",
+      "layout": {
+        "columns": null,
+        "row": "Row_ur_priority"
+      },
+      "type": "select",
+      "values": [
+        {
+          "label": "Low",
+          "value": "low"
+        },
+        {
+          "label": "Medium",
+          "value": "medium"
+        },
+        {
+          "label": "High",
+          "value": "high"
+        },
+        {
+          "label": "n/a",
+          "value": "n/a"
+        }
+      ]
+    },
+    {
+      "description": "Observable, measurable criteria used at Validation to confirm this need has been met.",
+      "id": "Field_ur_ac",
+      "key": "acceptance_criteria",
+      "label": "Acceptance Criteria",
+      "layout": {
+        "columns": null,
+        "row": "Row_ur_ac"
+      },
+      "type": "textarea"
+    },
+    {
+      "id": "Field_ur_riskflag",
+      "key": "ur_risk_relevant",
+      "label": "Safety / Risk relevant",
+      "layout": {
+        "columns": null,
+        "row": "Row_ur_riskflag"
+      },
+      "type": "checkbox"
+    },
+    {
+      "conditional": {
+        "hide": "=ur_risk_relevant != true"
+      },
+      "description": "ID(s) of the Risk Control Measure(s) in the Risk Management File (ISO 14971) this requirement implements or is derived from.",
+      "id": "Field_ur_riskid",
+      "key": "ur_relates_to_risk_control",
+      "label": "relates to Risk Control Measure(s)",
+      "layout": {
+        "columns": null,
+        "row": "Row_ur_riskid"
+      },
+      "type": "textfield"
+    },
+    {
+      "id": "Field_ur_status",
+      "key": "ur_status",
+      "label": "Status",
+      "layout": {
+        "columns": null,
+        "row": "Row_ur_status"
+      },
+      "type": "select",
+      "values": [
+        {
+          "label": "Draft",
+          "value": "draft"
+        },
+        {
+          "label": "In Review",
+          "value": "in_review"
+        },
+        {
+          "label": "Approved",
+          "value": "approved"
+        },
+        {
+          "label": "Implemented",
+          "value": "implemented"
+        },
+        {
+          "label": "Verified",
+          "value": "verified"
+        },
+        {
+          "label": "Obsolete / Superseded",
+          "value": "obsolete"
+        }
+      ]
+    },
+    {
+      "description": "Trace-down link (V-Model left branch): ID(s) of the System Requirement(s) that decompose this User Requirement.",
+      "id": "Field_0mqjmwh",
+      "key": "relates_to_system_requirement",
+      "label": "relates to System Requirement(s)",
+      "layout": {
+        "columns": null,
+        "row": "Row_0wh0c3i"
+      },
+      "type": "textfield"
+    }
+  ],
+  "exporter": {
+    "name": "form-js (https://demo.bpmn.io)",
+    "version": "1.8.3"
+  },
+  "id": "form_1",
+  "schemaVersion": 19,
+  "type": "default"
+}

@@ -1,0 +1,245 @@
+{
+  "_id": "6a6a452e091de8c0e9865cb2",
+  "knowledge_topic_name": "User Requirements",
+  "type": "multi_record",
+  "knowledge_topic_history_id": "6a6a452e091de8c0e9865cb1",
+  "product_history_id": "69b9899f4252b7481003afaa",
+  "product_version": "0.1",
+  "knowledge_unit_history_id": "69b989a14252b7481003afe5",
+  "knowledge_unit_version": "0.1",
+  "knowledge_topic_schema": {
+    "components": [
+      {
+        "label": "Name",
+        "type": "textfield",
+        "layout": {
+          "row": "Row_0k66naa",
+          "columns": null
+        },
+        "id": "Field_0c2tk5s",
+        "key": "name"
+      },
+      {
+        "label": "Description / Requirement Statement",
+        "type": "textarea",
+        "layout": {
+          "row": "Row_17neq4p",
+          "columns": null
+        },
+        "id": "Field_17d51ao",
+        "key": "description",
+        "description": "State the need as a single, unambiguous, verifiable statement."
+      },
+      {
+        "label": "Rationale / Intended Use",
+        "type": "textarea",
+        "layout": {
+          "row": "Row_ur_rationale",
+          "columns": null
+        },
+        "id": "Field_ur_rationale",
+        "key": "rationale"
+      },
+      {
+        "label": "Type",
+        "values": [
+          {
+            "label": "Fucntional",
+            "value": "Fucntional"
+          },
+          {
+            "label": "Non-Functional",
+            "value": "Non-Functional"
+          },
+          {
+            "label": "Quality",
+            "value": "Quality"
+          },
+          {
+            "label": "Interface",
+            "value": "Interface"
+          },
+          {
+            "label": "Marketing",
+            "value": "Marketing"
+          },
+          {
+            "label": "Customer Service",
+            "value": "Customer Service"
+          },
+          {
+            "label": "Maintenance",
+            "value": "Maintenance"
+          },
+          {
+            "label": "Regulatory",
+            "value": "Regulatory"
+          },
+          {
+            "label": "Other",
+            "value": "Other"
+          },
+          {
+            "label": "n/a",
+            "value": "n/a"
+          }
+        ],
+        "type": "select",
+        "layout": {
+          "row": "Row_ur_source",
+          "columns": null
+        },
+        "id": "Field_ur_source",
+        "key": "source"
+      },
+      {
+        "label": "specify Other",
+        "type": "textfield",
+        "layout": {
+          "row": "Row_ur_source_other",
+          "columns": null
+        },
+        "id": "Field_ur_source_other",
+        "key": "ur_source_other",
+        "conditional": {
+          "hide": "=not(source = \"Other\")"
+        }
+      },
+      {
+        "label": "Priority",
+        "values": [
+          {
+            "label": "Low",
+            "value": "low"
+          },
+          {
+            "label": "Medium",
+            "value": "medium"
+          },
+          {
+            "label": "High",
+            "value": "high"
+          },
+          {
+            "label": "n/a",
+            "value": "n/a"
+          }
+        ],
+        "type": "select",
+        "layout": {
+          "row": "Row_ur_priority",
+          "columns": null
+        },
+        "id": "Field_ur_priority",
+        "key": "priority"
+      },
+      {
+        "label": "Acceptance Criteria",
+        "type": "textarea",
+        "layout": {
+          "row": "Row_ur_ac",
+          "columns": null
+        },
+        "id": "Field_ur_ac",
+        "key": "acceptance_criteria",
+        "description": "Observable, measurable criteria used at Validation to confirm this need has been met."
+      },
+      {
+        "label": "Safety / Risk relevant",
+        "type": "checkbox",
+        "layout": {
+          "row": "Row_ur_riskflag",
+          "columns": null
+        },
+        "id": "Field_ur_riskflag",
+        "key": "ur_risk_relevant"
+      },
+      {
+        "label": "relates to Risk Control Measure(s)",
+        "type": "textfield",
+        "layout": {
+          "row": "Row_ur_riskid",
+          "columns": null
+        },
+        "id": "Field_ur_riskid",
+        "key": "ur_relates_to_risk_control",
+        "description": "ID(s) of the Risk Control Measure(s) in the Risk Management File (ISO 14971) this requirement implements or is derived from.",
+        "conditional": {
+          "hide": "=ur_risk_relevant != true"
+        }
+      },
+      {
+        "label": "Status",
+        "values": [
+          {
+            "label": "Draft",
+            "value": "draft"
+          },
+          {
+            "label": "In Review",
+            "value": "in_review"
+          },
+          {
+            "label": "Approved",
+            "value": "approved"
+          },
+          {
+            "label": "Implemented",
+            "value": "implemented"
+          },
+          {
+            "label": "Verified",
+            "value": "verified"
+          },
+          {
+            "label": "Obsolete / Superseded",
+            "value": "obsolete"
+          }
+        ],
+        "type": "select",
+        "layout": {
+          "row": "Row_ur_status",
+          "columns": null
+        },
+        "id": "Field_ur_status",
+        "key": "ur_status"
+      },
+      {
+        "label": "relates to System Requirement(s)",
+        "type": "textfield",
+        "layout": {
+          "row": "Row_0wh0c3i",
+          "columns": null
+        },
+        "id": "Field_0mqjmwh",
+        "key": "relates_to_system_requirement",
+        "description": "Trace-down link (V-Model left branch): ID(s) of the System Requirement(s) that decompose this User Requirement."
+      }
+    ],
+    "id": "form_1",
+    "type": "default",
+    "exporter": {
+      "name": "form-js (https://demo.bpmn.io)",
+      "version": "1.8.3"
+    },
+    "schemaVersion": 19
+  },
+  "source_schema_id": null,
+  "data": {},
+  "product_data_collection_id": null,
+  "metadata": {
+    "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+  },
+  "audit_info": {
+    "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+    "timestamp_created": "2026-07-29T18:23:42.531000",
+    "user_id_last_updated": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+    "timestamp_last_updated": "2026-07-29T18:34:18.365000",
+    "last_action": "updated",
+    "direct_approval_published_at": null,
+    "direct_approval_published_by": null
+  },
+  "latest_revision_id": "6a6a452e091de8c0e9865cb2",
+  "latest_or_latest_approved_revision_id": "6a6a452e091de8c0e9865cb2",
+  "use_case_config": null
+}

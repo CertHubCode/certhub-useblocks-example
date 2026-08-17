@@ -1,0 +1,865 @@
+[
+  {
+    "_id": "69c2d67f6406f437042965ef",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-03-24T18:22:55.558000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": "69b9899f4252b7481003afaa",
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Verify chamber reaches 121\u00b0C \u00b12\u00b0C",
+      "name": "Temperature verification",
+      "test_method": "Calibrated thermocouple logging every 10 seconds",
+      "textfield_sbkdwc": "TE-001"
+    },
+    "form": {
+      "components": [
+        {
+          "id": "Field_071tjqj",
+          "layout": {
+            "columns": null,
+            "row": "Row_0tlqqsl"
+          },
+          "text": "Source: ISO 13485:2016 7.3.4 Design Output",
+          "type": "text"
+        },
+        {
+          "id": "Field_11ub4vq",
+          "key": "textfield_sbkdwc",
+          "label": "Individual ID",
+          "layout": {
+            "columns": null,
+            "row": "Row_0nldway"
+          },
+          "type": "textfield"
+        },
+        {
+          "id": "Field_1wwkyk9",
+          "key": "name",
+          "label": "Name",
+          "layout": {
+            "columns": null,
+            "row": "Row_02anqom"
+          },
+          "type": "textfield"
+        },
+        {
+          "id": "Field_0j19a3r",
+          "key": "description",
+          "label": "Description",
+          "layout": {
+            "columns": null,
+            "row": "Row_07yokjn"
+          },
+          "type": "textarea"
+        },
+        {
+          "id": "Field_0uu9p4h",
+          "key": "test_method",
+          "label": "Specification",
+          "layout": {
+            "columns": null,
+            "row": "Row_0f683xd"
+          },
+          "type": "textarea"
+        }
+      ],
+      "exporter": {
+        "name": "form-js (https://demo.bpmn.io)",
+        "version": "1.8.3"
+      },
+      "id": "form_1",
+      "schemaVersion": 17,
+      "type": "default"
+    },
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-1",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69c2d67f6406f437042965f0",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-03-24T18:22:55.558000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": "69b9899f4252b7481003afaa",
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Measure total cycle duration",
+      "name": "Cycle time verification",
+      "test_method": "Timing start-to-end with stopwatch",
+      "textfield_sbkdwc": "TE-002"
+    },
+    "form": {
+      "components": [
+        {
+          "id": "Field_071tjqj",
+          "layout": {
+            "columns": null,
+            "row": "Row_0tlqqsl"
+          },
+          "text": "Source: ISO 13485:2016 7.3.4 Design Output",
+          "type": "text"
+        },
+        {
+          "id": "Field_11ub4vq",
+          "key": "textfield_sbkdwc",
+          "label": "Individual ID",
+          "layout": {
+            "columns": null,
+            "row": "Row_0nldway"
+          },
+          "type": "textfield"
+        },
+        {
+          "id": "Field_1wwkyk9",
+          "key": "name",
+          "label": "Name",
+          "layout": {
+            "columns": null,
+            "row": "Row_02anqom"
+          },
+          "type": "textfield"
+        },
+        {
+          "id": "Field_0j19a3r",
+          "key": "description",
+          "label": "Description",
+          "layout": {
+            "columns": null,
+            "row": "Row_07yokjn"
+          },
+          "type": "textarea"
+        },
+        {
+          "id": "Field_0uu9p4h",
+          "key": "test_method",
+          "label": "Specification",
+          "layout": {
+            "columns": null,
+            "row": "Row_0f683xd"
+          },
+          "type": "textarea"
+        }
+      ],
+      "exporter": {
+        "name": "form-js (https://demo.bpmn.io)",
+        "version": "1.8.3"
+      },
+      "id": "form_1",
+      "schemaVersion": 17,
+      "type": "default"
+    },
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-2",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69c2d67f6406f437042965f1",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-03-24T18:22:55.558000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": "69b9899f4252b7481003afaa",
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Check cycle status and alerts",
+      "name": "UI display test",
+      "test_method": "Visual inspection against expected messages",
+      "textfield_sbkdwc": "TE-003"
+    },
+    "form": {
+      "components": [
+        {
+          "id": "Field_071tjqj",
+          "layout": {
+            "columns": null,
+            "row": "Row_0tlqqsl"
+          },
+          "text": "Source: ISO 13485:2016 7.3.4 Design Output",
+          "type": "text"
+        },
+        {
+          "id": "Field_11ub4vq",
+          "key": "textfield_sbkdwc",
+          "label": "Individual ID",
+          "layout": {
+            "columns": null,
+            "row": "Row_0nldway"
+          },
+          "type": "textfield"
+        },
+        {
+          "id": "Field_1wwkyk9",
+          "key": "name",
+          "label": "Name",
+          "layout": {
+            "columns": null,
+            "row": "Row_02anqom"
+          },
+          "type": "textfield"
+        },
+        {
+          "id": "Field_0j19a3r",
+          "key": "description",
+          "label": "Description",
+          "layout": {
+            "columns": null,
+            "row": "Row_07yokjn"
+          },
+          "type": "textarea"
+        },
+        {
+          "id": "Field_0uu9p4h",
+          "key": "test_method",
+          "label": "Specification",
+          "layout": {
+            "columns": null,
+            "row": "Row_0f683xd"
+          },
+          "type": "textarea"
+        }
+      ],
+      "exporter": {
+        "name": "form-js (https://demo.bpmn.io)",
+        "version": "1.8.3"
+      },
+      "id": "form_1",
+      "schemaVersion": 17,
+      "type": "default"
+    },
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-3",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69c2d67f6406f437042965f2",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-03-24T18:22:55.558000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": "69b9899f4252b7481003afaa",
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Measure external dimensions",
+      "name": "Footprint measurement",
+      "test_method": "Use calipers and tape measure",
+      "textfield_sbkdwc": "TE-004"
+    },
+    "form": {
+      "components": [
+        {
+          "id": "Field_071tjqj",
+          "layout": {
+            "columns": null,
+            "row": "Row_0tlqqsl"
+          },
+          "text": "Source: ISO 13485:2016 7.3.4 Design Output",
+          "type": "text"
+        },
+        {
+          "id": "Field_11ub4vq",
+          "key": "textfield_sbkdwc",
+          "label": "Individual ID",
+          "layout": {
+            "columns": null,
+            "row": "Row_0nldway"
+          },
+          "type": "textfield"
+        },
+        {
+          "id": "Field_1wwkyk9",
+          "key": "name",
+          "label": "Name",
+          "layout": {
+            "columns": null,
+            "row": "Row_02anqom"
+          },
+          "type": "textfield"
+        },
+        {
+          "id": "Field_0j19a3r",
+          "key": "description",
+          "label": "Description",
+          "layout": {
+            "columns": null,
+            "row": "Row_07yokjn"
+          },
+          "type": "textarea"
+        },
+        {
+          "id": "Field_0uu9p4h",
+          "key": "test_method",
+          "label": "Specification",
+          "layout": {
+            "columns": null,
+            "row": "Row_0f683xd"
+          },
+          "type": "textarea"
+        }
+      ],
+      "exporter": {
+        "name": "form-js (https://demo.bpmn.io)",
+        "version": "1.8.3"
+      },
+      "id": "form_1",
+      "schemaVersion": 17,
+      "type": "default"
+    },
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-4",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69ea0b0a89fe66ea2f5c65a9",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-04-23T12:05:30.518000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": null,
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Previous generation device with automated drying cycle and touchscreen interface. Capacity: 5 trays",
+      "name": "SteamPro 1000",
+      "test_method": "Automated drying cycle; touchscreen interface",
+      "textfield_sbkdwc": "SteamPro 1000"
+    },
+    "form": {},
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-5",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69ea0b0a89fe66ea2f5c65aa",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-04-23T12:05:30.518000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": null,
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Previous generation device with pre-vacuum cycle and USB data export. Capacity: 4 trays",
+      "name": "AutoclaveX",
+      "test_method": "Pre-vacuum cycle; USB data export",
+      "textfield_sbkdwc": "AutoclaveX"
+    },
+    "form": {},
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-6",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69ea0b0a89fe66ea2f5c65ab",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-04-23T12:05:30.518000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": null,
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Previous generation device with integrated printer and Wi-Fi connectivity. Capacity: 6 trays",
+      "name": "BioSafe S50",
+      "test_method": "Integrated printer; Wi-Fi connectivity",
+      "textfield_sbkdwc": "BioSafe S50"
+    },
+    "form": {},
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-7",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69ea0b0a89fe66ea2f5c65ac",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-04-23T12:05:30.518000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": null,
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Previous generation device with low-water consumption mode. Uses distilled or demineralized water only",
+      "name": "EcoSteril A2",
+      "test_method": "Low-water consumption mode",
+      "textfield_sbkdwc": "EcoSteril A2"
+    },
+    "form": {},
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-8",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69ea0b0a89fe66ea2f5c65ad",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-04-23T12:05:30.518000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": null,
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Previous generation device with dual-zone chamber and barcode reader. Capacity: 8 trays",
+      "name": "SteriliMax 300",
+      "test_method": "Dual-zone chamber; barcode reader",
+      "textfield_sbkdwc": "SteriliMax 300"
+    },
+    "form": {},
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-9",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69ea0b0a89fe66ea2f5c65ae",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-04-23T12:05:30.518000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": null,
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Previous generation device with remote monitoring app and ecological cycle. Mid-size capacity",
+      "name": "MedAuto G2",
+      "test_method": "Remote monitoring app; ecological cycle",
+      "textfield_sbkdwc": "MedAuto G2"
+    },
+    "form": {},
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-10",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69ea0b0a89fe66ea2f5c65af",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-04-23T12:05:30.518000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": null,
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Previous generation device with self-diagnostic cycle and touch-free door",
+      "name": "UltraSteam M5",
+      "test_method": "Self-diagnostic cycle; touch-free door",
+      "textfield_sbkdwc": "UltraSteam M5"
+    },
+    "form": {},
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-11",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69ea0b0a89fe66ea2f5c65b0",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-04-23T12:05:30.518000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": null,
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Previous generation device with HEPA-filtered venting. Capacity: 7 trays",
+      "name": "SafeSter Z10",
+      "test_method": "HEPA-filtered venting",
+      "textfield_sbkdwc": "SafeSter Z10"
+    },
+    "form": {},
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-12",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69ea0b0a89fe66ea2f5c65b1",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-04-23T12:05:30.518000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": null,
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Previous generation device with chemical indicator reader and cycle upload",
+      "name": "ProClean S80",
+      "test_method": "Chemical indicator reader; cycle upload",
+      "textfield_sbkdwc": "ProClean S80"
+    },
+    "form": {},
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-13",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69ea0b0a89fe66ea2f5c65b2",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-04-23T12:05:30.518000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": null,
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Previous generation device with rapid cycle (18 min) and integrated washer",
+      "name": "AccuSteril 400",
+      "test_method": "Rapid cycle (18 min); integrated washer",
+      "textfield_sbkdwc": "AccuSteril 400"
+    },
+    "form": {},
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-14",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69ea0b0a89fe66ea2f5c65b3",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-04-23T12:05:30.518000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": null,
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Previous generation device with solar-power option and water recycling",
+      "name": "EcoSteam L1",
+      "test_method": "Solar-power option; water recycling",
+      "textfield_sbkdwc": "EcoSteam L1"
+    },
+    "form": {},
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-15",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69ea0b0a89fe66ea2f5c65b4",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-04-23T12:05:30.518000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": null,
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Previous generation device with voice-guided operation and cloud log",
+      "name": "MedSteril P7",
+      "test_method": "Voice-guided operation; cloud log",
+      "textfield_sbkdwc": "MedSteril P7"
+    },
+    "form": {},
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-16",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69ea0b0a89fe66ea2f5c65b5",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-04-23T12:05:30.518000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": null,
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Previous generation device with low-heat option and humidity sensor",
+      "name": "HydroSter 320",
+      "test_method": "Low-heat option; humidity sensor",
+      "textfield_sbkdwc": "HydroSter 320"
+    },
+    "form": {},
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-17",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69ea0b0a89fe66ea2f5c65b6",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-04-23T12:05:30.518000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": null,
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Previous generation device with pre-vacuum and postvacuum drying, color touchscreen. Capacity: 8 trays; network connectivity",
+      "name": "Sterilizer 20A",
+      "test_method": "Pre-vacuum and postvacuum drying; color touchscreen",
+      "textfield_sbkdwc": "Sterilizer 20A"
+    },
+    "form": {},
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-18",
+    "read_only": false,
+    "version": "1.0"
+  },
+  {
+    "_id": "69ea0b0a89fe66ea2f5c65b7",
+    "audit_info": {
+      "last_action": "created",
+      "timestamp_created": "2026-04-23T12:05:30.518000",
+      "timestamp_last_updated": null,
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "user_id_last_updated": null
+    },
+    "context": {
+      "form_id": null,
+      "global_element_id": null,
+      "group_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe4",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b10e",
+      "linked_document": null,
+      "linked_product": null,
+      "linked_sop": null
+    },
+    "data": {
+      "description": "Similar device using saturated steam at 134\u00b0C with same sterilization method",
+      "name": "SteamSter E1",
+      "test_method": "Uses saturated steam at 134\u00b0C",
+      "textfield_sbkdwc": "SteamSter E1"
+    },
+    "form": {},
+    "metadata": {
+      "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+    },
+    "name": "Design Output-19",
+    "read_only": false,
+    "version": "1.0"
+  }
+]

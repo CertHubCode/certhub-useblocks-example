@@ -1,0 +1,146 @@
+{
+  "_id": "69b989b54252b7481003b112",
+  "knowledge_topic_name": "Validation",
+  "type": "multi_record",
+  "knowledge_topic_history_id": "69b989b54252b7481003b113",
+  "product_history_id": "69b9899f4252b7481003afaa",
+  "product_version": "0.1",
+  "knowledge_unit_history_id": "69b989a14252b7481003afe5",
+  "knowledge_unit_version": "0.1",
+  "knowledge_topic_schema": {
+    "components": [
+      {
+        "text": "Source: ISO 13485:2016 7.3.7 Validation\nMDR Annex II 6.",
+        "type": "text",
+        "layout": {
+          "row": "Row_18pu0gn",
+          "columns": null
+        },
+        "id": "Field_0liptaz"
+      },
+      {
+        "label": "Name",
+        "type": "textfield",
+        "layout": {
+          "row": "Row_1ogmj0l",
+          "columns": null
+        },
+        "id": "Field_187p59e",
+        "key": "name"
+      },
+      {
+        "label": "Validation regarding",
+        "type": "textfield",
+        "layout": {
+          "row": "Row_08evsjz",
+          "columns": null
+        },
+        "id": "Field_04diwb7",
+        "key": "textfield_82f9x4"
+      },
+      {
+        "label": "Validation Method",
+        "type": "textarea",
+        "layout": {
+          "row": "Row_030wtl7",
+          "columns": null
+        },
+        "id": "Field_0jeqq35",
+        "key": "validation_method"
+      },
+      {
+        "label": "Sample Size",
+        "type": "textfield",
+        "layout": {
+          "row": "Row_1mfj7ll",
+          "columns": null
+        },
+        "id": "Field_1d5t4hq",
+        "key": "textfield_ftyshh"
+      },
+      {
+        "label": "Sample Size Justification",
+        "type": "textarea",
+        "layout": {
+          "row": "Row_1cyaw2d",
+          "columns": null
+        },
+        "id": "Field_1grjg3y",
+        "key": "textarea_8ohfuj"
+      },
+      {
+        "label": "Acceptance Criteria",
+        "type": "textarea",
+        "layout": {
+          "row": "Row_1atuv3m",
+          "columns": null
+        },
+        "id": "Field_1kchx3k",
+        "key": "textarea_15pm9"
+      },
+      {
+        "label": "Expected Result",
+        "type": "textarea",
+        "layout": {
+          "row": "Row_1ey5ukt",
+          "columns": null
+        },
+        "id": "Field_193uwt9",
+        "key": "results"
+      },
+      {
+        "label": "Status",
+        "values": [
+          {
+            "label": "Passed",
+            "value": "passed"
+          },
+          {
+            "label": "Failed",
+            "value": "failed"
+          },
+          {
+            "label": "In Progress",
+            "value": "in_progress"
+          },
+          {
+            "label": "n/a",
+            "value": "n/a"
+          }
+        ],
+        "type": "select",
+        "layout": {
+          "row": "Row_16dgnry",
+          "columns": null
+        },
+        "id": "Field_10thhdb",
+        "key": "status"
+      }
+    ],
+    "id": "form_1",
+    "type": "default",
+    "exporter": {
+      "name": "form-js (https://demo.bpmn.io)",
+      "version": "1.8.3"
+    },
+    "schemaVersion": 17
+  },
+  "source_schema_id": "69b989a74252b7481003b03f",
+  "data": {},
+  "product_data_collection_id": null,
+  "metadata": {
+    "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+  },
+  "audit_info": {
+    "user_id_created": "2354c892-e0e1-70a7-89e1-e4995cebb793",
+    "timestamp_created": "2026-03-17T17:04:53.775000",
+    "user_id_last_updated": null,
+    "timestamp_last_updated": null,
+    "last_action": "created",
+    "direct_approval_published_at": null,
+    "direct_approval_published_by": null
+  },
+  "latest_revision_id": "69b989b54252b7481003b112",
+  "latest_or_latest_approved_revision_id": "69b989b54252b7481003b112",
+  "use_case_config": null
+}

@@ -1,0 +1,326 @@
+{
+  "_id": "69b989b54252b7481003b10a",
+  "knowledge_topic_name": "System Requirements",
+  "type": "multi_record",
+  "knowledge_topic_history_id": "69b989b54252b7481003b10b",
+  "product_history_id": "69b9899f4252b7481003afaa",
+  "product_version": "0.1",
+  "knowledge_unit_history_id": "69b989a14252b7481003afe5",
+  "knowledge_unit_version": "0.1",
+  "knowledge_topic_schema": {
+    "components": [
+      {
+        "text": "Source:\nMDR Annex I 1., 6.\nISO 13485:2016 7.3",
+        "type": "text",
+        "layout": {
+          "row": "Row_1baor6x",
+          "columns": null
+        },
+        "id": "Field_1y9ehde"
+      },
+      {
+        "label": "Name",
+        "type": "textfield",
+        "layout": {
+          "row": "Row_1taz2nn",
+          "columns": null
+        },
+        "id": "Field_17xxoi7",
+        "key": "name"
+      },
+      {
+        "label": "Description",
+        "type": "textarea",
+        "layout": {
+          "row": "Row_0yay9nk",
+          "columns": null
+        },
+        "id": "Field_16zolpi",
+        "key": "description"
+      },
+      {
+        "label": "Type",
+        "values": [
+          {
+            "label": "Functional",
+            "value": "functional"
+          },
+          {
+            "label": "Regulatory",
+            "value": "regulatory"
+          },
+          {
+            "label": "Usability",
+            "value": "usability"
+          },
+          {
+            "label": "Physical",
+            "value": "Physical"
+          },
+          {
+            "label": "Other",
+            "value": "Other"
+          },
+          {
+            "label": "n/a",
+            "value": "n/a"
+          }
+        ],
+        "type": "select",
+        "layout": {
+          "row": "Row_1i289vg",
+          "columns": null
+        },
+        "id": "Field_1nnlsiv",
+        "key": "type"
+      },
+      {
+        "label": "specify Other Type",
+        "type": "textfield",
+        "layout": {
+          "row": "Row_16tvydf",
+          "columns": null
+        },
+        "id": "Field_15d55yf",
+        "key": "textfield_ollccr",
+        "conditional": {
+          "hide": "=type != \"Other\""
+        }
+      },
+      {
+        "label": "Requirement concerning",
+        "values": [
+          {
+            "label": "Cleanliness of Product",
+            "value": "Monitoring and Measurement"
+          },
+          {
+            "label": "Infrastructure",
+            "value": "Infrastructure"
+          },
+          {
+            "label": "Installation of Device",
+            "value": "Installation of Device"
+          },
+          {
+            "label": "Product Acceptancea",
+            "value": "Product Acceptancea"
+          },
+          {
+            "label": "Equipment",
+            "value": "Equipment"
+          },
+          {
+            "label": "Essential Performance (IEC 60601-1)",
+            "value": "Essential Performance (IEC 60601-1)"
+          },
+          {
+            "label": "Basic Safety (IEC 60601-1)",
+            "value": "Basic Safety (IEC 60601-1)"
+          },
+          {
+            "label": "Other",
+            "value": "Other"
+          },
+          {
+            "label": "N/A",
+            "value": "N/A"
+          }
+        ],
+        "type": "checklist",
+        "layout": {
+          "row": "Row_0ggt04i",
+          "columns": null
+        },
+        "id": "Field_1f5erfw",
+        "key": "checklist_kgd0ri"
+      },
+      {
+        "label": "specify Requirements concerning Other",
+        "type": "textfield",
+        "layout": {
+          "row": "Row_1m305cp",
+          "columns": null
+        },
+        "id": "Field_1nvz8gk",
+        "key": "textfield_hbgy8i",
+        "conditional": {
+          "hide": "=not(\"Other\" in checklist_kgd0ri)"
+        }
+      },
+      {
+        "label": "Infrastructure",
+        "values": [
+          {
+            "label": "buildings, workspace and associated utilities",
+            "value": "buildings, workspace and associated utilities"
+          },
+          {
+            "label": "process equipment",
+            "value": "process equipment"
+          },
+          {
+            "label": "supporting services",
+            "value": "supporting services"
+          },
+          {
+            "label": "Other",
+            "value": "Other"
+          },
+          {
+            "label": "n/a",
+            "value": "n/a"
+          }
+        ],
+        "type": "select",
+        "layout": {
+          "row": "Row_0bxuudz",
+          "columns": null
+        },
+        "id": "Field_1jtbeww",
+        "key": "select_1jzpmh",
+        "description": "process equipment include both hardware and software; supporting services such as tansport, communication or infromation systems",
+        "conditional": {
+          "hide": "=not(\"Infrastructure\" in checklist_kgd0ri)"
+        }
+      },
+      {
+        "label": "specfiy Other Infrastructure",
+        "type": "textfield",
+        "layout": {
+          "row": "Row_19jby7j",
+          "columns": null
+        },
+        "id": "Field_0zprto6",
+        "key": "textfield_uu051a",
+        "conditional": {
+          "hide": "=\nselect_1jzpmh\n != \"Other\""
+        }
+      },
+      {
+        "label": "Source",
+        "values": [
+          {
+            "label": "User Needs",
+            "value": "User Needs"
+          },
+          {
+            "label": "Stakeholder Input",
+            "value": "Stakeholder Input"
+          },
+          {
+            "label": "Risk Control Requirements",
+            "value": "Risk Control Requirements"
+          },
+          {
+            "label": "Functional & Performance Requirements",
+            "value": "Functional & Performance Requirements"
+          },
+          {
+            "label": "Environmental Constraints",
+            "value": "Environmental Constraints"
+          },
+          {
+            "label": "Software and Cybersecurity",
+            "value": "Software and Cybersecurity"
+          },
+          {
+            "label": "Other",
+            "value": "Other"
+          },
+          {
+            "label": "n/a",
+            "value": "n/a"
+          }
+        ],
+        "type": "select",
+        "layout": {
+          "row": "Row_15xbu80",
+          "columns": null
+        },
+        "id": "Field_11sagya",
+        "key": "source"
+      },
+      {
+        "label": "specify Other Source",
+        "type": "textfield",
+        "layout": {
+          "row": "Row_0vq3n90",
+          "columns": null
+        },
+        "id": "Field_1d7v0lq",
+        "key": "textfield_v8rfy",
+        "conditional": {
+          "hide": "=source != \"Other\""
+        }
+      },
+      {
+        "label": "Priority",
+        "values": [
+          {
+            "label": "Value",
+            "value": "value"
+          },
+          {
+            "label": "Low",
+            "value": "low"
+          },
+          {
+            "label": "Medium",
+            "value": "medium"
+          },
+          {
+            "label": "High",
+            "value": "high"
+          },
+          {
+            "label": "n/a",
+            "value": "n/a"
+          }
+        ],
+        "type": "select",
+        "layout": {
+          "row": "Row_0b9le5v",
+          "columns": null
+        },
+        "id": "Field_1cbvrn5",
+        "key": "priority"
+      },
+      {
+        "label": "Justification",
+        "type": "textarea",
+        "layout": {
+          "row": "Row_033gpiq",
+          "columns": null
+        },
+        "id": "Field_0yo6wsq",
+        "key": "justification"
+      }
+    ],
+    "id": "form_1",
+    "type": "default",
+    "exporter": {
+      "name": "form-js (https://demo.bpmn.io)",
+      "version": "1.8.3"
+    },
+    "schemaVersion": 19
+  },
+  "source_schema_id": null,
+  "data": {},
+  "product_data_collection_id": null,
+  "metadata": {
+    "tenant_id": "70cdf613-0249-460c-a426-f270a5e5c680"
+  },
+  "audit_info": {
+    "user_id_created": "f3a45852-3001-7082-24fd-197541e73ea8",
+    "timestamp_created": "2026-08-08T09:52:55.307000",
+    "user_id_last_updated": null,
+    "timestamp_last_updated": null,
+    "last_action": "created",
+    "direct_approval_published_at": null,
+    "direct_approval_published_by": null
+  },
+  "latest_revision_id": "69b989b54252b7481003b10a",
+  "latest_or_latest_approved_revision_id": "69b989b54252b7481003b10a",
+  "use_case_config": null
+}

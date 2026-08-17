@@ -1,0 +1,50 @@
+[project]
+name = "certhub-cadence"
+version = "0.0.7"
+description = "Cadence — CertHub SaMD Engineering Loop: Sterilisator 20A with Sphinx-Needs / CodeLinks / Test-Reports"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic>=2.10,<3",
+    "httpx>=0.27,<1",
+    "attrs>=23.0",
+    "sphinx>=7.4,<10",
+    "sphinx-needs[plotting]==8.3.0",
+    "sphinx-codelinks==1.4.0",
+    "sphinx-test-reports==1.4.0",
+    "furo>=2024.8.6",
+    "sphinxcontrib-plantuml>=0.27",
+    "pytest>=8.0",
+    "rich>=15.0.0",
+]
+
+[dependency-groups]
+codegen = [
+    "openapi-python-client>=0.21,<1",
+    "datamodel-code-generator>=0.26,<1",
+    "openapi-spec-validator>=0.7,<1",
+]
+
+[project.scripts]
+cadence = "certhub_connector.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["certhub/certhub_connector", "src/sterilisator_20a"]
+exclude = ["src/sterilisator_20a/tests", "src/sterilisator_20a/tests/**"]
+
+[tool.uv]
+package = true
+default-groups = []
+
+[tool.pytest.ini_options]
+testpaths = ["src/sterilisator_20a/tests", "tests"]
+pythonpath = ["src", "certhub"]
+markers = [
+    "certhub_test: CertHub test-case ID for JUnit property linking",
+]
+addopts = "-q"
+junit_family = "xunit1"

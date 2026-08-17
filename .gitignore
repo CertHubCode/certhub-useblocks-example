@@ -1,0 +1,20 @@
+sphinx/build/
+sphinx/utils/plantuml.jar
+reports/junit.xml
+reports/codelinks_analysis.json
+reports/codelinks_raw/
+sphinx/source/generated/*.rst
+!sphinx/source/generated/.gitkeep
+certhub/generated/*
+!certhub/generated/.gitkeep
+# CI evidence pack only (not certhub_connector/evidence/)
+/evidence/
+.pytest_cache/
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+dist/
+build/
+
+.env

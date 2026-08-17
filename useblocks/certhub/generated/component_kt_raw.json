@@ -1,0 +1,78 @@
+{
+  "_id": "69b989b54252b7481003b10c",
+  "knowledge_topic_name": "Component Requirements",
+  "type": "multi_record",
+  "knowledge_topic_history_id": "69b989b54252b7481003b10d",
+  "product_history_id": "69b9899f4252b7481003afaa",
+  "product_version": "0.1",
+  "knowledge_unit_history_id": "69b989a14252b7481003afe5",
+  "knowledge_unit_version": "0.1",
+  "knowledge_topic_schema": {
+    "components": [
+      {
+        "text": "Source: ISO 13485:2016 7.3.3 Design Input",
+        "type": "text",
+        "layout": {
+          "row": "Row_070w95h",
+          "columns": null
+        },
+        "id": "Field_1q00p9x"
+      },
+      {
+        "label": "Name",
+        "type": "textfield",
+        "layout": {
+          "row": "Row_0t2fqpo",
+          "columns": null
+        },
+        "id": "Field_0xx5wz5",
+        "key": "name"
+      },
+      {
+        "label": "Description",
+        "type": "textarea",
+        "layout": {
+          "row": "Row_04cfazv",
+          "columns": null
+        },
+        "id": "Field_1xraub7",
+        "key": "description"
+      },
+      {
+        "label": "Rationale",
+        "type": "textfield",
+        "layout": {
+          "row": "Row_1wm1x0f",
+          "columns": null
+        },
+        "id": "Field_0jbh9dp",
+        "key": "rationale"
+      }
+    ],
+    "id": "form_1",
+    "type": "default",
+    "exporter": {
+      "name": "form-js (https://demo.bpmn.io)",
+      "version": "1.8.3"
+    },
+    "schemaVersion": 17
+  },
+  "source_schema_id": "69b989a74252b7481003b039",
+  "data": {},
+  "product_data_collection_id": null,
+  "metadata": {
+    "tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"
+  },
+  "audit_info": {
+    "user_id_created": "2354c892-e0e1-70a7-89e1-e4995cebb793",
+    "timestamp_created": "2026-03-17T17:04:53.260000",
+    "user_id_last_updated": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+    "timestamp_last_updated": "2026-07-29T18:23:19.665000",
+    "last_action": "updated",
+    "direct_approval_published_at": null,
+    "direct_approval_published_by": null
+  },
+  "latest_revision_id": "69b989b54252b7481003b10c",
+  "latest_or_latest_approved_revision_id": "69b989b54252b7481003b10c",
+  "use_case_config": null
+}

@@ -1,0 +1,198 @@
+"$schema" = "https://ubcode.useblocks.com/ubproject.schema.json"
+
+[project]
+name = "Sterilisator 20A — Assurance Evidence"
+srcdir = "."
+
+[source]
+# Sync/CodeLinks write need RST under source/generated/ (gitignored).
+# Index those files; keep Sphinx from treating them as standalone pages via
+# conf.py exclude_patterns.
+respect_gitignore = false
+extend_include = ["generated/**/*.rst"]
+
+[needs_json]
+path = "../build/html/needs.json"
+src = "."
+
+[reports]
+directory = "ubcode_reports"
+
+[parse.extend_directives.test-report]
+argument = true
+options = true
+description = "Sphinx-Test-Reports JUnit import"
+extension = "sphinxcontrib.test_reports"
+
+[parse.extend_directives.test-report.named_options]
+id = { description = "Need id" }
+file = { description = "JUnit XML path" }
+tags = { description = "Tags" }
+
+[scripts]
+sync = { cmd = "cd ../.. && make sync", terminal = "cadence" }
+show = { cmd = "cd ../.. && make show", terminal = "cadence" }
+"needs:json" = { cmd = "cd ../.. && uv run sphinx-build -b html sphinx/source sphinx/build/html", terminal = "cadence" }
+
+[needs]
+default_layout = "assurance"
+flow_engine = "plantuml"
+id_regex = "^[A-Z0-9_]{5,}$"
+id_required = true
+
+[needs.fields.source_system]
+description = "Originating system of record"
+default = ""
+
+[needs.fields.source_system.schema]
+type = "string"
+
+[needs.fields.external_id]
+description = "Stable external identity in CertHub"
+default = ""
+
+[needs.fields.external_id.schema]
+type = "string"
+
+[needs.fields.external_version]
+description = "CertHub project/export version"
+default = ""
+
+[needs.fields.external_version.schema]
+type = "string"
+
+[needs.fields.req_type]
+description = "CertHub requirement type (functional, regulatory, …)"
+default = ""
+
+[needs.fields.req_type.schema]
+type = "string"
+
+[needs.fields.priority]
+description = "CertHub requirement priority"
+default = ""
+
+[needs.fields.priority.schema]
+type = "string"
+
+[needs.fields.source]
+description = "CertHub requirement source"
+default = ""
+
+[needs.fields.source.schema]
+type = "string"
+
+[needs.fields.justification]
+description = "CertHub requirement justification"
+default = ""
+
+[needs.fields.justification.schema]
+type = "string"
+
+[needs.fields.concerning]
+description = "CertHub 'requirement concerning' checklist (joined)"
+default = ""
+
+[needs.fields.concerning.schema]
+type = "string"
+
+[needs.fields.impl-file]
+description = "Implementation file path discovered by CodeLinks"
+default = ""
+
+[needs.fields.impl-file.schema]
+type = "string"
+
+# local-url / remote-url are registered by sphinx-codelinks — do not redeclare here.
+
+[needs.layouts.assurance]
+grid = "simple"
+
+[needs.layouts.assurance.layout]
+head = [
+    "<<meta(\"type_name\")>>: **<<meta(\"title\")>>** <<meta_id()>> <<collapse_button(\"meta\", collapsed=\"icon:arrow-down-circle\", visible=\"icon:arrow-right-circle\", initial=False)>>",
+]
+meta = [
+    "<<meta(\"status\", prefix=\"**status**: \")>>",
+    "<<meta(\"priority\", prefix=\"**priority**: \")>>",
+    "<<meta(\"req_type\", prefix=\"**type**: \")>>",
+    "<<meta(\"source\", prefix=\"**source**: \")>>",
+    "<<meta(\"external_id\", prefix=\"**CertHub id**: \")>>",
+    "<<meta(\"external_version\", prefix=\"**version**: \")>>",
+    "<<meta(\"source_system\", prefix=\"**system**: \")>>",
+    "<<meta(\"justification\", prefix=\"**justification**: \")>>",
+    "<<meta(\"concerning\", prefix=\"**concerning**: \")>>",
+    "<<meta(\"impl-file\", prefix=\"**impl**: \")>>",
+    "<<meta(\"local-url\", prefix=\"**local**: \")>>",
+    "<<meta(\"remote-url\", prefix=\"**remote**: \")>>",
+    "<<meta_links_all()>>",
+]
+
+[needs.links.links]
+incoming = "is linked by"
+outgoing = "links to"
+
+[needs.links.verifies]
+description = "Test case verifies requirement"
+incoming = "is verified by"
+outgoing = "verifies"
+allow_dead_links = false
+
+[needs.links.leads_to]
+description = "Requirement leads to derived requirement"
+incoming = "is led by"
+outgoing = "leads to"
+
+[needs.links.validates]
+description = "Validation activity confirms user need"
+incoming = "is validated by"
+outgoing = "validates"
+
+[[needs.types]]
+directive = "ureq"
+title = "User Requirements"
+prefix = "UREQ_"
+color = "#C8E6C9"
+style = "node"
+
+[[needs.types]]
+directive = "sysreq"
+title = "System Requirements"
+prefix = "SYSREQ_"
+color = "#BFD8D2"
+style = "node"
+
+[[needs.types]]
+directive = "creq"
+title = "Component Requirements"
+prefix = "CREQ_"
+color = "#A8DADC"
+style = "node"
+
+[[needs.types]]
+directive = "unitreq"
+title = "Unit Requirements"
+prefix = "UNITREQ_"
+color = "#89C2D9"
+style = "node"
+
+[[needs.types]]
+directive = "dout"
+title = "Design Output"
+prefix = "DOUT_"
+color = "#FEDCD2"
+style = "node"
+
+[[needs.types]]
+directive = "verif"
+title = "Verification"
+prefix = "VERIF_"
+color = "#DCB239"
+style = "node"
+
+[[needs.types]]
+directive = "valid"
+title = "Validation"
+prefix = "VALID_"
+color = "#E9C46A"
+style = "node"

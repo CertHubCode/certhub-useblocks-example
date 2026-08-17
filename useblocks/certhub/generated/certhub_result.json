@@ -1,0 +1,75 @@
+{
+  "certificationStatus": "VERIFIED",
+  "commit": "c693c75ab5c659b98a3b9c8e7c6300ac0558ecda",
+  "generatedAt": "2026-08-13T12:17:13.258119+00:00",
+  "project": "69b9899f4252b7481003afaa",
+  "requirements": [
+    {
+      "id": "SYSREQ_001",
+      "implementation": "src/sterilisator_20a/cycle/controller.py:def temperature_within_range(peak_temperature_c: float) -> bool:",
+      "specification": "DOUT_018",
+      "status": "verified",
+      "tests": [
+        {
+          "id": "VERIF_001",
+          "result": "passed"
+        }
+      ]
+    },
+    {
+      "id": "SYSREQ_002",
+      "implementation": "src/sterilisator_20a/cycle/controller.py:def temperature_within_range(peak_temperature_c: float) -> bool:",
+      "specification": "DOUT_018",
+      "status": "verified",
+      "tests": [
+        {
+          "id": "VERIF_002",
+          "result": "passed"
+        }
+      ]
+    },
+    {
+      "id": "SYSREQ_003",
+      "implementation": "src/sterilisator_20a/cycle/controller.py:def temperature_within_range(peak_temperature_c: float) -> bool:",
+      "specification": "DOUT_018",
+      "status": "verified",
+      "tests": [
+        {
+          "id": "VERIF_003",
+          "result": "passed"
+        },
+        {
+          "id": "VERIF_004",
+          "result": "passed"
+        }
+      ]
+    },
+    {
+      "id": "SYSREQ_004",
+      "implementation": "src/sterilisator_20a/cycle/controller.py:def temperature_within_range(peak_temperature_c: float) -> bool:",
+      "specification": "DOUT_018",
+      "status": "verified",
+      "tests": [
+        {
+          "id": "VERIF_001",
+          "result": "passed"
+        },
+        {
+          "id": "VERIF_004",
+          "result": "passed"
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "design_outputs": 19,
+    "failed": 0,
+    "implemented": 4,
+    "passed": 4,
+    "system_requirements": 4,
+    "validations": 4,
+    "verifications": 4,
+    "verified": 4
+  },
+  "version": "0.1"
+}

@@ -1,0 +1,118 @@
+{
+  "components": [
+    {
+      "id": "Field_0liptaz",
+      "layout": {
+        "columns": null,
+        "row": "Row_18pu0gn"
+      },
+      "text": "Source: ISO 13485:2016 7.3.7 Validation\nMDR Annex II 6.",
+      "type": "text"
+    },
+    {
+      "id": "Field_187p59e",
+      "key": "name",
+      "label": "Name",
+      "layout": {
+        "columns": null,
+        "row": "Row_1ogmj0l"
+      },
+      "type": "textfield"
+    },
+    {
+      "id": "Field_04diwb7",
+      "key": "textfield_82f9x4",
+      "label": "Validation regarding",
+      "layout": {
+        "columns": null,
+        "row": "Row_08evsjz"
+      },
+      "type": "textfield"
+    },
+    {
+      "id": "Field_0jeqq35",
+      "key": "validation_method",
+      "label": "Validation Method",
+      "layout": {
+        "columns": null,
+        "row": "Row_030wtl7"
+      },
+      "type": "textarea"
+    },
+    {
+      "id": "Field_1d5t4hq",
+      "key": "textfield_ftyshh",
+      "label": "Sample Size",
+      "layout": {
+        "columns": null,
+        "row": "Row_1mfj7ll"
+      },
+      "type": "textfield"
+    },
+    {
+      "id": "Field_1grjg3y",
+      "key": "textarea_8ohfuj",
+      "label": "Sample Size Justification",
+      "layout": {
+        "columns": null,
+        "row": "Row_1cyaw2d"
+      },
+      "type": "textarea"
+    },
+    {
+      "id": "Field_1kchx3k",
+      "key": "textarea_15pm9",
+      "label": "Acceptance Criteria",
+      "layout": {
+        "columns": null,
+        "row": "Row_1atuv3m"
+      },
+      "type": "textarea"
+    },
+    {
+      "id": "Field_193uwt9",
+      "key": "results",
+      "label": "Expected Result",
+      "layout": {
+        "columns": null,
+        "row": "Row_1ey5ukt"
+      },
+      "type": "textarea"
+    },
+    {
+      "id": "Field_10thhdb",
+      "key": "status",
+      "label": "Status",
+      "layout": {
+        "columns": null,
+        "row": "Row_16dgnry"
+      },
+      "type": "select",
+      "values": [
+        {
+          "label": "Passed",
+          "value": "passed"
+        },
+        {
+          "label": "Failed",
+          "value": "failed"
+        },
+        {
+          "label": "In Progress",
+          "value": "in_progress"
+        },
+        {
+          "label": "n/a",
+          "value": "n/a"
+        }
+      ]
+    }
+  ],
+  "exporter": {
+    "name": "form-js (https://demo.bpmn.io)",
+    "version": "1.8.3"
+  },
+  "id": "form_1",
+  "schemaVersion": 17,
+  "type": "default"
+}

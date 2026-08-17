@@ -1,0 +1,88 @@
+{
+  "components": [
+    {
+      "id": "Field_1pbnwvn",
+      "layout": {
+        "columns": null,
+        "row": "Row_0nygbcd"
+      },
+      "text": "Source: ISO 13485:2016 7.3.6 Verification\nMDR Annex II 6.",
+      "type": "text"
+    },
+    {
+      "id": "Field_07c7jkg",
+      "key": "name",
+      "label": "Name",
+      "layout": {
+        "columns": null,
+        "row": "Row_1o3k5az"
+      },
+      "type": "textfield"
+    },
+    {
+      "id": "Field_1yu835z",
+      "key": "test_method",
+      "label": "Test Method",
+      "layout": {
+        "columns": null,
+        "row": "Row_004vxbi"
+      },
+      "type": "textarea"
+    },
+    {
+      "id": "Field_16cshbj",
+      "key": "textarea_d1jh7",
+      "label": "Acceptance Criteria",
+      "layout": {
+        "columns": null,
+        "row": "Row_1qul93w"
+      },
+      "type": "textarea"
+    },
+    {
+      "id": "Field_18fhbyc",
+      "key": "test_result",
+      "label": "Expected Test Result",
+      "layout": {
+        "columns": null,
+        "row": "Row_0wj6lso"
+      },
+      "type": "textarea"
+    },
+    {
+      "id": "Field_1b8c82z",
+      "key": "select_p361sa",
+      "label": "Expected Test Status",
+      "layout": {
+        "columns": null,
+        "row": "Row_10m7kk1"
+      },
+      "type": "select",
+      "values": [
+        {
+          "label": "Passed",
+          "value": "passed"
+        },
+        {
+          "label": "Failed",
+          "value": "failed"
+        },
+        {
+          "label": "In Progress",
+          "value": "in_progress"
+        },
+        {
+          "label": "n/a",
+          "value": "n/a"
+        }
+      ]
+    }
+  ],
+  "exporter": {
+    "name": "form-js (https://demo.bpmn.io)",
+    "version": "1.8.3"
+  },
+  "id": "form_1",
+  "schemaVersion": 17,
+  "type": "default"
+}
