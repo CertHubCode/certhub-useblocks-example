@@ -22,7 +22,7 @@ dependencies = [
 [dependency-groups]
 codegen = [
     "openapi-python-client>=0.21,<1",
-    "datamodel-code-generator>=0.26,<1",
+    "datamodel-code-generator>=0.72.4,<1",
     "openapi-spec-validator>=0.7,<1",
 ]
 
