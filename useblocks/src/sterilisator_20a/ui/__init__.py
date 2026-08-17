@@ -1,1 +1,0 @@
-"""Operator interface software item."""
