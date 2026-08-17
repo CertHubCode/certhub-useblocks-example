@@ -1,0 +1,37 @@
+name: Cadence evidence
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [main, master]
+
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install graphviz and PlantUML
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz default-jre-headless plantuml
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Sync from CertHub
+        env:
+          CERTHUB_API_KEY: ${{ secrets.CERTHUB_API_KEY }}
+        run: make sync
+
+      - name: Build evidence pack
+        run: make evidence
+
+      - name: Upload evidence artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-${{ github.sha }}-${{ github.run_id }}
+          path: evidence/
+          if-no-files-found: error

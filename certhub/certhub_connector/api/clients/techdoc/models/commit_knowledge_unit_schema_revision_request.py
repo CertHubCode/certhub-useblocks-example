@@ -1,0 +1,62 @@
+from __future__ import annotations
+
+from collections.abc import Mapping
+from typing import Any, Self, TypeVar
+
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
+
+T = TypeVar("T", bound="CommitKnowledgeUnitSchemaRevisionRequest")
+
+
+@_attrs_define
+class CommitKnowledgeUnitSchemaRevisionRequest:
+    """Request to commit a revision (create next minor version)
+
+    Attributes:
+        commit_message (str):
+    """
+
+    commit_message: str
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+
+    def to_dict(self) -> dict[str, Any]:
+        commit_message = self.commit_message
+
+        field_dict: dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update(
+            {
+                "commit_message": commit_message,
+            }
+        )
+
+        return field_dict
+
+    @classmethod
+    def from_dict(cls, src_dict: Mapping[str, Any]) -> Self:
+        d = dict(src_dict)
+        commit_message = d.pop("commit_message")
+
+        commit_knowledge_unit_schema_revision_request = cls(
+            commit_message=commit_message,
+        )
+
+        commit_knowledge_unit_schema_revision_request.additional_properties = d
+        return commit_knowledge_unit_schema_revision_request
+
+    @property
+    def additional_keys(self) -> list[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

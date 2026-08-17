@@ -1,0 +1,195 @@
+### CertHub exploratory API calls (REST Client)
+### Flow: List System Requirements / Verification / Validation content by KT
+###
+### Setup:
+### 1. Copy IDs/URLs from the ACTIVE block in certhub.toml (do not invent values here).
+### 2. Set @apiKey from CERTHUB_API_KEY in .env (prod when toml ACTIVE=prod).
+### 3. Run the three "List records" requests — confirm counts and data.name values.
+### 4. Optionally Get KT (requirements) for Tech Doc metadata used by sync project info.
+###
+### ID mapping (dashboard URL uses history; Records context uses revision):
+###   knowledgeTopicId = *_kt_history_id → context.knowledge_unit_topic_id = *_kt_id
+###   Prefer: `uv run cadence config-get <field>` over hand-editing these vars.
+###
+### Note: put ObjectIds literally in JSON bodies — some REST Client builds leave
+### {{fileVar}} unsubstituted inside JSON (e.g. {{productId}} stored as text).
+
+# ACTIVE = prod (must match certhub.toml)
+@techdocBase = https://techdoc.prod.certhub-containers.containers.certhub.tech
+@recordsBase = https://records.prod.certhub-containers.containers.certhub.tech
+@tracerBase = https://tracer.prod.certhub-containers.containers.certhub.tech
+@apiKey = {{$dotenv CERTHUB_API_KEY}}
+@reqKtId = 69b989b54252b7481003b10a
+@verifKtId = 69b989b54252b7481003b110
+@validKtId = 69b989b54252b7481003b112
+@productHistoryId = 69b9899f4252b7481003afaa
+@kuHistoryId = 69b989a14252b7481003afe5
+@recordId = 000000000000000000000000
+
+# --- DEV (inactive; mirror commented block in certhub.toml) ---
+# @techdocBase = https://techdoc.dev.certhub-containers.containers.certhub.tech
+# @recordsBase = https://records.dev.certhub-containers.containers.certhub.tech
+# @tracerBase = https://tracer.dev.certhub-containers.containers.certhub.tech
+# @reqKtId = 6a76fc771074c36ea50f9e36
+# @verifKtId = 6a76fc771074c36ea50f9e3c
+# @validKtId = 6a76fc771074c36ea50f9e3e
+# @productHistoryId = 6a76fc641074c36ea50f9dab
+# @kuHistoryId = 6a76fc661074c36ea50f9dba
+
+### =============================================================================
+### 1. Get requirements KT (Tech Doc metadata)
+### =============================================================================
+
+# @name getKt
+GET {{techdocBase}}/kt/{{reqKtId}}
+X-API-Key: {{apiKey}}
+Accept: application/json
+
+### =============================================================================
+### 2. List records — Requirements / Verification / Validation
+### =============================================================================
+
+# @name listRequirements
+GET {{recordsBase}}/records/?context__knowledge_unit_topic_id={{reqKtId}}
+X-API-Key: {{apiKey}}
+Accept: application/json
+
+###
+
+# @name listVerification
+GET {{recordsBase}}/records/?context__knowledge_unit_topic_id={{verifKtId}}
+X-API-Key: {{apiKey}}
+Accept: application/json
+
+###
+
+# @name listValidation
+GET {{recordsBase}}/records/?context__knowledge_unit_topic_id={{validKtId}}
+X-API-Key: {{apiKey}}
+Accept: application/json
+
+### =============================================================================
+### 3. Read one record
+### =============================================================================
+
+# @name getRecord
+GET {{recordsBase}}/records/{{recordId}}
+X-API-Key: {{apiKey}}
+Accept: application/json
+
+### =============================================================================
+### 4. Create record on requirements KT
+### form starts as {}; replace with a real form from List/Get if validation requires it.
+### Product dashboard needs linked_product + knowledge_unit_id (KU revision), not KT alone.
+### Resolve KU revision via Tech Doc GET /ku/{kuHistoryId} → id before create.
+### =============================================================================
+
+# @name createRecord
+POST {{recordsBase}}/records/
+X-API-Key: {{apiKey}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Sterilization temperature range is better",
+  "form": {},
+  "data": {
+    "name": "Sterilization temperature range is better",
+    "description": "Device shall achieve and maintain sterilization temperature of 121°C ± 2°C",
+    "type": "functional",
+    "priority": "high",
+    "source": "Functional & Performance Requirements"
+  },
+  "context": {
+    "linked_product": "69b9899f4252b7481003afaa",
+    "knowledge_unit_id": "REPLACE_WITH_KU_REVISION",
+    "knowledge_unit_topic_id": "69b989b54252b7481003b10a"
+  }
+}
+
+### =============================================================================
+### 5. Patch context on a bad/orphan create
+### Set @recordId to the row to repair, then send.
+### =============================================================================
+
+# @name patchRecordContext
+PATCH {{recordsBase}}/records/{{recordId}}
+X-API-Key: {{apiKey}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "context": {
+    "linked_product": "69b9899f4252b7481003afaa",
+    "knowledge_unit_id": "REPLACE_WITH_KU_REVISION",
+    "knowledge_unit_topic_id": "69b989b54252b7481003b10a"
+  }
+}
+
+### =============================================================================
+### 6. Update record data (PATCH — by-id write; OpenAPI PUT is upsert-by-linked-document)
+### =============================================================================
+
+# @name updateRecord
+PATCH {{recordsBase}}/records/{{recordId}}
+X-API-Key: {{apiKey}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Sterilization temperature range is better (updated)",
+  "data": {
+    "name": "Sterilization temperature range is better (updated)",
+    "description": "Device shall achieve and maintain sterilization temperature of 121°C ± 2°C",
+    "type": "functional",
+    "priority": "high",
+    "source": "Functional & Performance Requirements"
+  }
+}
+
+### =============================================================================
+### 7. Tracer — smoke-check traces for one KT (System Requirements)
+### Confirmed: GET /traces and POST /traces/batch/list work (200) with Cadence key.
+### GET /traces/list and /traces/all still return 401 Invalid API key for that key.
+### docs.certhub.de hosts docs only — call {{tracerBase}}, not docs.certhub.de.
+### Sync joins via Record batch/list + requirements_use_case topic→topic rules.
+### =============================================================================
+
+@productVersion = 0.1
+
+# @name tracesForRequirementsKt
+GET {{tracerBase}}/traces?node_id={{reqKtId}}&node_type=KnowledgeTopic&version={{productVersion}}
+X-API-Key: {{apiKey}}
+Accept: application/json
+
+###
+
+# @name batchListTraces
+# Sync sends every synced Record _id this way. Demo: one SYSREQ + one VERIF + one DOUT.
+# Use literal ObjectIds in JSON (REST Client may not expand {{vars}}).
+POST {{tracerBase}}/traces/batch/list
+X-API-Key: {{apiKey}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nodes": [
+    {
+      "node_id": "69c2d6756406f437042965e5",
+      "node_type": "Record",
+      "version": ""
+    },
+    {
+      "node_id": "69c2d6826406f437042965f4",
+      "node_type": "Record",
+      "version": ""
+    },
+    {
+      "node_id": "69c2d67f6406f437042965ef",
+      "node_type": "Record",
+      "version": ""
+    }
+  ],
+  "n_hops": 1,
+  "mode": "legacy_connected_nodes"
+}

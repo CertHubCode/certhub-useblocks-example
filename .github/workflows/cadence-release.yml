@@ -1,0 +1,96 @@
+name: Cadence release evidence
+
+# Tag push (vX.Y.Z or vX.Y.Z-rc.N) → always build evidence pack + upload artifact.
+# CertHub Validation Records write-back only on full release tags (not RC).
+# Manual runs require workflow_dispatch input baseline (X.Y.Z / vX.Y.Z).
+
+on:
+  workflow_dispatch:
+    inputs:
+      baseline:
+        description: "Release version (X.Y.Z or vX.Y.Z)"
+        required: true
+        type: string
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      build_evidence: ${{ steps.check.outputs.build_evidence }}
+      is_release: ${{ steps.check.outputs.is_release }}
+      baseline: ${{ steps.check.outputs.baseline }}
+    steps:
+      - id: check
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            baseline="${{ inputs.baseline }}"
+            echo "tag=(manual)"
+            if [[ -z "${baseline}" ]]; then
+              echo "build_evidence=false" >> "$GITHUB_OUTPUT"
+              echo "is_release=false" >> "$GITHUB_OUTPUT"
+              echo "Missing required input: baseline"
+              exit 1
+            fi
+            echo "baseline=${baseline}" >> "$GITHUB_OUTPUT"
+            echo "build_evidence=true" >> "$GITHUB_OUTPUT"
+            if [[ "${baseline}" == *rc* ]] || [[ "${baseline}" == *RC* ]]; then
+              echo "is_release=false" >> "$GITHUB_OUTPUT"
+              echo "RC baseline: evidence only (no CertHub push)"
+            else
+              echo "is_release=true" >> "$GITHUB_OUTPUT"
+            fi
+          else
+            tag="${GITHUB_REF_NAME}"
+            echo "tag=${tag}"
+            echo "baseline=${tag#v}" >> "$GITHUB_OUTPUT"
+            echo "build_evidence=true" >> "$GITHUB_OUTPUT"
+            if [[ "${tag}" == *rc* ]] || [[ "${tag}" == *RC* ]]; then
+              echo "is_release=false" >> "$GITHUB_OUTPUT"
+              echo "RC tag: evidence only (no CertHub push)"
+            else
+              echo "is_release=true" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
+  evidence-and-push:
+    needs: gate
+    if: needs.gate.outputs.build_evidence == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install graphviz and PlantUML
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz default-jre-headless plantuml
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Sync requirements
+        env:
+          CERTHUB_API_KEY: ${{ secrets.CERTHUB_API_KEY }}
+        run: make sync
+
+      - name: Build evidence pack
+        run: make evidence
+
+      - name: Upload evidence artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-${{ github.ref_name }}-${{ github.run_id }}
+          path: evidence/
+          if-no-files-found: error
+
+      - name: Push release evidence to CertHub
+        if: needs.gate.outputs.is_release == 'true'
+        env:
+          CERTHUB_API_KEY: ${{ secrets.CERTHUB_API_KEY }}
+          CERTHUB_PUSH: "1"
+        run: |
+          baseline="${{ needs.gate.outputs.baseline }}"
+          make push-evidence BASELINE="${baseline}"

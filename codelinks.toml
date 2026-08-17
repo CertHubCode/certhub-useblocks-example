@@ -1,0 +1,37 @@
+# Sphinx-CodeLinks — paths are relative to this TOML file (project root).
+
+[codelinks]
+set_local_url = true
+local_url_field = "local-url"
+set_remote_url = true
+remote_url_field = "remote-url"
+
+[codelinks.projects.sterilisator_20a]
+remote_url_pattern = "https://github.com/CertHubCode/certhub-useblocks-example/blob/{commit}/{path}#L{line}"
+
+[codelinks.projects.sterilisator_20a.source_discover]
+src_dir = "src/sterilisator_20a"
+include = ["**/*.py"]
+comment_type = "python"
+
+[codelinks.projects.sterilisator_20a.analyse]
+get_need_id_refs = true
+get_oneline_needs = false
+
+[codelinks.projects.sterilisator_20a.analyse.need_id_refs]
+markers = ["@need-ids:"]
+
+[codelinks.projects.sterilisator_20a_tests]
+remote_url_pattern = "https://github.com/CertHubCode/certhub-useblocks-example/blob/{commit}/{path}#L{line}"
+
+[codelinks.projects.sterilisator_20a_tests.source_discover]
+src_dir = "src/sterilisator_20a/tests"
+include = ["test_sterilisator.py"]
+comment_type = "python"
+
+[codelinks.projects.sterilisator_20a_tests.analyse]
+get_need_id_refs = true
+get_oneline_needs = false
+
+[codelinks.projects.sterilisator_20a_tests.analyse.need_id_refs]
+markers = ["@need-ids:"]

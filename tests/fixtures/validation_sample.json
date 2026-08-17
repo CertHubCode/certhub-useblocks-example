@@ -1,0 +1,134 @@
+[
+  {
+    "_id": "6a770215cd5640b4bf28b077",
+    "name": "Validation-1",
+    "form": {"components": [], "id": "form_1", "type": "default", "schemaVersion": 19},
+    "version": "1.0",
+    "data": {
+      "name": "Sterilization temperature range is better",
+      "textfield_82f9x4": "Sterilization temperature control",
+      "validation_method": "Chamber temperature mapping",
+      "textarea_15pm9": "Device maintains 121°C ± 2°C",
+      "results": "Temperature range validated",
+      "status": "passed"
+    },
+    "read_only": false,
+    "metadata": {"tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"},
+    "context": {
+      "linked_product": "69b9899f4252b7481003afaa",
+      "linked_sop": null,
+      "form_id": null,
+      "global_element_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe5",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b112",
+      "linked_document": null,
+      "group_id": null
+    },
+    "audit_info": {
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "timestamp_created": "2026-08-10T12:02:00.000000",
+      "user_id_last_updated": null,
+      "timestamp_last_updated": null,
+      "last_action": "created"
+    }
+  },
+  {
+    "_id": "6a770215cd5640b4bf28b078",
+    "name": "Validation-2",
+    "form": {"components": [], "id": "form_1", "type": "default", "schemaVersion": 19},
+    "version": "1.0",
+    "data": {
+      "name": "Sterilization cycle time",
+      "textfield_82f9x4": "Cycle duration",
+      "validation_method": "Timed production cycles",
+      "textarea_15pm9": "Total cycle time shall not exceed 60 minutes",
+      "results": "Cycle time validated",
+      "status": "passed"
+    },
+    "read_only": false,
+    "metadata": {"tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"},
+    "context": {
+      "linked_product": "69b9899f4252b7481003afaa",
+      "linked_sop": null,
+      "form_id": null,
+      "global_element_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe5",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b112",
+      "linked_document": null,
+      "group_id": null
+    },
+    "audit_info": {
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "timestamp_created": "2026-08-10T12:02:01.000000",
+      "user_id_last_updated": null,
+      "timestamp_last_updated": null,
+      "last_action": "created"
+    }
+  },
+  {
+    "_id": "6a770215cd5640b4bf28b079",
+    "name": "Validation-3",
+    "form": {"components": [], "id": "form_1", "type": "default", "schemaVersion": 19},
+    "version": "1.0",
+    "data": {
+      "name": "User interface labeling",
+      "textfield_82f9x4": "Operator UI language",
+      "validation_method": "Usability review of UI strings",
+      "textarea_15pm9": "Cycle status and alerts displayed in English",
+      "results": "Labeling validated",
+      "status": "passed"
+    },
+    "read_only": false,
+    "metadata": {"tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"},
+    "context": {
+      "linked_product": "69b9899f4252b7481003afaa",
+      "linked_sop": null,
+      "form_id": null,
+      "global_element_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe5",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b112",
+      "linked_document": null,
+      "group_id": null
+    },
+    "audit_info": {
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "timestamp_created": "2026-08-10T12:02:02.000000",
+      "user_id_last_updated": null,
+      "timestamp_last_updated": null,
+      "last_action": "created"
+    }
+  },
+  {
+    "_id": "6a770215cd5640b4bf28b07a",
+    "name": "Validation-4",
+    "form": {"components": [], "id": "form_1", "type": "default", "schemaVersion": 19},
+    "version": "1.0",
+    "data": {
+      "name": "Device footprint",
+      "textfield_82f9x4": "External envelope",
+      "validation_method": "Dimensional inspection",
+      "textarea_15pm9": "Overall external dimensions shall not exceed 50 cm x 40 cm x 35 cm",
+      "results": "Footprint validated",
+      "status": "passed"
+    },
+    "read_only": false,
+    "metadata": {"tenant_id": "bd71306e-90ea-43e5-af42-9239b7e7920b"},
+    "context": {
+      "linked_product": "69b9899f4252b7481003afaa",
+      "linked_sop": null,
+      "form_id": null,
+      "global_element_id": null,
+      "knowledge_unit_id": "69b989a14252b7481003afe5",
+      "knowledge_unit_topic_id": "69b989b54252b7481003b112",
+      "linked_document": null,
+      "group_id": null
+    },
+    "audit_info": {
+      "user_id_created": "13743822-70d1-708d-b7ad-cb19b1151b5a",
+      "timestamp_created": "2026-08-10T12:02:03.000000",
+      "user_id_last_updated": null,
+      "timestamp_last_updated": null,
+      "last_action": "created"
+    }
+  }
+]
