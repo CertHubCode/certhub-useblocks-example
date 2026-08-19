@@ -5,9 +5,10 @@ from __future__ import annotations
 import importlib.util
 from pathlib import Path
 
-import pytest
-from certhub_connector.config.paths import normalized_snapshot_path, project_root
+from certhub_connector.config.paths import project_root
 from certhub_connector.evidence.verify import (
+    CertificationStatus,
+    ReqStatus,
     _pick_implementation,
     verify_certification,
 )
@@ -168,27 +169,154 @@ def test_verify_report_cites_matching_source_files(tmp_path: Path) -> None:
         assert needle in by_id[sys_id], f"{sys_id}: {by_id[sys_id]}"
 
 
-@pytest.mark.skipif(
-    not normalized_snapshot_path().is_file(),
-    reason="normalized export missing — run make sync",
-)
-def test_live_snapshot_sysreq_impl_files() -> None:
-    from certhub_connector.config.paths import codelinks_analysis_path, junit_path
+def _single_sysreq_export(
+    dout_links: list[str] | None = None,
+    verif_verifies: list[str] | None = None,
+) -> CertHubExport:
+    """One SYSREQ_001 with optional DOUT and VERIF wiring."""
+    douts = []
+    verifs = []
+    if dout_links is not None:
+        douts.append(
+            DesignOutput(
+                id="DOUT_018",
+                title="Product",
+                description="d",
+                status="approved",
+                links=dout_links,
+            )
+        )
+    if verif_verifies is not None:
+        verifs.append(
+            Verification(
+                id="VERIF_001",
+                title="Temp test",
+                description="d",
+                status="approved",
+                verifies=verif_verifies,
+            )
+        )
+    return CertHubExport(
+        project=ProjectInfo(id="demo", name="Test", version="0.1"),
+        user_requirements=[],
+        system_requirements=[
+            SystemRequirement(
+                id="SYSREQ_001", title="temperature", description="d", status="approved"
+            )
+        ],
+        component_requirements=[],
+        unit_requirements=[],
+        design_outputs=douts,
+        verifications=verifs,
+        validations=[],
+    )
 
-    if not codelinks_analysis_path().is_file() or not junit_path().is_file():
-        pytest.skip("codelinks/junit missing — run make show")
-    report = verify_certification()
-    expected = {
-        "SYSREQ_001": "temperature_within_range",
-        "SYSREQ_002": "reported_cycle_duration",
-        "SYSREQ_003": "messages.py",
-        "SYSREQ_004": "footprint.py",
-    }
-    by_id = {v.requirement_id: v.implementation or "" for v in report.requirements}
-    for sys_id, needle in expected.items():
-        if sys_id not in by_id:
-            continue
-        assert needle in by_id[sys_id], f"{sys_id}: {by_id[sys_id]}"
+
+def _codelinks_json(tmp_path: Path, need_ids: list[str] | None = None) -> Path:
+    import json as _json
+
+    analysis = tmp_path / "codelinks.json"
+    if need_ids is None:
+        analysis.write_text("[]", encoding="utf-8")
+        return analysis
+    records = [
+        {"filepath": "src/sterilisator_20a/cycle/controller.py", "need_ids": need_ids, "tagged_scope": "def temperature_within_range"}
+    ]
+    analysis.write_text(_json.dumps(records), encoding="utf-8")
+    return analysis
+
+
+def _junit_xml(tmp_path: Path, verif_id: str, result: str = "passed") -> Path:
+    junit = tmp_path / "junit.xml"
+    inner = ""
+    if result == "passed":
+        inner = ""
+    elif result == "failed":
+        inner = '<failure message="fail"/>'
+    tc = (
+        f'<testcase name="{verif_id}" classname="t">'
+        f'<properties><property name="certhub_test" value="{verif_id}"/></properties>'
+        f"{inner}</testcase>"
+    )
+    junit.write_text(f'<testsuite tests="1">{tc}</testsuite>\n', encoding="utf-8")
+    return junit
+
+
+def test_gate_missing_dout(tmp_path: Path) -> None:
+    export = _single_sysreq_export(dout_links=None, verif_verifies=["SYSREQ_001"])
+    report = verify_certification(
+        export,
+        codelinks_path=_codelinks_json(tmp_path, ["DOUT_018"]),
+        junit=_junit_xml(tmp_path, "VERIF_001"),
+    )
+    assert report.certification_status == CertificationStatus.BLOCKED
+    assert report.requirements[0].status == ReqStatus.MISSING_DOUT
+
+
+def test_gate_not_implemented(tmp_path: Path) -> None:
+    export = _single_sysreq_export(dout_links=["SYSREQ_001"], verif_verifies=["SYSREQ_001"])
+    report = verify_certification(
+        export,
+        codelinks_path=_codelinks_json(tmp_path),
+        junit=_junit_xml(tmp_path, "VERIF_001"),
+    )
+    assert report.certification_status == CertificationStatus.BLOCKED
+    assert report.requirements[0].status == ReqStatus.NOT_IMPLEMENTED
+
+
+def test_gate_not_tested(tmp_path: Path) -> None:
+    export = _single_sysreq_export(dout_links=["SYSREQ_001"], verif_verifies=[])
+    report = verify_certification(
+        export,
+        codelinks_path=_codelinks_json(tmp_path, ["DOUT_018"]),
+        junit=_junit_xml(tmp_path, "VERIF_001"),
+    )
+    assert report.certification_status == CertificationStatus.BLOCKED
+    assert report.requirements[0].status == ReqStatus.NOT_TESTED
+
+
+def test_gate_failed_test(tmp_path: Path) -> None:
+    export = _single_sysreq_export(dout_links=["SYSREQ_001"], verif_verifies=["SYSREQ_001"])
+    report = verify_certification(
+        export,
+        codelinks_path=_codelinks_json(tmp_path, ["DOUT_018"]),
+        junit=_junit_xml(tmp_path, "VERIF_001", result="failed"),
+    )
+    assert report.certification_status == CertificationStatus.BLOCKED
+    assert report.requirements[0].status == ReqStatus.FAILED
+    assert report.requirements[0].result == "FAILED"
+
+
+def test_gate_verified(tmp_path: Path) -> None:
+    export = _single_sysreq_export(dout_links=["SYSREQ_001"], verif_verifies=["SYSREQ_001"])
+    report = verify_certification(
+        export,
+        codelinks_path=_codelinks_json(tmp_path, ["DOUT_018"]),
+        junit=_junit_xml(tmp_path, "VERIF_001"),
+    )
+    assert report.certification_status == CertificationStatus.VERIFIED
+    assert report.requirements[0].status == ReqStatus.VERIFIED
+
+
+def test_gate_ignores_non_certhub_testcases(tmp_path: Path) -> None:
+    """pytest cases without certhub_test property must not affect the gate."""
+    export = _single_sysreq_export(dout_links=["SYSREQ_001"], verif_verifies=["SYSREQ_001"])
+    junit = tmp_path / "junit.xml"
+    junit.write_text(
+        '<testsuite tests="2">'
+        '<testcase name="test_unrelated" classname="t"/>'
+        '<testcase name="VERIF_001" classname="t">'
+        '<properties><property name="certhub_test" value="VERIF_001"/></properties>'
+        "</testcase></testsuite>\n",
+        encoding="utf-8",
+    )
+    report = verify_certification(
+        export,
+        codelinks_path=_codelinks_json(tmp_path, ["DOUT_018"]),
+        junit=junit,
+    )
+    assert report.certification_status == CertificationStatus.VERIFIED
+    assert len(report.requirements) == 1
 
 
 def test_needextend_emits_all_locations(tmp_path: Path, monkeypatch) -> None:

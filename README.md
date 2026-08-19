@@ -1,5 +1,5 @@
 [![Cadence evidence](https://github.com/CertHubCode/certhub-useblocks-example/actions/workflows/cadence-evidence.yml/badge.svg)](https://github.com/CertHubCode/certhub-useblocks-example/actions/workflows/cadence-evidence.yml)
-[![Unit tests](https://github.com/CertHubCode/certhub-useblocks-example/actions/workflows/cadence-unit-tests.yml/badge.svg)](https://github.com/CertHubCode/certhub-useblocks-example/actions/workflows/cadence-unit-tests.yml)
+[![Offline tests](https://github.com/CertHubCode/certhub-useblocks-example/actions/workflows/cadence-unit-tests.yml/badge.svg)](https://github.com/CertHubCode/certhub-useblocks-example/actions/workflows/cadence-unit-tests.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 # Cadence — CertHub SaMD Engineering Loop
@@ -62,12 +62,12 @@ flowchart LR
 
 | Workflow | When | CertHub write? |
 |----------|------|----------------|
-| `cadence-unit-tests.yml` | Every PR / push | No — no API key required (fork-safe) |
+| `cadence-unit-tests.yml` | Every PR / push | No — connector + SaMD tests, no API key (fork-safe) |
 | `cadence-evidence.yml` | PR / main | No — uploads `evidence/` artifact (`CERTHUB_API_KEY` secret required) |
 | `cadence-release.yml` | Tag `v*.*.*` | **Yes**, on full `vX.Y.Z` only (not RC) |
 
 **Repository setup:** GitHub → Settings → Secrets → Actions → `CERTHUB_API_KEY`.
-Forks do not inherit that secret; unit tests still run. Details:
+Forks do not inherit that secret; offline tests still run. Details:
 [docs/onboarding.md](docs/onboarding.md).
 
 ## Traceability model
@@ -142,6 +142,10 @@ This repository is one complete implementation of that pattern using useblocks a
 cp .env.example .env   # set CERTHUB_API_KEY; edit certhub.toml for your tenant
 # Switch prod/dev by commenting ONE flat block in certhub.toml (+ matching API key)
 # CI: store the same key as GitHub Actions secret CERTHUB_API_KEY
+
+make test                 # connector + SaMD tests (no API key)
+make test-connector       # connector tests only
+make test-samd            # SaMD verification tests only
 
 make sync                 # CertHub → Sphinx-Needs
 make show                 # tests + CodeLinks + verify + open dashboard
@@ -296,6 +300,6 @@ If activation fails with “Could not find license key”, confirm with useblock
 - First-class: release-number, release-id (commit), generated-at, evidence-url
 - Notes (`details`): short plain-text summary (status, compact totals, req id+status lines, result SHA)
 - GitHub workflows (repo root):
-  - `cadence-unit-tests.yml` — PR/main, no CertHub
+  - `cadence-unit-tests.yml` — PR/main, connector + SaMD tests, no CertHub
   - `cadence-evidence.yml` — PR/main → artifacts only
   - `cadence-release.yml` — `vX.Y.Z` / `v*-rc*` → evidence artifact + GitHub Release; CertHub POST only on full release

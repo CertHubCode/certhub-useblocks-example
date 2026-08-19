@@ -1,10 +1,13 @@
-name: Cadence unit tests
+name: Offline tests (no CertHub)
 
 on:
   workflow_dispatch:
   pull_request:
   push:
     branches: [main, master]
+
+permissions:
+  contents: read
 
 jobs:
   unit:
@@ -18,8 +21,11 @@ jobs:
       - name: Install package
         run: uv sync
 
-      - name: Connector tests (no CertHub)
+      - name: Connector tests
         run: uv run pytest tests -q
+
+      - name: SaMD verification tests
+        run: uv run pytest src/sterilisator_20a/tests -q
 
       - name: Lint hand-written Python
         run: uvx ruff check certhub/certhub_connector scripts tests src

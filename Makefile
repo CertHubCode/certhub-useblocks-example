@@ -36,6 +36,7 @@ RECORDS_MODEL_DIR = $(MODEL_DIR)/records
 TRACER_MODEL_DIR = $(MODEL_DIR)/tracer
 
 .PHONY: help install sync show evidence break fix clean \
+	test test-connector test-samd \
 	tag-rc tag-release push-evidence confirm ensure-plantuml \
 	open-requirements open-release-record \
 	init-schemas fetch-techdoc-schema fetch-records-schema fetch-tracer-schema \
@@ -54,11 +55,23 @@ help:
 	@echo "  make confirm BASELINE=0.0.99      # live POST+GET proof (needs API key)"
 	@echo "  make open-requirements            Open System Requirements KT in CertHub"
 	@echo "  make open-release-record          Open Release Record KT in CertHub"
+	@echo "  make test                         Connector + SaMD tests (no API key)"
+	@echo "  make test-connector               Connector tests only"
+	@echo "  make test-samd                    SaMD verification tests only"
 	@echo "  make break / make fix             RED/GREEN gate"
 	@echo "  make clean / make install / make generate-api"
 
 install:
 	$(UV) sync
+
+test: install
+	$(UV) run pytest tests src/sterilisator_20a/tests -q
+
+test-connector: install
+	$(UV) run pytest tests -q
+
+test-samd: install
+	$(UV) run pytest src/sterilisator_20a/tests -q
 
 ensure-plantuml:
 	bash scripts/ensure_plantuml.sh

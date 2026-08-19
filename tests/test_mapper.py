@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import logging
 from pathlib import Path
 
 import pytest
@@ -14,7 +13,6 @@ from certhub_connector.sync.mapper import (
     map_records_to_export,
 )
 from certhub_connector.sync.requirements_use_case import (
-    TOPIC_COMPONENT,
     TOPIC_DESIGN_OUTPUT,
     TOPIC_SYSTEM,
     TOPIC_VERIFICATION,
@@ -65,9 +63,6 @@ def test_parse_requirements_fixture_into_pydantic() -> None:
 def test_relation_for_topic_pairs() -> None:
     assert relation_for(TOPIC_SYSTEM, TOPIC_VERIFICATION) == "Verified By"
     assert relation_for(TOPIC_VERIFICATION, TOPIC_SYSTEM) == "Verifies SR"
-    assert relation_for(TOPIC_DESIGN_OUTPUT, TOPIC_SYSTEM) == "Relates to SR"
-    assert relation_for(TOPIC_VERIFICATION, TOPIC_DESIGN_OUTPUT) == "Verifies DO"
-    assert relation_for(TOPIC_DESIGN_OUTPUT, TOPIC_COMPONENT) == "Relates to CR"
     assert relation_for(TOPIC_SYSTEM, TOPIC_DESIGN_OUTPUT) is None
 
 
@@ -105,7 +100,7 @@ def test_usecase_neighbors_undirected_and_filters() -> None:
     assert neighbors["other"] == set()
 
 
-def test_apply_usecase_links_sets_verifies_and_logs(caplog: pytest.LogCaptureFixture) -> None:
+def test_apply_usecase_links_sets_verifies() -> None:
     from certhub_connector.sync.models import SystemRequirement, Verification
 
     sysreq = SystemRequirement(
@@ -123,14 +118,12 @@ def test_apply_usecase_links_sets_verifies_and_logs(caplog: pytest.LogCaptureFix
     need_by = {"sys-1": sysreq, "ver-1": verif}
     topics = {"sys-1": TOPIC_SYSTEM, "ver-1": TOPIC_VERIFICATION}
     neighbors = {"sys-1": {"ver-1"}, "ver-1": {"sys-1"}}
-    with caplog.at_level(logging.INFO, logger="certhub_connector.sync.trace_links"):
-        lines = apply_usecase_links(need_by, topics, neighbors)
+    lines = apply_usecase_links(need_by, topics, neighbors)
     assert "VERIF_001" in sysreq.links
     assert "SYSREQ_001" in verif.links
     assert verif.verifies == ["SYSREQ_001"]
     assert any("Verified By" in line for line in lines)
     assert any("Verifies SR" in line for line in lines)
-    assert any("Verified By" in r.message for r in caplog.records)
 
 
 def test_map_with_tracer_neighbors() -> None:

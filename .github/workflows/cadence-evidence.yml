@@ -6,8 +6,12 @@ on:
   push:
     branches: [main, master]
 
+permissions:
+  contents: read
+
 jobs:
   evidence:
+    if: ${{ github.event_name == 'workflow_dispatch' || secrets.CERTHUB_API_KEY != '' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7

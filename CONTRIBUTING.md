@@ -8,7 +8,7 @@ Sterilisator 20A loop understandable to someone cloning it cold.
 ```bash
 make install
 cp .env.example .env   # CERTHUB_API_KEY for sync only
-uv run pytest tests    # no CertHub required
+make test              # connector + SaMD tests (no CertHub required)
 make sync && make show # full loop
 ```
 
@@ -25,7 +25,7 @@ Python 3.12+ and [uv](https://docs.astral.sh/uv/) are required.
 
 - Keep diffs focused. Do not commit `.env`, `evidence/`, `sphinx/build/`, or
   `sphinx/source/generated/*.rst`.
-- Unit tests in `tests/` must pass without an API key.
+- Offline tests must pass without an API key: `make test`.
 - If you change the SYSREQ → code → VERIF chain, update
   [`docs/traceability-map.md`](docs/traceability-map.md) and
   `tests/test_verify_traceability.py`.
