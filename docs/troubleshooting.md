@@ -21,10 +21,11 @@ CertHub UI.
 A KT revision id in `certhub.toml` is wrong, or you mixed **revision** ids with
 **history** ids. See [onboarding](onboarding.md).
 
-## Fork / PR CI failed on “Sync from CertHub”
+## Fork / PR CI skipped “Cadence evidence”
 
 [`cadence-evidence.yml`](../.github/workflows/cadence-evidence.yml) needs the
-`CERTHUB_API_KEY` repository secret. Forks do not get that secret.
+`CERTHUB_API_KEY` repository secret. Forks do not get that secret, so the
+evidence job is **skipped** (not failed) on PRs from forks.
 
 [`cadence-unit-tests.yml`](../.github/workflows/cadence-unit-tests.yml) must still
 pass — it never calls CertHub.

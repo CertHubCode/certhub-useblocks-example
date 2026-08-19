@@ -10,8 +10,24 @@ permissions:
   contents: read
 
 jobs:
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      has_api_key: ${{ steps.check.outputs.has_api_key }}
+    steps:
+      - id: check
+        env:
+          CERTHUB_API_KEY: ${{ secrets.CERTHUB_API_KEY }}
+        run: |
+          if [ -n "$CERTHUB_API_KEY" ]; then
+            echo "has_api_key=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_api_key=false" >> "$GITHUB_OUTPUT"
+          fi
+
   evidence:
-    if: ${{ github.event_name == 'workflow_dispatch' || secrets.CERTHUB_API_KEY != '' }}
+    needs: gate
+    if: github.event_name == 'workflow_dispatch' || needs.gate.outputs.has_api_key == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
