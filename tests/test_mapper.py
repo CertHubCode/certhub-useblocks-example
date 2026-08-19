@@ -7,8 +7,8 @@ import logging
 from pathlib import Path
 
 import pytest
-
 from certhub_connector.api.parse import parse_knowledge_topic, parse_records_list
+from certhub_connector.sync import write_generated_files
 from certhub_connector.sync.mapper import (
     form_data_from_record,
     map_records_to_export,
@@ -20,7 +20,6 @@ from certhub_connector.sync.requirements_use_case import (
     TOPIC_VERIFICATION,
     relation_for,
 )
-from certhub_connector.sync import write_generated_files
 from certhub_connector.sync.trace_links import apply_usecase_links, usecase_neighbors
 
 FIXTURES = Path(__file__).resolve().parent / "fixtures"

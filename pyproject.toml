@@ -56,3 +56,11 @@ exclude = [
     "certhub/certhub_connector/api/clients",
     "certhub/certhub_connector/api/api_models",
 ]
+
+[tool.ruff.lint]
+ignore = [
+    "TRY004",   # Prefer TypeError — existing ValueError is intentional
+    "UP047",    # Generic type params syntax — keep explicit TypeVar for clarity
+    "SIM102",   # Collapsible if — readability preference
+    "FURB192",  # min() over sorted()[0] — minor style
+]

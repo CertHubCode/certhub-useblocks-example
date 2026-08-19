@@ -12,11 +12,6 @@ from certhub_connector.api.api_models.techdoc.techdoc_models import (
     FullKnowledgeUnitView,
     KnowledgeTopicDetailResponse,
 )
-from certhub_connector.api.parse import (
-    parse_knowledge_topic,
-    parse_model_json,
-    parse_records_list,
-)
 from certhub_connector.api.clients.records.api.records import (
     create_new_record_records_post,
     delete_existing_record_records_id_delete,
@@ -38,12 +33,21 @@ from certhub_connector.api.clients.tracer.api.default import (
     batch_retrieve_traces_traces_batch_list_post as batch_list_mod,
 )
 from certhub_connector.api.clients.tracer.client import Client as TracerHttpClient
-from certhub_connector.api.clients.tracer.models.batch_retrieve_mode import BatchRetrieveMode
-from certhub_connector.api.clients.tracer.models.batch_retrieve_node import BatchRetrieveNode
+from certhub_connector.api.clients.tracer.models.batch_retrieve_mode import (
+    BatchRetrieveMode,
+)
+from certhub_connector.api.clients.tracer.models.batch_retrieve_node import (
+    BatchRetrieveNode,
+)
 from certhub_connector.api.clients.tracer.models.batch_retrieve_request import (
     BatchRetrieveRequest,
 )
 from certhub_connector.api.clients.tracer.models.node_type import NodeType
+from certhub_connector.api.parse import (
+    parse_knowledge_topic,
+    parse_model_json,
+    parse_records_list,
+)
 from certhub_connector.config import CerthubConfig
 
 

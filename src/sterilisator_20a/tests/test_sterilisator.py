@@ -16,7 +16,11 @@ from sterilisator_20a.cycle.controller import (
     run_sterilization_cycle,
     temperature_within_range,
 )
-from sterilisator_20a.enclosure.footprint import DimensionsCm, device_dimensions_cm, footprint_within_limits
+from sterilisator_20a.enclosure.footprint import (
+    DimensionsCm,
+    device_dimensions_cm,
+    footprint_within_limits,
+)
 from sterilisator_20a.ui.messages import ui_labels_are_english, ui_messages
 
 

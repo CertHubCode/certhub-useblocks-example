@@ -7,17 +7,17 @@ from pathlib import Path
 from typing import Any
 
 from certhub_connector.config import CerthubConfig
+from certhub_connector.config.paths import (
+    certhub_generated_dir,
+    normalized_snapshot_path,
+    sphinx_generated_dir,
+)
 from certhub_connector.sync.models import (
     CertHubExport,
     DesignOutput,
     RequirementBase,
     Validation,
     Verification,
-)
-from certhub_connector.config.paths import (
-    certhub_generated_dir,
-    normalized_snapshot_path,
-    sphinx_generated_dir,
 )
 from certhub_connector.sync.sources import CertHubExportSource, HttpKtExportSource
 

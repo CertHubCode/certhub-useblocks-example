@@ -106,7 +106,7 @@ def form_from_record(
         semantic["name"] = record.name.strip()
     if fill_description_from_specification and "description" not in semantic:
         for key in ("description", "specification"):
-            if key in semantic and semantic[key]:
+            if semantic.get(key):
                 semantic["description"] = str(semantic[key])
                 break
     return model_type.model_validate(semantic)

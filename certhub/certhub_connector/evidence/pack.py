@@ -6,7 +6,7 @@ import hashlib
 import json
 import os
 import shutil
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -151,7 +151,7 @@ def package_evidence(
     lockfile_sha256 = _sha256_file(lockfile) if lockfile.is_file() else None
     if lockfile_sha256:
         hashes["uv.lock"] = lockfile_sha256
-    generated_at = datetime.now(timezone.utc).isoformat()
+    generated_at = datetime.now(UTC).isoformat()
     run_id = os.environ.get("GITHUB_RUN_ID", "").strip() or None
     evidence_url = resolve_evidence_url()
     manifest = EvidenceManifest(

@@ -4,9 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-
 import certhub_connector.evidence.pack as evidence_mod
+import pytest
 from certhub_connector.evidence import package_evidence
 from certhub_connector.evidence.verify import CertificationStatus, VerificationReport
 

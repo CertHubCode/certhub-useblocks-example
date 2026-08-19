@@ -5,7 +5,6 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
-
 from certhub_connector.config.dashboard_url import dashboard_kt_url
 from certhub_connector.config.settings import TenantSettings
 

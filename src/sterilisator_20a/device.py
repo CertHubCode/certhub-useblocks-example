@@ -29,16 +29,16 @@ from sterilisator_20a.enclosure.footprint import (
 from sterilisator_20a.ui.messages import ui_labels_are_english, ui_messages
 
 __all__ = [
-    "CycleResult",
-    "DimensionsCm",
     "MAX_CYCLE_MINUTES",
     "MAX_DEPTH_CM",
     "MAX_HEIGHT_CM",
     "MAX_WIDTH_CM",
-    "SterilizerError",
     "TARGET_TEMPERATURE_C",
     "TEMPERATURE_TOLERANCE_C",
     "UI_LANGUAGE",
+    "CycleResult",
+    "DimensionsCm",
+    "SterilizerError",
     "cycle_within_time_budget",
     "device_dimensions_cm",
     "footprint_within_limits",

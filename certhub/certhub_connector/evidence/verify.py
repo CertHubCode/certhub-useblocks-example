@@ -9,12 +9,12 @@ from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 
-from certhub_connector.sync.models import CertHubExport, SystemRequirement
 from certhub_connector.config.paths import (
     codelinks_analysis_path,
     junit_path,
     normalized_snapshot_path,
 )
+from certhub_connector.sync.models import CertHubExport, SystemRequirement
 
 SAMMD_PRODUCT_DOUT_ID = "DOUT_018"
 

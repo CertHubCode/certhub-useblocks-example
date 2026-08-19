@@ -8,20 +8,24 @@ import os
 import webbrowser
 from pathlib import Path
 
-from . import ui
 from certhub_connector.config import CerthubConfig, TenantSettings, load_dotenv
 from certhub_connector.config.dashboard_url import DashboardKt, dashboard_kt_url
-from certhub_connector.evidence import package_evidence
 from certhub_connector.config.paths import evidence_dir
+from certhub_connector.evidence import package_evidence
 from certhub_connector.evidence.push import (
     confirm_evidence,
     format_proof,
     push_evidence,
 )
 from certhub_connector.evidence.report import generate_report
-from certhub_connector.sync.sources import HttpKtExportSource
+from certhub_connector.evidence.verify import (
+    format_verification_report,
+    verify_certification,
+)
 from certhub_connector.sync import sync_from_source
-from certhub_connector.evidence.verify import format_verification_report, verify_certification
+from certhub_connector.sync.sources import HttpKtExportSource
+
+from . import ui
 
 
 def _open_url(url: str) -> None:

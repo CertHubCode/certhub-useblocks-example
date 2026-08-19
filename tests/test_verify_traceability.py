@@ -5,6 +5,8 @@ from __future__ import annotations
 import importlib.util
 from pathlib import Path
 
+import pytest
+from certhub_connector.config.paths import normalized_snapshot_path, project_root
 from certhub_connector.evidence.verify import (
     _pick_implementation,
     verify_certification,
@@ -16,9 +18,6 @@ from certhub_connector.sync.models import (
     SystemRequirement,
     Verification,
 )
-from certhub_connector.config.paths import normalized_snapshot_path, project_root
-
-import pytest
 
 _IMPL_MAP = {
     "DOUT_018": [

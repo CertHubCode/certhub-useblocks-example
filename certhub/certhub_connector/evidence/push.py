@@ -5,20 +5,18 @@
 from __future__ import annotations
 
 import re
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-from certhub_connector.api.api_models.records.records_models import RecordContext, RecordCreate
+from certhub_connector.api.api_models.records.records_models import (
+    RecordContext,
+    RecordCreate,
+)
 from certhub_connector.api.api_models.techdoc.techdoc_models import (
     KnowledgeTopicDetailResponse,
-)
-from certhub_connector.sync.keys import (
-    REQUIRED_RELEASE_EVIDENCE_KEYS,
-    CerthubKeyMap,
-    certhub_key_map_from_schema,
 )
 from certhub_connector.api.client import RecordsClient, TechDocClient
 from certhub_connector.config import CerthubConfig
@@ -27,6 +25,11 @@ from certhub_connector.evidence.pack import (
     load_evidence_manifest,
     load_evidence_result,
     resolve_evidence_url,
+)
+from certhub_connector.sync.keys import (
+    REQUIRED_RELEASE_EVIDENCE_KEYS,
+    CerthubKeyMap,
+    certhub_key_map_from_schema,
 )
 
 _RELEASE_VERSION_RE = re.compile(
@@ -285,7 +288,7 @@ def _values_match(certhub_key: str, expected: object, actual: object) -> bool:
         normalized = value.strip().replace("Z", "+00:00")
         parsed = datetime.fromisoformat(normalized)
         if parsed.tzinfo is None:
-            return parsed.replace(tzinfo=timezone.utc)
+            return parsed.replace(tzinfo=UTC)
         return parsed
 
     try:
@@ -379,6 +382,6 @@ def format_proof(proof: ConfirmProof) -> str:
         f"evidence_url:     {proof.evidence_url}",
         f"details_preview:  {proof.details_preview!r}",
         f"matched:          {proof.matched}",
-        f"confirmed_at:     {datetime.now(timezone.utc).isoformat()}",
+        f"confirmed_at:     {datetime.now(UTC).isoformat()}",
     ]
     return "\n".join(lines)

@@ -3,12 +3,10 @@
 from __future__ import annotations
 
 import pytest
-
 from certhub_connector.sync.keys import (
     REQUIRED_RELEASE_EVIDENCE_KEYS,
     certhub_key_map_from_schema,
 )
-
 
 VALIDATION_RECORDS_SCHEMA = {
     "components": [
@@ -77,11 +75,11 @@ def test_build_record_create_uses_ku_revision_not_history() -> None:
         KnowledgeTopicDetailResponse,
         KnowledgeTopicType,
     )
-    from certhub_connector.sync.keys import certhub_key_map_from_schema
     from certhub_connector.evidence.push import (
         ReleaseEvidenceFields,
         build_record_create,
     )
+    from certhub_connector.sync.keys import certhub_key_map_from_schema
 
     kt = KnowledgeTopicDetailResponse.model_validate(
         {

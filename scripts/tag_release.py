@@ -9,8 +9,8 @@ import subprocess
 from pathlib import Path
 
 from certhub_connector.cli import ui
-from certhub_connector.config.settings import TenantSettings
 from certhub_connector.config.dashboard_url import dashboard_kt_url
+from certhub_connector.config.settings import TenantSettings
 
 _VERSION_RE = re.compile(r"^\d+\.\d+\.\d+$")
 
@@ -64,6 +64,7 @@ def _ref_exists(cwd: Path, ref: str) -> bool:
         capture_output=True,
         text=True,
         cwd=cwd,
+        check=False,
     )
     return result.returncode == 0
 

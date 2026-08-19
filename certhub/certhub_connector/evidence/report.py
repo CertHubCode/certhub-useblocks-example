@@ -3,10 +3,14 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
-from certhub_connector.config.paths import certhub_result_path, git_head_commit, sphinx_generated_dir
+from certhub_connector.config.paths import (
+    certhub_result_path,
+    git_head_commit,
+    sphinx_generated_dir,
+)
 from certhub_connector.evidence.verify import (
     ReqStatus,
     VerificationReport,
@@ -48,7 +52,7 @@ def build_outbound_payload(report: VerificationReport) -> dict:
         "project": report.project_id,
         "version": report.project_version,
         "commit": git_head_commit(),
-        "generatedAt": datetime.now(timezone.utc).isoformat(),
+        "generatedAt": datetime.now(UTC).isoformat(),
         "certificationStatus": report.certification_status.value,
         "totals": report.totals,
         "requirements": req_payload,

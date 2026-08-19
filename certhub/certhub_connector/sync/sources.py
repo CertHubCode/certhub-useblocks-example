@@ -9,9 +9,9 @@ from typing import Protocol
 
 from certhub_connector.api.client import RecordsClient, TechDocClient, TracerClient
 from certhub_connector.config import CerthubConfig
+from certhub_connector.config.paths import certhub_generated_dir
 from certhub_connector.sync.mapper import map_records_to_export
 from certhub_connector.sync.models import CertHubExport
-from certhub_connector.config.paths import certhub_generated_dir
 from certhub_connector.sync.requirements_use_case import (
     TOPIC_COMPONENT,
     TOPIC_DESIGN_OUTPUT,
