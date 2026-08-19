@@ -10,7 +10,7 @@ jobs:
   evidence:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install graphviz and PlantUML
         run: |
@@ -18,7 +18,7 @@ jobs:
           sudo apt-get install -y graphviz default-jre-headless plantuml
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v6
 
       - name: Sync from CertHub
         env:
@@ -30,7 +30,7 @@ jobs:
 
       - name: Upload evidence artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: evidence-${{ github.sha }}-${{ github.run_id }}
           path: evidence/

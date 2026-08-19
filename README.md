@@ -114,6 +114,16 @@ After `make show`, open `sphinx/build/html/dashboard.html` and
 `make show` / `make evidence` never write to CertHub. Only `push-evidence --push`
 (or the release workflow) POSTs one Release Record row.
 
+## Customer-facing guides
+
+For the general pattern behind this example (which parts of the V-model belong in CertHub, how to export records, how to write evidence back), see the CertHub documentation:
+
+- [Where does the V-model live when you develop software?](https://docs.certhub.de/1.5%20Implementation%20Guides/v-model-software-outside-certhub)
+- [Export Records from CertHub](https://docs.certhub.de/api/export-records)
+- [Write Evidence Records](https://docs.certhub.de/api/write-evidence-records)
+
+This repository is one complete implementation of that pattern using useblocks and GitHub Actions.
+
 ## Docs
 
 | Doc | What |
