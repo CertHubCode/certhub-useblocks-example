@@ -38,7 +38,7 @@ flowchart TB
 ## Inbound (every `make sync` / PR evidence run)
 
 1. Tech Doc KT metadata + seven Records lists + Tracer use-case edges
-2. Sphinx-Needs RST under `sphinx/source/generated/` (gitignored)
+2. Sphinx-Needs catalog RST under `sphinx/source/generated/` (committed so public clones can browse; `make sync` refreshes from CertHub)
 3. No write to CertHub
 
 ## Engineering gate (`make show` / `make evidence`)

@@ -26,8 +26,12 @@ Python 3.12+ and [uv](https://docs.astral.sh/uv/) are required.
 
 ## Pull requests
 
-- Keep diffs focused. Do not commit `.env`, `evidence/`, `sphinx/build/`, or
-  `sphinx/source/generated/*.rst`.
+- Keep diffs focused. Do not commit `.env`, `evidence/`, `sphinx/build/`,
+  `certhub/generated/`, or per-build Sphinx fragments
+  (`codelinks_needextend.rst`, `certification_summary.rst`).
+- When showcase CertHub content changes, run `make sync` and **do** commit the
+  seven catalog RST files under `sphinx/source/generated/` (requirements,
+  design outputs, verifications, validations) so public clones stay browsable.
 - Offline tests must pass without an API key: `make test`.
 - If you change the SYSREQ → code → VERIF chain, update
   [`docs/traceability-map.md`](docs/traceability-map.md) and

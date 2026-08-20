@@ -5,8 +5,8 @@ name = "Sterilisator 20A — Assurance Evidence"
 srcdir = "."
 
 [source]
-# Sync/CodeLinks write need RST under source/generated/ (gitignored).
-# Index those files; keep Sphinx from treating them as standalone pages via
+# Catalog RST from sync is committed; CodeLinks / certification summary are
+# gitignored. Index the whole tree; Sphinx excludes standalone pages via
 # conf.py exclude_patterns.
 respect_gitignore = false
 extend_include = ["generated/**/*.rst"]

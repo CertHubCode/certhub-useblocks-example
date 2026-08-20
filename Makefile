@@ -146,12 +146,15 @@ fix:
 clean:
 	rm -rf sphinx/build reports/junit.xml reports/codelinks_analysis.json
 	rm -rf reports/codelinks_raw
-	rm -rf sphinx/source/generated/*.rst certhub/generated/*
+	# Keep committed Sphinx-Needs catalog RST; remove only per-build fragments + raw API dumps.
+	rm -f sphinx/source/generated/codelinks_needextend.rst \
+		sphinx/source/generated/certification_summary.rst
+	rm -rf certhub/generated/*
 	rm -rf evidence
 	rm -rf .pytest_cache
 	mkdir -p sphinx/source/generated certhub/generated
 	touch sphinx/source/generated/.gitkeep certhub/generated/.gitkeep
-	@echo "Cleaned generated artifacts."
+	@echo "Cleaned generated artifacts (catalog RST kept)."
 
 # ---- Schema fetch + client/model generation ----
 

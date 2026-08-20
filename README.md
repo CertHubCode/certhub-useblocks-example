@@ -6,8 +6,10 @@
 
 Cadence is CertHub’s public example of an **engineering evidence loop**:
 controlled requirements stay in CertHub; this repo syncs them into Sphinx-Needs;
-useblocks (Needs / CodeLinks / Test-Reports) builds an evidence pack from real
-Git work on the fictional **Sterilisator 20A** SaMD.
+open-source useblocks (Sphinx-Needs / CodeLinks / Test-Reports) builds an
+evidence pack from real Git work on the fictional **Sterilisator 20A** SaMD.
+Commercial useblocks products (ubCode, ubTrace) are optional — same files, no
+migration.
 
 ```mermaid
 flowchart LR
@@ -46,6 +48,36 @@ make fix && make show         # back to GREEN
 Committed [`certhub.toml`](certhub.toml) is the **showcase tenant**. To point at
 your own product, copy [`certhub.toml.example`](certhub.toml.example) and follow
 [docs/onboarding.md](docs/onboarding.md).
+
+## useblocks in your code
+
+This pattern is portable — Cadence is one reference, not a prescribed toolchain.
+See [Working example](https://docs.certhub.de/api/overview/working-example).
+
+Integrations live **in the repo**: Sphinx-Needs objects in RST, CodeLinks
+comments in product/test code (`# @need-ids:`), Test-Reports from JUnit. No
+commercial license is required to clone, sync, and `make show`.
+
+Adopt more of the open-source stack when you want it (filters, needflow, extra
+need types, more CodeLinks projects). Same files, same Sphinx build.
+
+When you want an IDE or a live web model, plug in
+[ubCode](https://ubcode.useblocks.com/) and/or
+[ubTrace](https://ubtrace.useblocks.com/latest/) — they read the same
+Sphinx-Needs / `ubproject.toml` / CodeLinks data. You do not migrate the
+markers or the evidence loop.
+
+```mermaid
+flowchart LR
+  Code["Your code plus CodeLinks"] --> Needs["Sphinx-Needs OSS"]
+  Needs --> Optional["ubCode IDE or ubTrace web"]
+```
+
+| Layer | What | License |
+|-------|------|---------|
+| In-repo | Sphinx-Needs, CodeLinks, Test-Reports | Open source (MIT) |
+| Optional IDE | [ubCode](https://ubcode.useblocks.com/) (VS Code + `ubc` CLI) | Free for public OSS; paid for private |
+| Optional web | [ubTrace](https://ubtrace.useblocks.com/latest/) | Paid — not wired in this example |
 
 ## CI and release
 
@@ -113,13 +145,15 @@ After `make show`, open `sphinx/build/html/dashboard.html` and
 
 ## Customer-facing guides
 
-For the general pattern behind this example (which parts of the V-model belong in CertHub, how to export records, how to write evidence back), see the CertHub documentation:
+This repository is **not** a prescribed toolchain. You talk to CertHub through
+the API; how you implement the bottom of the V is your choice. Cadence is one
+reference implementation — replace the engineering stack with your own and keep
+the same export / write-back pattern.
 
+- [Working example](https://docs.certhub.de/api/overview/working-example) — annotated V, your choices vs this example
 - [Where does the V-model live when you develop software?](https://docs.certhub.de/1.5%20Implementation%20Guides/v-model-software-outside-certhub)
 - [Export Records from CertHub](https://docs.certhub.de/api/export-records)
 - [Write Evidence Records](https://docs.certhub.de/api/write-evidence-records)
-
-This repository is one complete implementation of that pattern using useblocks and GitHub Actions.
 
 ## Docs
 
@@ -168,12 +202,21 @@ make generate-api         # fetch OpenAPI, keep x-public ops, regenerate clients
 
 `make sync` requires `CERTHUB_API_KEY` and pulls Tech Doc + Records + Tracer use-case links into Sphinx-Needs.
 
-## ubCode (commercial editor trial)
+## Optional: ubCode (paid IDE) and ubTrace (paid web)
 
-Real-time Sphinx-Needs editing via the **ubCode** extension (`useblocks.ubcode`).
-The Marketplace listing is **VS Code only** (not Cursor).
+Cadence already works without commercial useblocks products: `make sync` /
+`make show` use open-source Sphinx-Needs, CodeLinks, and Test-Reports only.
+Install the products below when you want live IDE feedback or a browser
+dashboard on the **same** RST / `ubproject.toml` / CodeLinks files.
 
-### Setup
+### ubCode — VS Code IDE
+
+[ubCode](https://ubcode.useblocks.com/) (`useblocks.ubcode`) gives real-time
+Needs Index, graph, diagnostics, and MCP. The Marketplace listing is **VS Code
+only** (not Cursor). Free for public OSS repos; a license is required for
+private use.
+
+#### Setup
 
 1. In **VS Code**, install the extension (repo root recommends it via `.vscode/extensions.json`).
 2. Put your license in **macOS** `~/Library/Application Support/ubcode/ubcode.toml` (never commit):
@@ -191,7 +234,8 @@ The Marketplace listing is **VS Code only** (not Cursor).
    (see `.vscode/settings.json`). Needs config is shared with Sphinx via
    [`sphinx/source/ubproject.toml`](sphinx/source/ubproject.toml) (`needs_from_toml` in `conf.py`).
 
-4. Ensure generated needs exist, then refresh ubCode:
+4. The V-model catalog RST already ships under `sphinx/source/generated/`.
+   To refresh from CertHub (needs API key) and then refresh ubCode:
 
    ```bash
    make sync
@@ -201,10 +245,13 @@ The Marketplace listing is **VS Code only** (not Cursor).
    After a Sphinx HTML build (`make show` / script `needs:json`), Needs JSON loads
    `sphinx/build/html/needs.json` (`needs_build_json = True` in `conf.py`).
 
-### Config notes
+#### Config notes
 
-- Need RST is written under `sphinx/source/generated/` (same tree as `ubproject.toml`),
-  so ubCode indexes it with `[source] respect_gitignore = false` +
+- Catalog Need RST (requirements, design outputs, verifications, validations) is
+  committed under `sphinx/source/generated/` so a public clone can browse without
+  CertHub. `make sync` overwrites those files from the SoR. Per-build fragments
+  (`codelinks_needextend.rst`, `certification_summary.rst`) stay gitignored.
+  ubCode indexes the tree with `[source] respect_gitignore = false` +
   `extend_include = ["generated/**/*.rst"]`. Sphinx still excludes that folder from
   standalone pages (`exclude_patterns`); hand-written pages `.. include:: generated/…`.
 - `[needs_json]` — Sphinx-built `sphinx/build/html/needs.json` (`needs_build_json = True`).
@@ -216,19 +263,17 @@ The Marketplace listing is **VS Code only** (not Cursor).
 Redirect stub `src/sterilisator_20a/ubproject.redirect.toml` points CodeLinks source
 markers at `sphinx/source/`.
 
-### Sidebar map (what you can do)
+#### What you get in the IDE
 
 | View | Purpose |
 |------|---------|
-| **Needs Index** | Live browse/filter/group of SYSREQ/DOUT/VERIF (and links); click-through to RST |
+| **Needs Index** | Live browse/filter/group of SYSREQ/DOUT/VERIF; click-through to RST |
 | **Needs Graph** | Interactive SYSREQ↔DOUT↔VERIF link graph |
-| **Needs JSON** | Tree of Sphinx-built `needs.json` (includes Test-Reports needs after HTML build) |
+| **Needs JSON** | Tree of Sphinx-built `needs.json` (includes Test-Reports after HTML build) |
 | **Diagnostics** | RST / needs lint as you type |
-| **Std referencing / Site Map** | toctree docs and cross-refs |
 | **Reports** | Render `ubcode_reports/*.html.j2` → preview or Open in Browser |
-| **Home** | License, restart LS, docs links |
 
-Also useful: RST preview, go-to-definition on need IDs, Diff & impact, MCP / `@pharaoh`
+Also useful: RST preview, go-to-definition on need IDs, Diff & impact, MCP
 (license-dependent). Docs: <https://ubcode.useblocks.com/>.
 
 Re-export Needs TOML after changing types/fields in `conf.py` (rare — prefer editing
@@ -239,6 +284,14 @@ cd sphinx/source && uv run export_needs_toml.py
 ```
 
 If activation fails with “Could not find license key”, confirm with useblocks that the key is provisioned for **ubCode** and bound to your email.
+
+### ubTrace — web dashboard (not in this example)
+
+[ubTrace](https://ubtrace.useblocks.com/latest/) is useblocks’ paid browser
+layer for large-team Sphinx-Needs analysis (coverage, search, RBAC). It uses
+the same Sphinx-Needs data model. This repository ships Sphinx HTML via
+`make show` / `make evidence` and does **not** run an ubTrace server — treat
+ubTrace as a later plug-in when your team outgrows static HTML.
 
 ## Layout
 
@@ -253,7 +306,7 @@ If activation fails with “Could not find license key”, confirm with useblock
 | `schemas/` | Fetched OpenAPI specs |
 | `sphinx/source/` | Hand-written Sphinx assurance pages (dashboard, catalogs, traceability, release evidence) |
 | `sphinx/source/ubproject.toml` | Shared Sphinx-Needs + ubCode config (`needs_from_toml`) |
-| `sphinx/source/generated/` | Needs RST written by sync / CodeLinks / report (gitignored; included by pages) |
+| `sphinx/source/generated/` | Synced V-model catalog RST (committed); CodeLinks / certification summary (gitignored) |
 | `sphinx/source/ubcode_reports/` | ubCode Jinja report templates (`.html.j2`) |
 | `sphinx/build/` | HTML output (open `dashboard.html`) |
 | `sphinx/utils/` | Optional `plantuml.jar` download target (`make ensure-plantuml`) |

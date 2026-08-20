@@ -4,8 +4,9 @@ sphinx/utils/plantuml.jar
 reports/junit.xml
 reports/codelinks_analysis.json
 reports/codelinks_raw/
-sphinx/source/generated/*.rst
-!sphinx/source/generated/.gitkeep
+# Per-build Sphinx fragments (CodeLinks / verify). Catalog RST from sync is tracked.
+sphinx/source/generated/codelinks_needextend.rst
+sphinx/source/generated/certification_summary.rst
 certhub/generated/*
 !certhub/generated/.gitkeep
 # CI evidence pack only (not certhub_connector/evidence/)
