@@ -24,26 +24,42 @@ missing_dout     System requirement has no linked Design Output
 Traceability graph
 ------------------
 
-Linked V-model graph (edges from ``links`` / ``verifies`` / ``validates``).
-Orphan previous-generation Design Outputs are excluded so the sterilizer chain
-stays readable.
+Full Sterilisator V-model graph (edges from ``links`` / ``verifies`` / ``validates``).
 
 .. needflow:: Traceability graph
-   :filter: type in ["sysreq", "verif", "valid"] or id in ["DOUT_001", "DOUT_002", "DOUT_003", "DOUT_004", "DOUT_018"]
+   :filter: type in ["ureq", "sysreq", "creq", "unitreq", "dout", "verif", "valid"]
    :link_types: links, verifies, validates
    :show_link_names:
    :show_legend:
 
-System Requirement ↔ Design Output → code
--------------------------------------------
+User → System → Component → Unit
+--------------------------------
+
+.. needtable:: User Requirements
+   :filter: type == "ureq"
+   :columns: id;title;links
+   :style: datatables
 
 .. needtable:: System Requirements
    :filter: type == "sysreq"
-   :columns: id;title;status
+   :columns: id;title;status;links
    :style: datatables
 
+.. needtable:: Component Requirements
+   :filter: type == "creq"
+   :columns: id;title;links
+   :style: datatables
+
+.. needtable:: Unit Requirements
+   :filter: type == "unitreq"
+   :columns: id;title;links
+   :style: datatables
+
+System Requirement ↔ Design Output → code
+-------------------------------------------
+
 .. needtable:: Design Output → inputs and code
-   :filter: type == "dout" and id in ["DOUT_001", "DOUT_002", "DOUT_003", "DOUT_004", "DOUT_018"]
+   :filter: type == "dout"
    :columns: id;title;links;impl-file;local-url;remote-url
    :style: datatables
 

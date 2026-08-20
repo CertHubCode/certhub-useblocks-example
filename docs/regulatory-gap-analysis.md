@@ -44,14 +44,19 @@ Risk management, GSPR, clinical evaluation, labeling, PMS, and formal approvals 
 
 ### Traceability chain (as implemented)
 
+Two jobs: CertHub is the ISO 13485 7.3.2(e) matrix; this repo tags GPSV §5.2.4’s
+last hop (code → design specification, tests → that spec). See
+[docs/traceability-map.md](traceability-map.md).
+
 ```text
-CertHub KTs (UREQ/SYSREQ/CREQ/UNITREQ/DOUT/VERIF/VALID)
-    → make sync → Sphinx-Needs
-SYSREQ_* ←links← DOUT_* (product DO: DOUT_018)
-DOUT_018 → CodeLinks → src/sterilisator_20a/**
-VERIF_*  → CodeLinks + pytest → src/sterilisator_20a/tests/ + JUnit
-Gate root = System Requirements (not UREQ)
+CertHub KTs (UREQ/SYSREQ/CREQ/UNITREQ/DOUT/VERIF/VALID) + Tracer
+    → make sync → Sphinx-Needs catalog (including unlinked rows)
+SYSREQ_* ←Tracer→ DOUT_018 → CodeLinks → src/sterilisator_20a/**
+SYSREQ_* ←Tracer→ VERIF_*  → CodeLinks + pytest → tests/ + JUnit
+UREQ ←→ VALID              → catalog only (intended use; not pytest)
+Gate root = System Requirements (walked via DOUT/VERIF, not stamped on source)
 Outbound = one Release Record (not full Tech Doc upload)
+Risk controls (62304 5.1.1(c) / ISO 14971) stay in CertHub
 ```
 
 ---
@@ -84,15 +89,15 @@ Legend: **Done** = Cadence can show it for Sterilisator 20A · **Partial** = pre
 
 | Item | Status | Notes |
 |---|---|---|
-| User needs / UREQ | Partial | Synced; tenant may still hold non-sterilizer UREQ text |
-| System requirements (SoR) | Done | Gate root; `SYSREQ_001`–`004` |
-| Component / unit requirements | Partial | Synced; not in gate |
-| Design outputs | Done | DOUT catalog + links; product DO `DOUT_018` |
-| Implementation ↔ DOUT | Done | CodeLinks to `src/sterilisator_20a/` |
+| User needs / UREQ | Done | `UREQ_001`–`002` sterilizer needs; VALID links to UREQ |
+| System requirements (SoR) | Done | Gate root; `SYSREQ_001`–`004` (temp, time, door, English UI) |
+| Component / unit requirements | Done | 3 CREQ + 5 UNITREQ synced; not in gate |
+| Design outputs | Done | Product DO `DOUT_018` + CodeLinks |
+| Implementation ↔ DOUT | Done | CodeLinks to `src/sterilisator_20a/` (cycle, safety, UI) |
 | Architecture / detailed design docs | Gap | Thin simulation code; no formal SW architecture KT in pack |
 | Design reviews | CertHub | Not in evidence pack |
-| Verification protocols + results | Partial / Done | VERIF content in CertHub; execution in pytest/JUnit/Sphinx |
-| Validation protocols + results | Partial | VALID synced; **not in the engineering gate** (manual / N/A KPI on the dashboard); often linked to SYSREQ not UREQ |
+| Verification protocols + results | Done | VERIF in CertHub; execution in pytest/JUnit/Sphinx |
+| Validation protocols + results | Done (manual) | `VALID_001`–`002` → UREQ; **not in the engineering gate** |
 | Traceability matrix | Done | Sphinx matrices + (after fix) needflow graph + ubCode chain report |
 | Risk ↔ requirements | CertHub | Keep in CertHub; optional future: show risk IDs as links only |
 
@@ -143,12 +148,11 @@ These are the improvements that belong in Cadence code/docs (implementation trac
 4. **Sphinx tables** — DOUT/VERIF columns include implementation URLs; certification summary lists implementation (**done**).
 5. **This gap analysis** — pack mapped to EU/US checklists; CertHub boundaries explicit (**done**).
 6. **Optional later (still repo):**
-   - Per-feature CodeLinks on `DOUT_001`–`004` instead of only `DOUT_018`
-   - Stronger UREQ↔VALID title join once sterilizer UREQs are clean in CertHub
+   - Split `DOUT_018` into feature-level design outputs in CertHub, then split
+     the `@need-ids:` markers (do **not** put CodeLinks on procedure
+     `DOUT_001`–`004`)
+   - Stronger UREQ↔VALID Tracer links once sterilizer UREQs are clean in CertHub
    - PDF/LaTeX builder if customers need a single signed PDF twin
-
-CertHub content cleanup (legacy DOUT links, UNITREQ text):
-[`docs/certhub-content-cleanup.md`](certhub-content-cleanup.md).
 
 ### 5.2 Additional steps outside “random Sphinx polish” (CertHub + QMS)
 
@@ -199,8 +203,8 @@ Anything not in 1–7 should not appear as if Cadence “owns” it.
               ▼                                │ (full release only)
 ┌─────────────────────────────────────────────┴───────────┐
 │ This repo / CI                                          │
-│  CodeLinks · pytest · gate · Sphinx HTML · evidence/    │
-│  ubCode Rendered Report (SYSREQ → code → test)          │
+│  CodeLinks on DOUT · pytest on VERIF · gate · Sphinx    │
+│  ubCode Rendered Report (SYSREQ via Tracer → DOUT → test)│
 └─────────────────────────────────────────────────────────┘
 ```
 

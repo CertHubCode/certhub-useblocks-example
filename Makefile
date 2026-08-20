@@ -8,7 +8,6 @@ DASHBOARD := $(ROOT)sphinx/build/html/dashboard.html
 VERSION ?=
 RC ?= 1
 BASELINE ?= $(VERSION)
-CONFIRM_CLEANUP ?= 0
 
 CERTHUB_TOML := $(ROOT)certhub.toml
 
@@ -40,6 +39,7 @@ TRACER_MODEL_DIR = $(MODEL_DIR)/tracer
 	tag-rc tag-release push-evidence confirm ensure-plantuml \
 	open-requirements open-release-record \
 	init-schemas fetch-techdoc-schema fetch-records-schema fetch-tracer-schema \
+	filter-techdoc-schema filter-records-schema filter-tracer-schema \
 	generate-techdoc-client generate-records-client generate-tracer-client \
 	generate-techdoc-models generate-records-models generate-api
 
@@ -127,9 +127,7 @@ push-evidence: install
 # Live round-trip proof. Example: make confirm BASELINE=0.0.99
 confirm: evidence
 	@test -n "$(BASELINE)" || (echo "USAGE: make confirm BASELINE=0.0.99"; exit 2)
-	@cleanup_flag=""; \
-	if [ "$(CONFIRM_CLEANUP)" = "1" ]; then cleanup_flag="--cleanup"; fi; \
-	$(UV) run cadence confirm --baseline "$(BASELINE)" --from evidence $$cleanup_flag
+	$(UV) run cadence confirm --baseline "$(BASELINE)" --from evidence
 
 open-requirements: install
 	$(UV) run cadence open-requirements
@@ -148,12 +146,15 @@ fix:
 clean:
 	rm -rf sphinx/build reports/junit.xml reports/codelinks_analysis.json
 	rm -rf reports/codelinks_raw
-	rm -rf sphinx/source/generated/*.rst certhub/generated/*
+	# Keep committed Sphinx-Needs catalog RST; remove only per-build fragments + raw API dumps.
+	rm -f sphinx/source/generated/codelinks_needextend.rst \
+		sphinx/source/generated/certification_summary.rst
+	rm -rf certhub/generated/*
 	rm -rf evidence
 	rm -rf .pytest_cache
 	mkdir -p sphinx/source/generated certhub/generated
 	touch sphinx/source/generated/.gitkeep certhub/generated/.gitkeep
-	@echo "Cleaned generated artifacts."
+	@echo "Cleaned generated artifacts (catalog RST kept)."
 
 # ---- Schema fetch + client/model generation ----
 
@@ -187,7 +188,17 @@ fetch-tracer-schema: init-schemas install
 	@$(UV) run --group codegen openapi-spec-validator $(TRACER_SCHEMA_FILE) \
 		|| echo "WARNING: openapi-spec-validator failed for Tracer (continuing)"
 
-generate-techdoc-client: fetch-techdoc-schema
+# Keep only @public_api / x-public: true operations (same contract as CertHub docs).
+filter-techdoc-schema: fetch-techdoc-schema
+	$(UV) run python -m certhub_connector.api.filter_public $(TECHDOC_SCHEMA_FILE)
+
+filter-records-schema: fetch-records-schema
+	$(UV) run python -m certhub_connector.api.filter_public $(RECORDS_SCHEMA_FILE)
+
+filter-tracer-schema: fetch-tracer-schema
+	$(UV) run python -m certhub_connector.api.filter_public $(TRACER_SCHEMA_FILE)
+
+generate-techdoc-client: filter-techdoc-schema
 	rm -rf $(TECHDOC_CLIENT_DIR)
 	mkdir -p $(CLIENT_DIR)
 	$(UV) run --group codegen openapi-python-client generate \
@@ -196,7 +207,7 @@ generate-techdoc-client: fetch-techdoc-schema
 		--meta none \
 		--overwrite
 
-generate-records-client: fetch-records-schema
+generate-records-client: filter-records-schema
 	rm -rf $(RECORDS_CLIENT_DIR)
 	mkdir -p $(CLIENT_DIR)
 	$(UV) run --group codegen openapi-python-client generate \
@@ -205,7 +216,7 @@ generate-records-client: fetch-records-schema
 		--meta none \
 		--overwrite
 
-generate-tracer-client: fetch-tracer-schema
+generate-tracer-client: filter-tracer-schema
 	rm -rf $(TRACER_CLIENT_DIR)
 	mkdir -p $(CLIENT_DIR)
 	$(UV) run --group codegen openapi-python-client generate \
@@ -214,7 +225,7 @@ generate-tracer-client: fetch-tracer-schema
 		--meta none \
 		--overwrite
 
-generate-techdoc-models: fetch-techdoc-schema
+generate-techdoc-models: filter-techdoc-schema
 	mkdir -p $(TECHDOC_MODEL_DIR)
 	$(UV) run --group codegen python -m datamodel_code_generator \
 		--input $(TECHDOC_SCHEMA_FILE) \
@@ -227,7 +238,7 @@ generate-techdoc-models: fetch-techdoc-schema
 		--collapse-root-models \
 		--target-python-version 3.12
 
-generate-records-models: fetch-records-schema
+generate-records-models: filter-records-schema
 	mkdir -p $(RECORDS_MODEL_DIR)
 	$(UV) run --group codegen python -m datamodel_code_generator \
 		--input $(RECORDS_SCHEMA_FILE) \
@@ -243,8 +254,8 @@ generate-records-models: fetch-records-schema
 generate-api: generate-techdoc-client generate-records-client generate-tracer-client \
 	generate-techdoc-models generate-records-models
 	@echo ""
-	@echo "Generated TechDoc + Records + Tracer clients; TechDoc + Records Pydantic models."
-	@echo "  schemas: $(SCHEMA_DIR)/"
+	@echo "Generated public-only TechDoc + Records + Tracer clients; TechDoc + Records Pydantic models."
+	@echo "  schemas: $(SCHEMA_DIR)/  (x-public filtered)"
 	@echo "  clients: $(CLIENT_DIR)/"
 	@echo "  models:  $(MODEL_DIR)/ (no tracer Pydantic — attrs client models only)"
 	@rm -rf $(TRACER_MODEL_DIR)

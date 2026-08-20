@@ -12,9 +12,8 @@ cp .env.example .env
 
 ## `make sync` returns 401 / 403
 
-The key does not match the environment in `certhub.toml` (prod vs dev), or it
-lacks Records / Tech Doc / Tracer access. Confirm the same key works in the
-CertHub UI.
+The key is invalid, expired, or lacks Records / Tech Doc / Tracer access for
+the tenant in `certhub.toml`. Confirm the same key works in the CertHub UI.
 
 ## `make sync` returns 404 or empty catalogs
 
@@ -53,8 +52,8 @@ key is bound to your email. See the ubCode section in the README.
 
 ## Gate VERIFIED but the implementation column looks wrong
 
-Each SYSREQ should cite the **matching** source file (temperature →
-`cycle/controller.py`, UI → `ui/messages.py`, footprint → `enclosure/footprint.py`).
+Each SYSREQ should cite the **matching** source file (temperature / cycle →
+`cycle/controller.py`, door → `safety/door.py`, English UI → `ui/messages.py`).
 If every row shows the same function, re-run `make show` on a tree that includes
 the current `verify.py` picker. See [traceability map](traceability-map.md).
 
@@ -63,9 +62,13 @@ the current `verify.py` picker. See [traceability map](traceability-map.md).
 `make fix` restores `reported_cycle_duration_minutes()`. Do not commit the broken
 line.
 
-## Generated OpenAPI clients look huge
+## Generated OpenAPI clients
 
-That is expected. Hand-written code lives under
-`certhub/certhub_connector/{cli,config,api,sync,evidence}/` excluding
-`api/clients/`. Regenerate with `make generate-api`. Do not edit client files
-by hand.
+`make generate-api` fetches live OpenAPI, keeps only operations marked
+`x-public: true` (same public surface as the CertHub API docs), then regenerates
+`api/clients/` (attrs HTTP stubs) and `api/api_models/` (Pydantic for Tech Doc /
+Records). Hand-written code lives under
+`certhub/certhub_connector/{cli,config,api,sync,evidence}/` excluding those
+generated trees. Regeneration can rename client symbols and break imports in
+`api/client.py` until that wrapper is updated. Do not edit generated files by
+hand. Not needed for Quickstart.

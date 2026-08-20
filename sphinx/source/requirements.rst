@@ -1,13 +1,14 @@
 Requirements
 ============
 
-System Requirements imported from CertHub (SoR). Sphinx IDs (``SYSREQ_*``) follow
-the requirement topic number. The stable CertHub identity is ``external_id``.
+V-model requirements imported from CertHub (SoR): user → system → component →
+unit. Sphinx IDs (``SYSREQ_*``, ``UREQ_*``, …) follow the prefixed Name fields.
+The stable CertHub identity is ``external_id``.
+
+System Requirements
+-------------------
 
 .. include:: generated/system_requirements.rst
-
-Overview
---------
 
 .. needtable:: System Requirements catalog
    :filter: type == "sysreq"

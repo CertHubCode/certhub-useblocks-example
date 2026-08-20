@@ -4,10 +4,24 @@
 
 # Cadence — CertHub SaMD Engineering Loop
 
+## The product — Sterilisator 20A
+
+This repository is the engineering twin of a fictional **tabletop steam
+sterilizer** for small clinics. Staff load reusable instruments, close the
+chamber door, and start a cycle. The software under test
+(`src/sterilisator_20a/`) evaluates whether the chamber reached **121°C ± 2°C**,
+whether the cycle finished within **60 minutes**, keeps the **door locked** while
+the cycle is running, and shows **English** status (idle, running, complete,
+fault). Controlled requirements live in CertHub; this repo syncs them, links
+them to that sterilizer code and its tests, and builds the evidence pack.
+**Cadence is the loop; Sterilisator 20A is what the loop is about.**
+
 Cadence is CertHub’s public example of an **engineering evidence loop**:
 controlled requirements stay in CertHub; this repo syncs them into Sphinx-Needs;
-useblocks (Needs / CodeLinks / Test-Reports) builds an evidence pack from real
-Git work on the fictional **Sterilisator 20A** SaMD.
+open-source useblocks (Sphinx-Needs / CodeLinks / Test-Reports) builds an
+evidence pack from real Git work on that SaMD.
+Commercial useblocks products (ubCode, ubTrace) are optional — same files, no
+migration.
 
 ```mermaid
 flowchart LR
@@ -21,7 +35,7 @@ flowchart LR
 
 - Python 3.12+
 - [uv](https://docs.astral.sh/uv/)
-- A CertHub API key (`CERTHUB_API_KEY`) for `make sync`
+- A CertHub API key (`CERTHUB_API_KEY`) for `make sync` — [create one in Settings → API Keys](https://docs.certhub.de/api/getting-started)
 - Optional: PlantUML on PATH (or `make ensure-plantuml`) for needflow graphs
 - Optional: CodeLinks CLI — `scripts/run_codelinks.py` falls back to `@need-ids:` grep
 
@@ -31,7 +45,7 @@ flowchart LR
 git clone https://github.com/CertHubCode/certhub-useblocks-example.git
 cd certhub-useblocks-example
 make install
-cp .env.example .env          # set CERTHUB_API_KEY
+cp .env.example .env          # set CERTHUB_API_KEY (see https://docs.certhub.de/api/getting-started)
 make sync                     # CertHub → Sphinx-Needs
 make show                     # tests + CodeLinks + gate + open dashboard
 ```
@@ -46,6 +60,36 @@ make fix && make show         # back to GREEN
 Committed [`certhub.toml`](certhub.toml) is the **showcase tenant**. To point at
 your own product, copy [`certhub.toml.example`](certhub.toml.example) and follow
 [docs/onboarding.md](docs/onboarding.md).
+
+## useblocks in your code
+
+This pattern is portable — Cadence is one reference, not a prescribed toolchain.
+See [Working example](https://docs.certhub.de/api/overview/working-example).
+
+Integrations live **in the repo**: Sphinx-Needs objects in RST, CodeLinks
+comments in product/test code (`# @need-ids:`), Test-Reports from JUnit. No
+commercial license is required to clone, sync, and `make show`.
+
+Adopt more of the open-source stack when you want it (filters, needflow, extra
+need types, more CodeLinks projects). Same files, same Sphinx build.
+
+When you want an IDE or a live web model, plug in
+[ubCode](https://ubcode.useblocks.com/) and/or
+[ubTrace](https://ubtrace.useblocks.com/latest/) — they read the same
+Sphinx-Needs / `ubproject.toml` / CodeLinks data. You do not migrate the
+markers or the evidence loop.
+
+```mermaid
+flowchart LR
+  Code["Your code plus CodeLinks"] --> Needs["Sphinx-Needs OSS"]
+  Needs --> Optional["ubCode IDE or ubTrace web"]
+```
+
+| Layer | What | License |
+|-------|------|---------|
+| In-repo | Sphinx-Needs, CodeLinks, Test-Reports | Open source (MIT) |
+| Optional IDE | [ubCode](https://ubcode.useblocks.com/) (VS Code + `ubc` CLI) | Free for public OSS; paid for private |
+| Optional web | [ubTrace](https://ubtrace.useblocks.com/latest/) | Paid — not wired in this example |
 
 ## CI and release
 
@@ -72,18 +116,31 @@ Forks do not inherit that secret; offline tests still run. Details:
 
 ## Traceability model
 
+Two jobs, not one annotation scheme. CertHub holds the design-control
+**matrix** (ISO 13485 7.3.2(e): outputs traced to inputs). This repo tags only
+the last hop FDA GPSV §5.2.4 names for source: **design output** on
+implementation, **verification** on tests. System requirements still close the
+gate, via Tracer, not via extra comments.
+
 ```text
-SYSREQ → DOUT (product: DOUT_018) → @need-ids: on source → VERIF → pytest / JUnit
+SYSREQ ←Tracer→ DOUT_018  →  # @need-ids: DOUT_018 on source
+SYSREQ ←Tracer→ VERIF_00N →  # @need-ids: VERIF_00N + pytest.mark.certhub_test
 ```
 
-| SYSREQ | Code | Test |
-|--------|------|------|
+| SYSREQ | Code (tagged `DOUT_018`) | Test (tagged `VERIF_*`) |
+|--------|--------------------------|-------------------------|
 | SYSREQ_001 temperature | `src/sterilisator_20a/cycle/controller.py` | VERIF_001 |
 | SYSREQ_002 cycle time | `src/sterilisator_20a/cycle/controller.py` | VERIF_002 |
-| SYSREQ_003 English UI | `src/sterilisator_20a/ui/messages.py` | VERIF_003 |
-| SYSREQ_004 footprint | `src/sterilisator_20a/enclosure/footprint.py` | VERIF_004 |
+| SYSREQ_003 door interlock | `src/sterilisator_20a/safety/door.py` | VERIF_003 |
+| SYSREQ_004 English UI | `src/sterilisator_20a/ui/messages.py` | VERIF_004 |
 
-Full table and showcase limitations: [docs/traceability-map.md](docs/traceability-map.md).
+UREQ / CREQ / UNITREQ / VALID sync into the Sphinx catalog. They are not
+marked in `src/`. The showcase V-model is **2 user needs → 4 system specs →
+3 components → 5 unit specs → 1 design output; 4 verifications + 2 validations**.
+
+Why this split, with citations:
+[V-model guide](https://docs.certhub.de/1.5%20Implementation%20Guides/v-model-software-outside-certhub)
+and the worked example in [docs/traceability-map.md](docs/traceability-map.md).
 
 After `make show`, open `sphinx/build/html/dashboard.html` and
 `traceability.html`:
@@ -96,13 +153,13 @@ After `make show`, open `sphinx/build/html/dashboard.html` and
 
 ## Showcase limitations
 
-- **One product design output.** Source markers use `DOUT_018`. Procedure and
-  legacy catalog DOUTs in CertHub are filtered out of the Sphinx graph.
-- **VALID is manual.** Validation protocols sync into the pack but do not close
+- **One product design output.** Source markers use `DOUT_018`. Procedure
+  DOUTs stay in the catalog without CodeLinks; they are not software. Other-
+  product or leftover rows are a CertHub SoR problem, not a reason to sync
+  fewer knowledge topics.
+- **VALID is manual.** Validation protocols sync into the pack (ISO 13485
+  7.3.7 / 21 CFR 820.30(g): user needs and intended use) but do not close
   the engineering gate.
-- **CertHub catalog noise.** Some UNITREQ / UREQ / DOUT rows on the showcase
-  tenant are leftover from other demo products. See
-  [docs/certhub-content-cleanup.md](docs/certhub-content-cleanup.md).
 
 ## Boundary
 
@@ -116,18 +173,22 @@ After `make show`, open `sphinx/build/html/dashboard.html` and
 
 ## Customer-facing guides
 
-For the general pattern behind this example (which parts of the V-model belong in CertHub, how to export records, how to write evidence back), see the CertHub documentation:
+This repository is **not** a prescribed toolchain. You talk to CertHub through
+the API; how you implement the last hop into source is your choice. Cadence is
+one reference implementation — replace the engineering stack with your own and
+keep the same export / write-back pattern. The V-model *records* stay in
+CertHub; only design outputs and verification tests are tagged in code.
 
+- [Working example](https://docs.certhub.de/api/overview/working-example) — annotated V, your choices vs this example
 - [Where does the V-model live when you develop software?](https://docs.certhub.de/1.5%20Implementation%20Guides/v-model-software-outside-certhub)
 - [Export Records from CertHub](https://docs.certhub.de/api/export-records)
 - [Write Evidence Records](https://docs.certhub.de/api/write-evidence-records)
-
-This repository is one complete implementation of that pattern using useblocks and GitHub Actions.
 
 ## Docs
 
 | Doc | What |
 |-----|------|
+| [docs/traceability-map.md](docs/traceability-map.md) | What to mark in code, why (GPSV / 13485), four-row map |
 | [docs/walkthrough.md](docs/walkthrough.md) | GREEN → RED → evidence → release → CertHub UI |
 | [docs/onboarding.md](docs/onboarding.md) | Showcase tenant vs your own KT ids |
 | [docs/architecture.md](docs/architecture.md) | Data flow |
@@ -140,7 +201,6 @@ This repository is one complete implementation of that pattern using useblocks a
 
 ```bash
 cp .env.example .env   # set CERTHUB_API_KEY; edit certhub.toml for your tenant
-# Switch prod/dev by commenting ONE flat block in certhub.toml (+ matching API key)
 # CI: store the same key as GitHub Actions secret CERTHUB_API_KEY
 
 make test                 # connector + SaMD tests (no API key)
@@ -158,7 +218,6 @@ make push-evidence BASELINE=1.0.0          # dry-run RecordCreate JSON
 CERTHUB_PUSH=1 make push-evidence BASELINE=1.0.0   # live POST
 
 make confirm BASELINE=0.0.99               # POST → GET proof (needs API key)
-# CONFIRM_CLEANUP=1 make confirm BASELINE=0.0.99   # delete after assert
 
 make open-requirements            # open System Requirements KT in CertHub
 make open-release-record          # open Release Record KT in CertHub
@@ -166,17 +225,28 @@ make open-release-record          # open Release Record KT in CertHub
 make break && make show   # RED — VERIF_002 (cycle time) fails, gate BLOCKED
 make fix && make show     # back to GREEN
 
-make generate-api         # fetch OpenAPI + regenerate clients; TechDoc/Records Pydantic models
+# DEV ONLY — not needed for Quickstart. Regenerating from live OpenAPI can rename
+# Tracer/other client symbols and break imports in certhub_connector/api/client.py.
+make generate-api         # fetch OpenAPI, keep x-public ops, regenerate clients + models
 ```
 
 `make sync` requires `CERTHUB_API_KEY` and pulls Tech Doc + Records + Tracer use-case links into Sphinx-Needs.
 
-## ubCode (commercial editor trial)
+## Optional: ubCode (paid IDE) and ubTrace (paid web)
 
-Real-time Sphinx-Needs editing via the **ubCode** extension (`useblocks.ubcode`).
-The Marketplace listing is **VS Code only** (not Cursor).
+Cadence already works without commercial useblocks products: `make sync` /
+`make show` use open-source Sphinx-Needs, CodeLinks, and Test-Reports only.
+Install the products below when you want live IDE feedback or a browser
+dashboard on the **same** RST / `ubproject.toml` / CodeLinks files.
 
-### Setup
+### ubCode — VS Code IDE
+
+[ubCode](https://ubcode.useblocks.com/) (`useblocks.ubcode`) gives real-time
+Needs Index, graph, diagnostics, and MCP. The Marketplace listing is **VS Code
+only** (not Cursor). Free for public OSS repos; a license is required for
+private use.
+
+#### Setup
 
 1. In **VS Code**, install the extension (repo root recommends it via `.vscode/extensions.json`).
 2. Put your license in **macOS** `~/Library/Application Support/ubcode/ubcode.toml` (never commit):
@@ -194,7 +264,8 @@ The Marketplace listing is **VS Code only** (not Cursor).
    (see `.vscode/settings.json`). Needs config is shared with Sphinx via
    [`sphinx/source/ubproject.toml`](sphinx/source/ubproject.toml) (`needs_from_toml` in `conf.py`).
 
-4. Ensure generated needs exist, then refresh ubCode:
+4. The V-model catalog RST already ships under `sphinx/source/generated/`.
+   To refresh from CertHub (needs API key) and then refresh ubCode:
 
    ```bash
    make sync
@@ -204,10 +275,13 @@ The Marketplace listing is **VS Code only** (not Cursor).
    After a Sphinx HTML build (`make show` / script `needs:json`), Needs JSON loads
    `sphinx/build/html/needs.json` (`needs_build_json = True` in `conf.py`).
 
-### Config notes
+#### Config notes
 
-- Need RST is written under `sphinx/source/generated/` (same tree as `ubproject.toml`),
-  so ubCode indexes it with `[source] respect_gitignore = false` +
+- Catalog Need RST (requirements, design outputs, verifications, validations) is
+  committed under `sphinx/source/generated/` so a public clone can browse without
+  CertHub. `make sync` overwrites those files from the SoR. Per-build fragments
+  (`codelinks_needextend.rst`, `certification_summary.rst`) stay gitignored.
+  ubCode indexes the tree with `[source] respect_gitignore = false` +
   `extend_include = ["generated/**/*.rst"]`. Sphinx still excludes that folder from
   standalone pages (`exclude_patterns`); hand-written pages `.. include:: generated/…`.
 - `[needs_json]` — Sphinx-built `sphinx/build/html/needs.json` (`needs_build_json = True`).
@@ -219,19 +293,17 @@ The Marketplace listing is **VS Code only** (not Cursor).
 Redirect stub `src/sterilisator_20a/ubproject.redirect.toml` points CodeLinks source
 markers at `sphinx/source/`.
 
-### Sidebar map (what you can do)
+#### What you get in the IDE
 
 | View | Purpose |
 |------|---------|
-| **Needs Index** | Live browse/filter/group of SYSREQ/DOUT/VERIF (and links); click-through to RST |
+| **Needs Index** | Live browse/filter/group of SYSREQ/DOUT/VERIF; click-through to RST |
 | **Needs Graph** | Interactive SYSREQ↔DOUT↔VERIF link graph |
-| **Needs JSON** | Tree of Sphinx-built `needs.json` (includes Test-Reports needs after HTML build) |
+| **Needs JSON** | Tree of Sphinx-built `needs.json` (includes Test-Reports after HTML build) |
 | **Diagnostics** | RST / needs lint as you type |
-| **Std referencing / Site Map** | toctree docs and cross-refs |
 | **Reports** | Render `ubcode_reports/*.html.j2` → preview or Open in Browser |
-| **Home** | License, restart LS, docs links |
 
-Also useful: RST preview, go-to-definition on need IDs, Diff & impact, MCP / `@pharaoh`
+Also useful: RST preview, go-to-definition on need IDs, Diff & impact, MCP
 (license-dependent). Docs: <https://ubcode.useblocks.com/>.
 
 Re-export Needs TOML after changing types/fields in `conf.py` (rare — prefer editing
@@ -243,19 +315,28 @@ cd sphinx/source && uv run export_needs_toml.py
 
 If activation fails with “Could not find license key”, confirm with useblocks that the key is provisioned for **ubCode** and bound to your email.
 
+### ubTrace — web dashboard (not in this example)
+
+[ubTrace](https://ubtrace.useblocks.com/latest/) is useblocks’ paid browser
+layer for large-team Sphinx-Needs analysis (coverage, search, RBAC). It uses
+the same Sphinx-Needs data model. This repository ships Sphinx HTML via
+`make show` / `make evidence` and does **not** run an ubTrace server — treat
+ubTrace as a later plug-in when your team outgrows static HTML.
+
 ## Layout
 
 | Path | What |
 |------|------|
 | `certhub/` | Connector, sync snapshots, outbound JSON |
 | `certhub/certhub_connector/{cli,config,api,sync,evidence}/` | Hand-written Cadence connector (CLI, config, API wrappers, sync/transform, evidence) |
-| `certhub/certhub_connector/api/clients/` | Generated OpenAPI HTTP clients (`make generate-api`; do not edit by hand). Most endpoints are unused; Cadence calls a small wrapper in `api/client.py`. |
-| `certhub/certhub-api.http` | Dev-only REST Client scratchpad against the showcase tenant |
+| `certhub/certhub_connector/api/clients/` | Generated OpenAPI HTTP clients — **public endpoints only** (`x-public` / `@public_api`). `make generate-api` is **DEV ONLY** (can break `api/client.py` imports after OpenAPI renames); do not edit by hand. Cadence calls a small wrapper in `api/client.py`. |
+| `certhub/certhub_connector/api/api_models/` | Generated Pydantic models for Tech Doc / Records JSON (validated at the API boundary). |
+| `certhub/certhub-api.http` | Optional REST Client scratchpad against the showcase tenant |
 | `evidence/` | CI evidence pack (gitignored): result, junit, `docs/` (Sphinx HTML), MANIFEST |
 | `schemas/` | Fetched OpenAPI specs |
 | `sphinx/source/` | Hand-written Sphinx assurance pages (dashboard, catalogs, traceability, release evidence) |
 | `sphinx/source/ubproject.toml` | Shared Sphinx-Needs + ubCode config (`needs_from_toml`) |
-| `sphinx/source/generated/` | Needs RST written by sync / CodeLinks / report (gitignored; included by pages) |
+| `sphinx/source/generated/` | Synced V-model catalog RST (committed); CodeLinks / certification summary (gitignored) |
 | `sphinx/source/ubcode_reports/` | ubCode Jinja report templates (`.html.j2`) |
 | `sphinx/build/` | HTML output (open `dashboard.html`) |
 | `sphinx/utils/` | Optional `plantuml.jar` download target (`make ensure-plantuml`) |
@@ -279,7 +360,7 @@ If activation fails with “Could not find license key”, confirm with useblock
 ## CertHub sync (inbound)
 
 - Auth: `X-API-Key` from `CERTHUB_API_KEY` · tenant settings in committed `certhub.toml` via Pydantic `TenantSettings` / `CerthubConfig`
-- Switch prod/dev by commenting one flat block in `certhub.toml` (and the matching API key in `.env`); never hardcode URLs/KT ids in connector code
+- Showcase `certhub.toml` uses prod CertHub URLs/KT ids; never hardcode URLs/KT ids in connector code
 - Seven V-Model content KTs (in `certhub.toml`):
   - `user_requirements_kt_id` → `UREQ_*`
   - `system_requirements_kt_id` → System Requirements SoR → `SYSREQ_*`
@@ -289,7 +370,7 @@ If activation fails with “Could not find license key”, confirm with useblock
   - `verification_kt_id` → `VERIF_*`
   - `validation_kt_id` → `VALID_*`
 - Dashboard URLs use history ids (`*_kt_history_id`, `product_history_id`, `ku_history_id`) — not Records revision KT ids
-- Live path: Tech Doc KT metadata + seven Records lists + Tracer `POST /traces/batch/list` → Sphinx-Needs
+- Live path: Tech Doc KT metadata + seven Records lists + Tracer `POST /traces/batch/list` → Sphinx-Needs. That is the ISO 13485 7.3.2(e) matrix. Source only tags `DOUT_*`; tests tag `VERIF_*`. SYSREQ closes the gate through Tracer, not through extra comments.
 - Cross-need `links` / `verifies` from Tracer `connected_within_use_case` edges only (no keyword/title joins)
 - Responses parsed into Pydantic at the client boundary (Tech Doc + Records); Tracer uses generated attrs client models
 

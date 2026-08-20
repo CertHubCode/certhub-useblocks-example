@@ -2,8 +2,8 @@
 ### Flow: List System Requirements / Verification / Validation content by KT
 ###
 ### Setup:
-### 1. Copy IDs/URLs from the ACTIVE block in certhub.toml (do not invent values here).
-### 2. Set @apiKey from CERTHUB_API_KEY in .env (prod when toml ACTIVE=prod).
+### 1. Copy IDs/URLs from certhub.toml (do not invent values here).
+### 2. Set @apiKey from CERTHUB_API_KEY in .env (prod showcase tenant).
 ### 3. Run the three "List records" requests — confirm counts and data.name values.
 ### 4. Optionally Get KT (requirements) for Tech Doc metadata used by sync project info.
 ###
@@ -14,7 +14,7 @@
 ### Note: put ObjectIds literally in JSON bodies — some REST Client builds leave
 ### {{fileVar}} unsubstituted inside JSON (e.g. {{productId}} stored as text).
 
-# ACTIVE = prod (must match certhub.toml)
+# Prod showcase tenant (must match certhub.toml)
 @techdocBase = https://techdoc.prod.certhub-containers.containers.certhub.tech
 @recordsBase = https://records.prod.certhub-containers.containers.certhub.tech
 @tracerBase = https://tracer.prod.certhub-containers.containers.certhub.tech
@@ -25,16 +25,6 @@
 @productHistoryId = 69b9899f4252b7481003afaa
 @kuHistoryId = 69b989a14252b7481003afe5
 @recordId = 000000000000000000000000
-
-# --- DEV (inactive; mirror commented block in certhub.toml) ---
-# @techdocBase = https://techdoc.dev.certhub-containers.containers.certhub.tech
-# @recordsBase = https://records.dev.certhub-containers.containers.certhub.tech
-# @tracerBase = https://tracer.dev.certhub-containers.containers.certhub.tech
-# @reqKtId = 6a76fc771074c36ea50f9e36
-# @verifKtId = 6a76fc771074c36ea50f9e3c
-# @validKtId = 6a76fc771074c36ea50f9e3e
-# @productHistoryId = 6a76fc641074c36ea50f9dab
-# @kuHistoryId = 6a76fc661074c36ea50f9dba
 
 ### =============================================================================
 ### 1. Get requirements KT (Tech Doc metadata)

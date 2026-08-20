@@ -16,6 +16,9 @@ from certhub_connector.config.paths import (
 )
 from certhub_connector.sync.models import CertHubExport, SystemRequirement
 
+# Sterilisator 20A showcase: product Design Output that owns CodeLinks. Used as
+# fallback when a SYSREQ has no explicit DOUT link (CertHub DO→SR is often
+# single-select, while one SaMD DOUT covers all four SYSREQs).
 SAMMD_PRODUCT_DOUT_ID = "DOUT_018"
 
 
@@ -143,13 +146,10 @@ def _douts_for_sysreq(export: CertHubExport, sysreq_id: str) -> list[str]:
     for dout in export.design_outputs:
         if sysreq_id in dout.links:
             found.append(dout.id)
-    if SAMMD_PRODUCT_DOUT_ID not in found:
-        product = next(
-            (d for d in export.design_outputs if d.id == SAMMD_PRODUCT_DOUT_ID),
-            None,
-        )
-        if product and sysreq_id in product.links:
-            found.append(SAMMD_PRODUCT_DOUT_ID)
+    # CertHub Design Output → System Requirement is often single-select. When no
+    # DOUT lists this SYSREQ, fall back to the product DOUT that owns CodeLinks.
+    if not found and any(d.id == SAMMD_PRODUCT_DOUT_ID for d in export.design_outputs):
+        found.append(SAMMD_PRODUCT_DOUT_ID)
     return found
 
 
@@ -181,13 +181,13 @@ def _is_test_location(location: str) -> bool:
     return "/tests/" in f"/{path}/" or name.startswith("test_")
 
 
-# Domain hints so SYSREQ_002/003/004 do not all report temperature_within_range
-# (first CodeLinks hit on DOUT_018).
+# Sterilisator 20A showcase: domain hints so SYSREQ_002/003/004 do not all
+# report temperature_within_range (first CodeLinks hit on DOUT_018).
 _VERIF_HINTS: dict[str, tuple[str, ...]] = {
     "VERIF_001": ("temperature",),
     "VERIF_002": ("duration", "minutes", "reported"),
-    "VERIF_003": ("ui", "messages", "label", "english", "interface"),
-    "VERIF_004": ("footprint", "enclosure", "dimensions"),
+    "VERIF_003": ("door", "lock", "safety", "interlock"),
+    "VERIF_004": ("ui", "messages", "label", "english", "interface"),
 }
 
 

@@ -192,7 +192,6 @@ def cmd_confirm(args: argparse.Namespace) -> int:
     proof = confirm_evidence(
         baseline=args.baseline,
         evidence_path=evidence_path,
-        cleanup=bool(args.cleanup),
         evidence_url=args.evidence_url,
     )
     print(format_proof(proof))
@@ -336,11 +335,6 @@ def build_parser() -> argparse.ArgumentParser:
         "--package-first",
         action="store_true",
         help="Build the evidence pack before confirming",
-    )
-    confirm_p.add_argument(
-        "--cleanup",
-        action="store_true",
-        help="Delete the confirm record after a successful assert",
     )
     confirm_p.add_argument(
         "--evidence-url",

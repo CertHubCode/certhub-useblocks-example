@@ -21,16 +21,6 @@ TOPIC_VALIDATION = "Validation"
 TOPIC_RCM = "Risk Control Measures"
 TOPIC_USE_SCENARIOS = "Use Scenarios"
 
-SYNCED_TOPICS: tuple[str, ...] = (
-    TOPIC_USER,
-    TOPIC_SYSTEM,
-    TOPIC_COMPONENT,
-    TOPIC_UNIT,
-    TOPIC_DESIGN_OUTPUT,
-    TOPIC_VERIFICATION,
-    TOPIC_VALIDATION,
-)
-
 
 @dataclass(frozen=True)
 class DomainTracerRelation:
