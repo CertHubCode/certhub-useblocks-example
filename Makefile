@@ -8,7 +8,6 @@ DASHBOARD := $(ROOT)sphinx/build/html/dashboard.html
 VERSION ?=
 RC ?= 1
 BASELINE ?= $(VERSION)
-CONFIRM_CLEANUP ?= 0
 
 CERTHUB_TOML := $(ROOT)certhub.toml
 
@@ -127,9 +126,7 @@ push-evidence: install
 # Live round-trip proof. Example: make confirm BASELINE=0.0.99
 confirm: evidence
 	@test -n "$(BASELINE)" || (echo "USAGE: make confirm BASELINE=0.0.99"; exit 2)
-	@cleanup_flag=""; \
-	if [ "$(CONFIRM_CLEANUP)" = "1" ]; then cleanup_flag="--cleanup"; fi; \
-	$(UV) run cadence confirm --baseline "$(BASELINE)" --from evidence $$cleanup_flag
+	$(UV) run cadence confirm --baseline "$(BASELINE)" --from evidence
 
 open-requirements: install
 	$(UV) run cadence open-requirements

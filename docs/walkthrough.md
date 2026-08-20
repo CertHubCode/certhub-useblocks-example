@@ -6,11 +6,11 @@ Local walkthroughs print a polished CertHub CLI (Rich banners / status). CI stay
 
 ## Configure
 
-Tenant URLs, KT revision ids, and dashboard history ids live in committed [`certhub.toml`](../certhub.toml) — edit that file for a customer tenant (safe to keep in git). Switch prod/dev by commenting **one** flat block (keep a single active set of keys). Read settings only via `TenantSettings.load()` / `CerthubConfig.load()` (no ad-hoc toml parsing; no hardcoded URLs/KT ids in connector code).
+Tenant URLs, KT revision ids, and dashboard history ids live in committed [`certhub.toml`](../certhub.toml) — edit that file for a customer tenant (safe to keep in git). The showcase file uses **prod** CertHub hosts. Read settings only via `TenantSettings.load()` / `CerthubConfig.load()` (no ad-hoc toml parsing; no hardcoded URLs/KT ids in connector code).
 
 ```bash
 cp .env.example .env
-# set CERTHUB_API_KEY=… in .env  (the only secret; must match the active toml env)
+# set CERTHUB_API_KEY=… in .env  (the only secret; prod key for the showcase tenant)
 ```
 
 | Where | What |
@@ -18,7 +18,7 @@ cp .env.example .env
 | `certhub.toml` | Tech Doc / Records / Tracer base URLs, seven content KT revision ids + Release Record, dashboard URL fields |
 | `.env` / GitHub secret `CERTHUB_API_KEY` | API key (`X-API-Key`) |
 
-`make sync` requires `CERTHUB_API_KEY` (no mock fallback). Product / KU revision for write-back are resolved from Tech Doc at push time (from the Release Record KT). On prod the SoR is **System Requirements** (sterilizer content).
+`make sync` requires `CERTHUB_API_KEY` (no mock fallback). Product / KU revision for write-back are resolved from Tech Doc at push time (from the Release Record KT). The SoR is **System Requirements** (sterilizer content).
 
 **GitHub:** only secret `CERTHUB_API_KEY` (no repository variables for URLs/KTs).
 

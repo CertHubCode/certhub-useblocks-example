@@ -21,7 +21,7 @@ flowchart LR
 
 - Python 3.12+
 - [uv](https://docs.astral.sh/uv/)
-- A CertHub API key (`CERTHUB_API_KEY`) for `make sync`
+- A CertHub API key (`CERTHUB_API_KEY`) for `make sync` — [create one in Settings → API Keys](https://docs.certhub.de/api/getting-started)
 - Optional: PlantUML on PATH (or `make ensure-plantuml`) for needflow graphs
 - Optional: CodeLinks CLI — `scripts/run_codelinks.py` falls back to `@need-ids:` grep
 
@@ -31,7 +31,7 @@ flowchart LR
 git clone https://github.com/CertHubCode/certhub-useblocks-example.git
 cd certhub-useblocks-example
 make install
-cp .env.example .env          # set CERTHUB_API_KEY
+cp .env.example .env          # set CERTHUB_API_KEY (see https://docs.certhub.de/api/getting-started)
 make sync                     # CertHub → Sphinx-Needs
 make show                     # tests + CodeLinks + gate + open dashboard
 ```
@@ -96,13 +96,10 @@ After `make show`, open `sphinx/build/html/dashboard.html` and
 
 ## Showcase limitations
 
-- **One product design output.** Source markers use `DOUT_018`. Procedure and
-  legacy catalog DOUTs in CertHub are filtered out of the Sphinx graph.
+- **One product design output.** Source markers use `DOUT_018`. Procedure DOUTs
+  in CertHub are filtered out of the Sphinx needflow graph.
 - **VALID is manual.** Validation protocols sync into the pack but do not close
   the engineering gate.
-- **CertHub catalog noise.** Some UNITREQ / UREQ / DOUT rows on the showcase
-  tenant are leftover from other demo products. See
-  [docs/certhub-content-cleanup.md](docs/certhub-content-cleanup.md).
 
 ## Boundary
 
@@ -140,7 +137,6 @@ This repository is one complete implementation of that pattern using useblocks a
 
 ```bash
 cp .env.example .env   # set CERTHUB_API_KEY; edit certhub.toml for your tenant
-# Switch prod/dev by commenting ONE flat block in certhub.toml (+ matching API key)
 # CI: store the same key as GitHub Actions secret CERTHUB_API_KEY
 
 make test                 # connector + SaMD tests (no API key)
@@ -158,7 +154,6 @@ make push-evidence BASELINE=1.0.0          # dry-run RecordCreate JSON
 CERTHUB_PUSH=1 make push-evidence BASELINE=1.0.0   # live POST
 
 make confirm BASELINE=0.0.99               # POST → GET proof (needs API key)
-# CONFIRM_CLEANUP=1 make confirm BASELINE=0.0.99   # delete after assert
 
 make open-requirements            # open System Requirements KT in CertHub
 make open-release-record          # open Release Record KT in CertHub
@@ -166,6 +161,8 @@ make open-release-record          # open Release Record KT in CertHub
 make break && make show   # RED — VERIF_002 (cycle time) fails, gate BLOCKED
 make fix && make show     # back to GREEN
 
+# DEV ONLY — not needed for Quickstart. Regenerating from live OpenAPI can rename
+# Tracer/other client symbols and break imports in certhub_connector/api/client.py.
 make generate-api         # fetch OpenAPI + regenerate clients; TechDoc/Records Pydantic models
 ```
 
@@ -249,8 +246,8 @@ If activation fails with “Could not find license key”, confirm with useblock
 |------|------|
 | `certhub/` | Connector, sync snapshots, outbound JSON |
 | `certhub/certhub_connector/{cli,config,api,sync,evidence}/` | Hand-written Cadence connector (CLI, config, API wrappers, sync/transform, evidence) |
-| `certhub/certhub_connector/api/clients/` | Generated OpenAPI HTTP clients (`make generate-api`; do not edit by hand). Most endpoints are unused; Cadence calls a small wrapper in `api/client.py`. |
-| `certhub/certhub-api.http` | Dev-only REST Client scratchpad against the showcase tenant |
+| `certhub/certhub_connector/api/clients/` | Generated OpenAPI HTTP clients (`make generate-api` is **DEV ONLY** — can break `api/client.py` imports; do not edit by hand). Most endpoints are unused; Cadence calls a small wrapper in `api/client.py`. |
+| `certhub/certhub-api.http` | Optional REST Client scratchpad against the showcase tenant |
 | `evidence/` | CI evidence pack (gitignored): result, junit, `docs/` (Sphinx HTML), MANIFEST |
 | `schemas/` | Fetched OpenAPI specs |
 | `sphinx/source/` | Hand-written Sphinx assurance pages (dashboard, catalogs, traceability, release evidence) |
@@ -279,7 +276,7 @@ If activation fails with “Could not find license key”, confirm with useblock
 ## CertHub sync (inbound)
 
 - Auth: `X-API-Key` from `CERTHUB_API_KEY` · tenant settings in committed `certhub.toml` via Pydantic `TenantSettings` / `CerthubConfig`
-- Switch prod/dev by commenting one flat block in `certhub.toml` (and the matching API key in `.env`); never hardcode URLs/KT ids in connector code
+- Showcase `certhub.toml` uses prod CertHub URLs/KT ids; never hardcode URLs/KT ids in connector code
 - Seven V-Model content KTs (in `certhub.toml`):
   - `user_requirements_kt_id` → `UREQ_*`
   - `system_requirements_kt_id` → System Requirements SoR → `SYSREQ_*`

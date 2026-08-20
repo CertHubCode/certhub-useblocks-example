@@ -14,8 +14,9 @@ configuration, not credentials.
 | **Showcase tenant** (default) | Clone, demo, CI against CertHub’s example Sterilisator 20A | `.env` only (`CERTHUB_API_KEY`) |
 | **Your own tenant** | Adopt Cadence on a real product | Copy [`certhub.toml.example`](../certhub.toml.example) → `certhub.toml` and fill every key |
 
-Ask CertHub for a showcase API key if you do not already have one. The key must
-match the environment in `certhub.toml` (prod vs dev).
+Create an API key in [Settings → API Keys](https://docs.certhub.de/api/getting-started).
+The committed showcase `certhub.toml` points at the **prod** CertHub tenant; use a
+prod API key that can access that product.
 
 ## Repository setup (GitHub Actions)
 
@@ -66,12 +67,6 @@ or empty syncs.
 If sync succeeds but the gate is empty, the KTs probably still hold a different
 product’s content. Cadence maps whatever CertHub returns; it does not invent
 Sterilisator requirements.
-
-## Switch prod / dev
-
-[`certhub.toml`](../certhub.toml) keeps one **flat** active key set. Comment the
-inactive block. Point `.env` at the API key for that environment. Never hardcode
-URLs or KT ids in connector code.
 
 ## Related
 

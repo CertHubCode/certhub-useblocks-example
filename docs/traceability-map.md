@@ -30,16 +30,12 @@ go RED. `make fix` restores GREEN.
 |-------|-----------------|--------------|
 | UREQ / CREQ / UNITREQ | Synced from CertHub | No |
 | DOUT_001–004 (procedures) | Filtered into the sterilizer graph | No CodeLinks on product source |
-| DOUT_015–017, DOUT_019 (legacy catalog) | Synced; excluded from the needflow filter | No |
 | VALID_001–004 | Synced; dashboard KPI is **manual / N/A** | No — validation stays in CertHub |
 
 ## Showcase limitations
 
 - One product design output (`DOUT_018`) covers all four SYSREQs. Feature-level
   DOUTs can be added in CertHub later; then split the `@need-ids:` markers.
-- The showcase tenant may still **Tracer-link** SYSREQ_002/003/004 to legacy
-  device DOUTs. The gate falls back to `DOUT_018` when that product DO links
-  (or is the SaMD product id). Cleanup: [certhub-content-cleanup.md](certhub-content-cleanup.md).
 - CodeLinks `needextend` lists **all** marker URLs per need; the certification
   report cites the **domain-matching** implementation, not always the first hit.
 

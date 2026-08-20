@@ -14,7 +14,6 @@ from certhub_connector.api.api_models.techdoc.techdoc_models import (
 )
 from certhub_connector.api.clients.records.api.records import (
     create_new_record_records_post,
-    delete_existing_record_records_id_delete,
     list_records_records_get,
     read_record_records_id_get,
 )
@@ -144,7 +143,10 @@ class TechDocClient:
 
 
 class RecordsClient:
-    """Records wrapper: list/create/get/delete → Pydantic Record models."""
+    """Records wrapper: list/create/get → Pydantic Record models.
+
+    Public Records API supports read, create, and update only (no delete).
+    """
 
     def __init__(self, config: CerthubConfig, *, timeout_s: float = 30.0) -> None:
         if not config:
@@ -238,31 +240,6 @@ class RecordsClient:
                 f"CertHub Records get error {response.status_code}: {body_text}"
             )
         return parse_model_json(Record, response.content)
-
-    def delete_record(self, record_id: str) -> None:
-        if not record_id or not record_id.strip():
-            raise ValueError("Missing required field: 'record_id'")
-        rid = record_id.strip()
-        try:
-            response = delete_existing_record_records_id_delete.sync_detailed(
-                rid,
-                client=self._client,
-            )
-        except httpx.HTTPError as exc:
-            raise RuntimeError(f"CertHub Records delete failed: {exc}") from exc
-
-        if response.status_code == 401:
-            raise PermissionError(
-                "CertHub Records rejected the API key (401). "
-                "Check CERTHUB_API_KEY and that the key uses the X-API-Key header."
-            )
-        if response.status_code == 404:
-            raise FileNotFoundError(f"Record not found: {rid}")
-        if response.status_code >= 400:
-            body_text = response.content.decode("utf-8", errors="replace")[:500]
-            raise RuntimeError(
-                f"CertHub Records delete error {response.status_code}: {body_text}"
-            )
 
 
 class TracerClient:

@@ -12,9 +12,8 @@ cp .env.example .env
 
 ## `make sync` returns 401 / 403
 
-The key does not match the environment in `certhub.toml` (prod vs dev), or it
-lacks Records / Tech Doc / Tracer access. Confirm the same key works in the
-CertHub UI.
+The key is invalid, expired, or lacks Records / Tech Doc / Tracer access for
+the tenant in `certhub.toml`. Confirm the same key works in the CertHub UI.
 
 ## `make sync` returns 404 or empty catalogs
 
@@ -67,5 +66,7 @@ line.
 
 That is expected. Hand-written code lives under
 `certhub/certhub_connector/{cli,config,api,sync,evidence}/` excluding
-`api/clients/`. Regenerate with `make generate-api`. Do not edit client files
-by hand.
+`api/clients/`. `make generate-api` is **DEV ONLY** — not needed for Quickstart.
+Regenerating from live OpenAPI can rename Tracer (or other) client symbols and
+break imports in `api/client.py` until that wrapper is updated. Do not edit
+generated client files by hand.

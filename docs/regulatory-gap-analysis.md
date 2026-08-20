@@ -147,9 +147,6 @@ These are the improvements that belong in Cadence code/docs (implementation trac
    - Stronger UREQ↔VALID title join once sterilizer UREQs are clean in CertHub
    - PDF/LaTeX builder if customers need a single signed PDF twin
 
-CertHub content cleanup (legacy DOUT links, UNITREQ text):
-[`docs/certhub-content-cleanup.md`](certhub-content-cleanup.md).
-
 ### 5.2 Additional steps outside “random Sphinx polish” (CertHub + QMS)
 
 Use this as the enhancement backlog for a **real** SaMD DHR/Tech Doc program. Cadence stays the engineering twin.

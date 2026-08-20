@@ -301,10 +301,12 @@ def confirm_evidence(
     baseline: str,
     evidence_path: Path,
     config: CerthubConfig | None = None,
-    cleanup: bool = False,
     evidence_url: str | None = None,
 ) -> ConfirmProof:
-    """POST → GET → assert fields match; print-ready proof object."""
+    """POST → GET → assert fields match; print-ready proof object.
+
+    Records stay in CertHub: the public Records API does not support delete.
+    """
     config = config or CerthubConfig.load()
     pushed = push_evidence(
         baseline=baseline,
@@ -359,9 +361,6 @@ def confirm_evidence(
         details_preview=preview,
         matched=matched,
     )
-
-    if cleanup:
-        records.delete_record(pushed.record_id)
 
     if mismatches:
         raise AssertionError(
