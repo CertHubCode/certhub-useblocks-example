@@ -166,16 +166,16 @@ Show the Sphinx twin updated. No new Release Record was created — engineering 
 
 ---
 
-## What to say in the walkthrough
+## What this demonstrates
 
 1. **CertHub** holds the V-model *records* and Tracer matrix (ISO 13485 7.3.2(e)).
 2. **This repo** tags only the last hop: `DOUT_*` on source, `VERIF_*` on tests
    (FDA GPSV §5.2.4). `SYSREQ` is not on functions; the gate walks Tracer.
 3. **Cadence** is the SaMD engineering loop: Git twin + evidence gate + release write-back.
 4. **useblocks** turns Git work into an evidence pack.
-5. **PRs** prove engineering quality (artifact), they do not create regulatory records.
+5. **PRs** prove engineering quality (artifact); they do not create regulatory records.
 6. **RC tags** rehearse the same gate and store the pack on the run; they do not write CertHub.
 7. **Release tags** close the loop: one Release Record in CertHub for that baseline.
-8. **Open the printed CertHub URL** so the audience sees the controlled row.
-9. **Edit a requirement in CertHub**, re-sync — engineering follows the SoR. Unlinked
+8. After a release or `make confirm`, open the printed CertHub URL to see the controlled row.
+9. Edit a requirement in CertHub, then re-sync — engineering follows the SoR. Unlinked
    catalog rows stay; leftover product text is cleaned in CertHub, not by syncing less.

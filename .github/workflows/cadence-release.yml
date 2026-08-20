@@ -1,7 +1,7 @@
 name: Cadence release evidence
 
 # Tag push (vX.Y.Z or vX.Y.Z-rc.N) → always build evidence pack + upload artifact.
-# CertHub Validation Records write-back only on full release tags (not RC).
+# CertHub Release Record write-back only on full release tags (not RC).
 # Manual runs require workflow_dispatch input baseline (X.Y.Z / vX.Y.Z).
 
 on:

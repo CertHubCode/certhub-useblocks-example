@@ -31,8 +31,7 @@ verification.
        software unit was released green.
    * - **Not in this pack**
      - Risk (ISO 14971), GSPR, clinical evaluation, labeling, PMS / PMCF, and
-       formal approvals stay in **CertHub**. Detail:
-       ``docs/regulatory-gap-analysis.md``.
+       formal approvals stay in **CertHub**.
 
 .. admonition:: Regulatory boundary
    :class: note

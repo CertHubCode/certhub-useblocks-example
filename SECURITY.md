@@ -2,9 +2,11 @@
 
 ## Reporting a vulnerability
 
-Email security issues to CertHub (do not open a public GitHub issue for
-undisclosed vulnerabilities). Include the affected command or workflow and
-whether a secret was exposed.
+Do **not** open a public GitHub issue for undisclosed vulnerabilities.
+
+Prefer [GitHub private vulnerability reporting](https://github.com/CertHubCode/certhub-useblocks-example/security/advisories/new)
+on this repository, or email **security@certhub.de**. Include the affected
+command or workflow and whether a secret was exposed.
 
 ## What this repo stores
 
@@ -19,6 +21,7 @@ not remove a leaked key from clones.
 
 ## Supply chain notes
 
-Dependencies are locked in `uv.lock`. `make generate-api` fetches OpenAPI specs
-from the URLs in `certhub.toml`, keeps only `x-public` operations, then
-regenerates clients. Treat those hosts as part of your trust boundary.
+Dependencies are locked in `uv.lock`. `make generate-api` (maintainer-only)
+fetches OpenAPI specs from the URLs in `certhub.toml`, keeps only `x-public`
+operations, then regenerates clients. Treat those hosts as part of your trust
+boundary.

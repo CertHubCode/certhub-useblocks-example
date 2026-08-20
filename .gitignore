@@ -12,6 +12,8 @@ certhub/generated/*
 # CI evidence pack only (not certhub_connector/evidence/)
 /evidence/
 .pytest_cache/
+.ruff_cache/
+.DS_Store
 __pycache__/
 *.pyc
 .venv/

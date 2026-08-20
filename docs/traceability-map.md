@@ -59,10 +59,10 @@ system-of-record problem, not a reason to sync less.**
 The pytest marker is the contractual link for the certification gate. The
 `# @need-ids:` comment on tests is for the Sphinx / CodeLinks pack. Keep both.
 
-Rows with no marker still belong in the pack. Procedure design outputs
-(`DOUT_001`–`004` here) are not software; leaving them unmarked is correct.
-An input with no output is a dropped requirement — hiding it by syncing fewer
-topics would hide the 7.3.2(e) finding.
+Rows with no marker still belong in the pack. Not every CertHub record is
+software — leaving non-software rows unmarked is correct. An input with no
+output is a dropped requirement — hiding it by syncing fewer topics would hide
+the 7.3.2(e) finding.
 
 Validation stays out of pytest because [21 CFR 820.30(g)](https://www.law.cornell.edu/cfr/text/21/820.30)
 / ISO 13485 **7.3.7** ask whether the device meets **user needs and intended

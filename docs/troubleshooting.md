@@ -48,7 +48,7 @@ only if you want the full analyse JSON.
 ubCode is a commercial VS Code extension (not Cursor). Put the license in
 `~/Library/Application Support/ubcode/ubcode.toml` (macOS) or set
 `UBCODE_LICENSE_KEY` / `UBCODE_LICENSE_USER`. Confirm with useblocks that the
-key is bound to your email. See the ubCode section in the README.
+key is bound to your email. Full setup: [ubcode.md](ubcode.md).
 
 ## Gate VERIFIED but the implementation column looks wrong
 

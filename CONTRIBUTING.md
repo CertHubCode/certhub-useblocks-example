@@ -18,10 +18,10 @@ Python 3.12+ and [uv](https://docs.astral.sh/uv/) are required.
 
 - Product behaviour: `src/sterilisator_20a/` + `src/sterilisator_20a/tests/`
 - Connector / gate / evidence: `certhub/certhub_connector/` + `tests/`
-- Generated HTTP clients: `make generate-api` is **DEV ONLY** — fetches OpenAPI,
-  filters to `x-public` operations, regenerates `api/clients/` and
+- Generated HTTP clients: `make generate-api` is **maintainer-only** — fetches
+  OpenAPI, filters to `x-public` operations, regenerates `api/clients/` and
   `api/api_models/` (can break `api/client.py` imports after OpenAPI renames).
-  Do not hand-edit generated trees.
+  Do not hand-edit generated trees. Not needed for Quickstart.
 - Tenant IDs: `certhub.toml` (showcase) or `certhub.toml.example` (placeholders)
 
 New product behaviour gets `# @need-ids: DOUT_*` on the implementing function
@@ -42,6 +42,8 @@ those IDs live in the CertHub matrix; Tracer already links them. See
 - If you change the SYSREQ → DOUT → code → VERIF chain, update
   [`docs/traceability-map.md`](docs/traceability-map.md) and
   `tests/test_verify_traceability.py`. Do not add SYSREQ comments on source.
+- Do not reintroduce maintainer punch lists or auditor gap-analysis docs into
+  `docs/` — learner docs stay in the README Docs table path.
 
 ## GitHub topics
 
