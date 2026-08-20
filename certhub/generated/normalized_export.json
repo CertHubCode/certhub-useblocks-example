@@ -1,0 +1,367 @@
+{
+  "component_requirements": [
+    {
+      "concerning": null,
+      "description": "The cycle-control software component shall run a sterilization cycle (idle \u2192 running \u2192 complete or fault), evaluate chamber peak temperature against 121\u00b0C \u00b1 2\u00b0C, and accept a cycle only when total duration is \u2264 60 minutes.",
+      "external_id": "6a86f53b41dd09bd2cb8a11a",
+      "id": "CREQ_001",
+      "justification": null,
+      "links": [
+        "VERIF_001",
+        "VERIF_002",
+        "SYSREQ_001",
+        "SYSREQ_002",
+        "UNITREQ_001",
+        "UNITREQ_002",
+        "UNITREQ_003"
+      ],
+      "priority": null,
+      "req_type": null,
+      "source": null,
+      "status": "approved",
+      "title": "Cycle engine"
+    },
+    {
+      "concerning": null,
+      "description": "The door-safety software component shall inhibit cycle start when the door is open and require the door to remain locked while cycle state is running.",
+      "external_id": "6a86f53b41dd09bd2cb8a11b",
+      "id": "CREQ_002",
+      "justification": null,
+      "links": [
+        "VERIF_003",
+        "SYSREQ_003",
+        "UNITREQ_004"
+      ],
+      "priority": null,
+      "req_type": null,
+      "source": null,
+      "status": "approved",
+      "title": "Door safety"
+    },
+    {
+      "concerning": null,
+      "description": "The UI software component shall expose English status and alert strings for each cycle state (idle, running, complete, fault) and door-locked conditions.",
+      "external_id": "6a86f53b41dd09bd2cb8a11c",
+      "id": "CREQ_003",
+      "justification": null,
+      "links": [
+        "VERIF_004",
+        "SYSREQ_004",
+        "UNITREQ_005"
+      ],
+      "priority": null,
+      "req_type": null,
+      "source": null,
+      "status": "approved",
+      "title": "Operator UI"
+    }
+  ],
+  "design_outputs": [
+    {
+      "description": "Sterilisator 20A cycle-control SaMD for a tabletop steam sterilizer: software evaluates sterilization cycle temperature and duration, enforces door interlock while running, and presents English operator status (idle, running, complete, fault). Not a hardware catalog entry.\n\nImplementation in src/sterilisator_20a/ (cycle/controller.py, safety/door.py, ui/messages.py). CodeLinks markers: # @need-ids: DOUT_018.",
+      "external_id": "6a86f56b41dd09bd2cb8a122",
+      "id": "DOUT_018",
+      "links": [
+        "VERIF_001",
+        "VERIF_002",
+        "VERIF_003",
+        "VERIF_004",
+        "SYSREQ_001",
+        "CREQ_001",
+        "UNITREQ_001"
+      ],
+      "status": "approved",
+      "title": "Sterilizer 20A"
+    }
+  ],
+  "project": {
+    "id": "69b9899f4252b7481003afaa",
+    "name": "System Requirements",
+    "version": "0.1"
+  },
+  "system_requirements": [
+    {
+      "concerning": [
+        "Equipment"
+      ],
+      "description": "Device shall achieve and maintain sterilization temperature of 121\u00b0C \u00b1 2\u00b0C.",
+      "external_id": "6a86f51c41dd09bd2cb8a115",
+      "id": "SYSREQ_001",
+      "justification": "Ensures effective microbial inactivation.",
+      "links": [
+        "VERIF_001",
+        "UREQ_001",
+        "CREQ_001"
+      ],
+      "priority": "high",
+      "req_type": "functional",
+      "source": null,
+      "status": "approved",
+      "title": "Sterilization temperature range"
+    },
+    {
+      "concerning": null,
+      "description": "Total cycle time shall not exceed 60 minutes.",
+      "external_id": "6a86f51c41dd09bd2cb8a116",
+      "id": "SYSREQ_002",
+      "justification": "Optimizes throughput for clinical operations.",
+      "links": [
+        "VERIF_002",
+        "UREQ_002",
+        "CREQ_001"
+      ],
+      "priority": "high",
+      "req_type": "functional",
+      "source": null,
+      "status": "approved",
+      "title": "Sterilization cycle time"
+    },
+    {
+      "concerning": null,
+      "description": "A sterilization cycle shall not start unless the chamber door is closed. The door shall remain locked while the cycle is running.",
+      "external_id": "6a86f51c41dd09bd2cb8a117",
+      "id": "SYSREQ_003",
+      "justification": "Prevents operator exposure and incomplete sterilization from door opening during an active cycle.",
+      "links": [
+        "VERIF_003",
+        "UREQ_001",
+        "CREQ_002"
+      ],
+      "priority": "high",
+      "req_type": "functional",
+      "source": null,
+      "status": "approved",
+      "title": "Door interlock"
+    },
+    {
+      "concerning": null,
+      "description": "The user interface shall display cycle state and alerts in English, covering idle, running, complete, fault, and door-locked conditions.",
+      "external_id": "6a86f51c41dd09bd2cb8a118",
+      "id": "SYSREQ_004",
+      "justification": "Compliance with MDR user-information expectations; clinic staff must read status without translation.",
+      "links": [
+        "VERIF_004",
+        "UREQ_002",
+        "CREQ_003"
+      ],
+      "priority": "high",
+      "req_type": "regulatory",
+      "source": null,
+      "status": "approved",
+      "title": "English cycle status"
+    }
+  ],
+  "unit_requirements": [
+    {
+      "concerning": null,
+      "description": "temperature_within_range shall return true if and only if peak chamber temperature is in [119.0, 123.0] \u00b0C.",
+      "external_id": "6a86f55541dd09bd2cb8a11d",
+      "id": "UNITREQ_001",
+      "justification": null,
+      "links": [
+        "VERIF_001",
+        "CREQ_001"
+      ],
+      "priority": "high",
+      "req_type": "functional",
+      "source": null,
+      "status": "approved",
+      "title": "Peak temperature window"
+    },
+    {
+      "concerning": null,
+      "description": "reported_cycle_duration_minutes shall reject negative durations; cycle_within_time_budget shall return true if and only if reported duration is \u2264 60 minutes.",
+      "external_id": "6a86f55541dd09bd2cb8a11e",
+      "id": "UNITREQ_002",
+      "justification": null,
+      "links": [
+        "VERIF_002",
+        "CREQ_001"
+      ],
+      "priority": "high",
+      "req_type": "performance",
+      "source": null,
+      "status": "approved",
+      "title": "Cycle duration acceptance"
+    },
+    {
+      "concerning": null,
+      "description": "After start_cycle returns, cycle state shall be complete when temperature and duration both pass, otherwise fault. The returned result shall not leave the cycle in running.",
+      "external_id": "6a86f55541dd09bd2cb8a11f",
+      "id": "UNITREQ_003",
+      "justification": null,
+      "links": [
+        "CREQ_001"
+      ],
+      "priority": "medium",
+      "req_type": "functional",
+      "source": null,
+      "status": "approved",
+      "title": "Cycle states"
+    },
+    {
+      "concerning": null,
+      "description": "Cycle start with door open shall be refused. door_must_lock shall be true if and only if cycle state is running. door_may_open shall be true for idle, complete, and fault.",
+      "external_id": "6a86f55541dd09bd2cb8a120",
+      "id": "UNITREQ_004",
+      "justification": null,
+      "links": [
+        "VERIF_003",
+        "CREQ_002"
+      ],
+      "priority": "high",
+      "req_type": "safety",
+      "source": null,
+      "status": "approved",
+      "title": "Door start-inhibit and lock"
+    },
+    {
+      "concerning": null,
+      "description": "English UI payload shall cover idle, running, complete, and fault states plus a door-locked alert; non-English language or empty required strings shall fail the English-label check.",
+      "external_id": "6a86f55541dd09bd2cb8a121",
+      "id": "UNITREQ_005",
+      "justification": null,
+      "links": [
+        "VERIF_004",
+        "CREQ_003"
+      ],
+      "priority": "high",
+      "req_type": "interface",
+      "source": null,
+      "status": "approved",
+      "title": "English state labels"
+    }
+  ],
+  "user_requirements": [
+    {
+      "concerning": null,
+      "description": "The operator shall be able to steam-sterilize reusable instruments so that heat-resistant microorganisms are inactivated during intended use, without unloading while the chamber is in an unsafe (in-progress) state.",
+      "external_id": "6a86f4ad41dd09bd2cb8a112",
+      "id": "UREQ_001",
+      "justification": null,
+      "links": [
+        "SYSREQ_001",
+        "SYSREQ_003",
+        "VALID_001"
+      ],
+      "priority": "high",
+      "req_type": null,
+      "source": "Fucntional",
+      "status": "approved",
+      "title": "Safe and effective instrument sterilization"
+    },
+    {
+      "concerning": null,
+      "description": "Clinic staff shall finish a sterilization cycle within a treatment-room timebox and understand cycle status and alerts in English.",
+      "external_id": "6a86f4ad41dd09bd2cb8a113",
+      "id": "UREQ_002",
+      "justification": null,
+      "links": [
+        "SYSREQ_002",
+        "SYSREQ_004",
+        "VALID_002"
+      ],
+      "priority": "high",
+      "req_type": null,
+      "source": "Fucntional",
+      "status": "approved",
+      "title": "Operable in a clinic workflow"
+    }
+  ],
+  "validations": [
+    {
+      "description": "Ten consecutive intended-use sterilization cycles with independent temperature logging and observed door behaviour.",
+      "external_id": "6a86f59341dd09bd2cb8a123",
+      "id": "VALID_001",
+      "links": [
+        "UREQ_001"
+      ],
+      "status": "approved",
+      "title": "Intended-use sterilization"
+    },
+    {
+      "description": "Ten consecutive full cycles timed end-to-end; operators identify cycle states from the English UI using normal and fault scripts.",
+      "external_id": "6a86f59341dd09bd2cb8a124",
+      "id": "VALID_002",
+      "links": [
+        "UREQ_002"
+      ],
+      "status": "approved",
+      "title": "Clinic operability"
+    }
+  ],
+  "verifications": [
+    {
+      "description": "Execute automated test test_sterilization_temperature_accuracy (@pytest.mark.certhub_test(\"VERIF_001\")) in src/sterilisator_20a/tests/test_sterilisator.py.",
+      "external_id": "69c2d6826406f437042965f4",
+      "id": "VERIF_001",
+      "links": [
+        "SYSREQ_001",
+        "CREQ_001",
+        "UNITREQ_001",
+        "DOUT_018"
+      ],
+      "status": "approved",
+      "title": "Temperature accuracy test",
+      "verifies": [
+        "SYSREQ_001",
+        "CREQ_001",
+        "UNITREQ_001"
+      ]
+    },
+    {
+      "description": "Execute automated test test_sterilization_cycle_time (@pytest.mark.certhub_test(\"VERIF_002\")) in src/sterilisator_20a/tests/test_sterilisator.py. This is the Cadence make break / make fix demo target.",
+      "external_id": "69c2d6826406f437042965f5",
+      "id": "VERIF_002",
+      "links": [
+        "SYSREQ_002",
+        "CREQ_001",
+        "UNITREQ_002",
+        "DOUT_018"
+      ],
+      "status": "approved",
+      "title": "Cycle time test",
+      "verifies": [
+        "SYSREQ_002",
+        "CREQ_001",
+        "UNITREQ_002"
+      ]
+    },
+    {
+      "description": "Execute automated test test_door_interlock (@pytest.mark.certhub_test(\"VERIF_003\")).",
+      "external_id": "69c2d6826406f437042965f6",
+      "id": "VERIF_003",
+      "links": [
+        "SYSREQ_003",
+        "CREQ_002",
+        "UNITREQ_004",
+        "DOUT_018"
+      ],
+      "status": "approved",
+      "title": "Door interlock test",
+      "verifies": [
+        "SYSREQ_003",
+        "CREQ_002",
+        "UNITREQ_004"
+      ]
+    },
+    {
+      "description": "Execute automated test test_user_interface_labeling (@pytest.mark.certhub_test(\"VERIF_004\")).",
+      "external_id": "69c2d6826406f437042965f7",
+      "id": "VERIF_004",
+      "links": [
+        "SYSREQ_004",
+        "CREQ_003",
+        "UNITREQ_005",
+        "DOUT_018"
+      ],
+      "status": "approved",
+      "title": "English UI test",
+      "verifies": [
+        "SYSREQ_004",
+        "CREQ_003",
+        "UNITREQ_005"
+      ]
+    }
+  ]
+}

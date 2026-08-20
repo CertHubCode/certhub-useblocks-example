@@ -58,56 +58,82 @@ Open-source useblocks (Sphinx-Needs / CodeLinks / Test-Reports) builds the pack
 from real Git work. Commercial useblocks products (ubCode, ubTrace) are optional
 — same files, no migration. See [docs/ubcode.md](docs/ubcode.md).
 
+### Walkthrough video
+
 [![CertHub Cadence walkthrough](https://img.youtube.com/vi/9R5RELvVyeY/hqdefault.jpg)](https://www.youtube.com/watch?v=9R5RELvVyeY)
 
 ## Prerequisites
 
 - Python 3.12+
 - [uv](https://docs.astral.sh/uv/)
-- A CertHub API key (`CERTHUB_API_KEY`) for `make sync` — [create one in Settings → API Keys](https://docs.certhub.de/api/getting-started)
 - Optional: PlantUML on PATH (or `make ensure-plantuml`) for needflow graphs
+- A CertHub API key only when you **sync** or **push** a Release Record — [create one in Settings → API Keys](https://docs.certhub.de/api/getting-started)
 
-## Quickstart — feel linking
+## 1. See it (no API key)
+
+The showcase requirements and gate snapshot are already in git. Clone, install,
+and open the evidence pack:
 
 ```bash
 git clone https://github.com/CertHubCode/certhub-useblocks-example.git
 cd certhub-useblocks-example
 make install
-cp .env.example .env          # set CERTHUB_API_KEY (see https://docs.certhub.de/api/getting-started)
-make sync                     # CertHub → Sphinx-Needs
-make show                     # tests + CodeLinks + gate + open dashboard
+make show                 # tests + CodeLinks + gate + open dashboard
 ```
 
-Expect **VERIFIED** and all four `SYSREQ_*` PASS. Then see the gate fail:
+Expect **VERIFIED** and all four `SYSREQ_*` PASS. The local HTML pack opens at
+`sphinx/build/html/dashboard.html` — gate status, SYSREQ table, and
+traceability for this baseline. That pack is what CI uploads as an artifact; it
+is engineering evidence, not the CertHub technical file.
+
+Then see the gate fail and recover:
 
 ```bash
-make break && make show       # RED — VERIF_002 cycle time
-make fix && make show         # back to GREEN
+make break && make show   # RED — VERIF_002 cycle time
+make fix && make show     # back to GREEN
 ```
 
-Committed [`certhub.toml`](certhub.toml) is the **showcase tenant**. To point at
-your own product, copy [`certhub.toml.example`](certhub.toml.example) and follow
-[docs/onboarding.md](docs/onboarding.md).
+## 2. Refresh from CertHub (`make sync`)
 
-## Pushing evidence — the write-back
-
-PRs and RC tags upload an evidence artifact only. A full release tag closes the
-loop:
+When you want to re-pull or change the V-model, you need an API key and the
+right KT IDs in [`certhub.toml`](certhub.toml).
 
 ```bash
-make tag-release VERSION=1.0.0   # v1.0.0 → evidence artifact + CertHub Release Record
+cp .env.example .env      # set CERTHUB_API_KEY
+make sync                 # CertHub → Sphinx-Needs + snapshot
+make show
 ```
 
-Or rehearse without tagging: `make confirm BASELINE=0.0.99` (needs an [API key](https://docs.certhub.de/api/getting-started)).
-Step-by-step: [docs/walkthrough.md](docs/walkthrough.md) §§6–8.
+Committed `certhub.toml` is the **showcase tenant**. How to find revision vs
+history IDs in the CertHub UI: [docs/onboarding.md](docs/onboarding.md).
+
+## 3. GitHub + Release Record write-back
+
+Add the same key as a repository secret, then rehearse write-back before a real
+tag:
+
+1. GitHub → **Settings** → **Secrets and variables** → **Actions** →
+   `CERTHUB_API_KEY`
+2. Locally (needs the key):
+
+```bash
+make confirm BASELINE=0.0.99          # live POST → GET proof
+make tag-release VERSION=1.0.0        # v1.0.0 → evidence artifact + Release Record
+```
 
 | Workflow | When | CertHub write? |
 |----------|------|----------------|
 | `cadence-unit-tests.yml` | Every PR / push | No — fork-safe |
-| `cadence-evidence.yml` | PR / main | No — uploads `evidence/` (`CERTHUB_API_KEY` required) |
+| `cadence-evidence.yml` | PR / main | No — builds `evidence/` from committed catalog; `make sync` first when the secret is set |
 | `cadence-release.yml` | Tag `v*.*.*` | **Yes**, on full `vX.Y.Z` only (not RC) |
 
-**Repository setup:** GitHub → Settings → Secrets → Actions → `CERTHUB_API_KEY`.
+Step-by-step: [docs/walkthrough.md](docs/walkthrough.md).
+
+## 4. Your own product (last)
+
+Copy [`certhub.toml.example`](certhub.toml.example) → `certhub.toml`, fill every
+ID for your tenant, retag source (`DOUT_*`) and tests (`VERIF_*`), then
+`make sync && make show`. Full checklist: [docs/onboarding.md](docs/onboarding.md).
 
 ## What to mark in code
 
@@ -133,19 +159,11 @@ Showcase shape: **2 user needs → 4 system specs → 3 components → 5 unit sp
 (`DOUT_018`) covers all four SYSREQs. VALID is manual and does not close the
 gate. Full citations: [docs/traceability-map.md](docs/traceability-map.md).
 
-After `make show`:
-
-![Assurance dashboard](docs/assets/dashboard.png)
-
-![Traceability matrix](docs/assets/traceability.png)
-
-![Release evidence / gate report](docs/assets/release-evidence.png)
-
 ## Docs
 
 | Start here | Then |
 |------------|------|
-| This Quickstart | [docs/walkthrough.md](docs/walkthrough.md) — GREEN → RED → push |
+| This guide (§§1–4) | [docs/walkthrough.md](docs/walkthrough.md) — GREEN → RED → sync → push |
 | Why these markers | [docs/traceability-map.md](docs/traceability-map.md) |
 | Your own tenant | [docs/onboarding.md](docs/onboarding.md) |
 | Data flow (both directions) | [docs/architecture.md](docs/architecture.md) |
@@ -162,25 +180,28 @@ pattern): [Working example](https://docs.certhub.de/api/overview/working-example
 ## Commands
 
 ```bash
-cp .env.example .env   # set CERTHUB_API_KEY — https://docs.certhub.de/api/getting-started
-
-make test                 # connector + SaMD tests (no API key)
-make sync                 # CertHub → Sphinx-Needs
+# 1. See it (no API key)
+make install
 make show                 # tests + CodeLinks + verify + open dashboard
-make evidence             # same gate, writes evidence/ (CI-friendly)
-
-make tag-rc VERSION=1.0.0 RC=1       # RC tag → CI evidence artifact only
-make tag-release VERSION=1.0.0       # full tag → artifact + CertHub Release Record
-
-make push-evidence BASELINE=1.0.0          # dry-run RecordCreate JSON
-CERTHUB_PUSH=1 make push-evidence BASELINE=1.0.0   # live POST
-make confirm BASELINE=0.0.99               # POST → GET proof
-
 make break && make show   # RED — VERIF_002
 make fix && make show     # back to GREEN
+make test                 # connector + SaMD tests (no API key)
+make evidence             # same gate as show, writes evidence/ (CI-friendly)
+
+# 2. Refresh from CertHub (needs API key)
+cp .env.example .env      # set CERTHUB_API_KEY — https://docs.certhub.de/api/getting-started
+make sync                 # CertHub → Sphinx-Needs + snapshot
+
+# 3. Write-back
+make confirm BASELINE=0.0.99               # POST → GET proof
+make tag-rc VERSION=1.0.0 RC=1             # RC tag → CI evidence artifact only
+make tag-release VERSION=1.0.0             # full tag → artifact + CertHub Release Record
+make push-evidence BASELINE=1.0.0          # dry-run RecordCreate JSON
+CERTHUB_PUSH=1 make push-evidence BASELINE=1.0.0   # live POST
 ```
 
-`make sync` requires [`CERTHUB_API_KEY`](https://docs.certhub.de/api/getting-started).
-Layout, inbound sync details, and Release Record field mapping:
+`make sync` / `make confirm` / release push require
+[`CERTHUB_API_KEY`](https://docs.certhub.de/api/getting-started).
+`make show` does not. Layout and Release Record field mapping:
 [docs/architecture.md](docs/architecture.md). Regenerating OpenAPI clients
 (`make generate-api`) is maintainer-only — see [CONTRIBUTING.md](CONTRIBUTING.md).

@@ -2,6 +2,9 @@
 
 ## `Missing required field: 'CERTHUB_API_KEY'`
 
+This applies to `make sync`, `make confirm`, and release write-back — **not**
+`make show` or `make test`. Those use the committed catalog and snapshot.
+
 Create `.env` from the example and set the key. Generate the key yourself in
 CertHub: [Authentication / API Keys](https://docs.certhub.de/api/getting-started).
 
@@ -21,11 +24,12 @@ the tenant in `certhub.toml`. Confirm the same key works in the CertHub UI.
 A KT revision id in `certhub.toml` is wrong, or you mixed **revision** ids with
 **history** ids. See [onboarding](onboarding.md).
 
-## Fork / PR CI skipped “Cadence evidence”
+## Fork / PR CI: evidence without sync
 
-[`cadence-evidence.yml`](../.github/workflows/cadence-evidence.yml) needs the
-`CERTHUB_API_KEY` repository secret. Forks do not get that secret, so the
-evidence job is **skipped** (not failed) on PRs from forks.
+[`cadence-evidence.yml`](../.github/workflows/cadence-evidence.yml) always builds
+the pack from the committed catalog. When `CERTHUB_API_KEY` is set it runs
+`make sync` first. Forks do not get that secret, so they get the pack without a
+live CertHub refresh.
 
 [`cadence-unit-tests.yml`](../.github/workflows/cadence-unit-tests.yml) must still
 pass — it never calls CertHub.

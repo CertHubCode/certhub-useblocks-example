@@ -36,13 +36,15 @@ flowchart TB
   Rel -->|CERTHUB_PUSH=1 full tag only| RR
 ```
 
-## Inbound (every `make sync` / PR evidence run)
+## Inbound (`make sync`; optional on PR evidence when the API key is set)
 
 1. Tech Doc KT metadata + seven Records lists + Tracer use-case edges — the
    design-control matrix, including rows with no CodeLinks
 2. Sphinx-Needs catalog RST under `sphinx/source/generated/` (committed so
    public clones can browse; `make sync` refreshes from CertHub)
-3. No write to CertHub
+3. Normalized snapshot at `certhub/generated/normalized_export.json` (also
+   committed so `make show` works offline; `make sync` refreshes it)
+4. No write to CertHub
 
 You sync layers you never tag in source because 7.3.2(e) is a completeness
 check. Dropping a knowledge topic because some rows have no `@need-ids:`
@@ -53,6 +55,10 @@ hides the finding. Wrong-product text is cleaned in CertHub.
 ```text
 SYSREQ → Tracer-linked DOUT → CodeLinks on source → VERIF → JUnit certhub_test
 ```
+
+`make show` and `make evidence` read the **committed** snapshot and catalogs.
+They do **not** call CertHub and do not need `CERTHUB_API_KEY`. Run `make sync`
+when you want to refresh from the system of record.
 
 The gate root is **System Requirements**. Source comments are `DOUT_*` only
 (FDA GPSV §5.2.4: code traces to the software design specification). Tests

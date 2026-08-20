@@ -10,24 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  gate:
-    runs-on: ubuntu-latest
-    outputs:
-      has_api_key: ${{ steps.check.outputs.has_api_key }}
-    steps:
-      - id: check
-        env:
-          CERTHUB_API_KEY: ${{ secrets.CERTHUB_API_KEY }}
-        run: |
-          if [ -n "$CERTHUB_API_KEY" ]; then
-            echo "has_api_key=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "has_api_key=false" >> "$GITHUB_OUTPUT"
-          fi
-
   evidence:
-    needs: gate
-    if: github.event_name == 'workflow_dispatch' || needs.gate.outputs.has_api_key == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -40,10 +23,15 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
 
-      - name: Sync from CertHub
+      - name: Sync from CertHub (when API key is present)
         env:
           CERTHUB_API_KEY: ${{ secrets.CERTHUB_API_KEY }}
-        run: make sync
+        run: |
+          if [ -n "$CERTHUB_API_KEY" ]; then
+            make sync
+          else
+            echo "No CERTHUB_API_KEY — building evidence from committed catalog/snapshot"
+          fi
 
       - name: Build evidence pack
         run: make evidence
