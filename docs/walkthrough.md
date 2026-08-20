@@ -1,5 +1,7 @@
 # Walkthrough — Cadence (CertHub SaMD Engineering Loop)
 
+[![CertHub Cadence walkthrough](https://img.youtube.com/vi/9R5RELvVyeY/hqdefault.jpg)](https://www.youtube.com/watch?v=9R5RELvVyeY)
+
 Run from the repository root.
 
 Local walkthroughs print a polished CertHub CLI (Rich banners / status). CI stays plain (`CI=1` / non-TTY).

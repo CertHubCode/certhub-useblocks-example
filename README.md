@@ -17,28 +17,39 @@ fault).
 Controlled requirements live in CertHub. **Cadence is the loop; Sterilisator 20A
 is what the loop is about.**
 
-## Two ways this repo talks to CertHub
+## Device vs harness
 
-Cadence shows **both** patterns companies use when software engineering sits
+This repo is two layers in one tree:
+
+| Layer | What it is | Where |
+|---|---|---|
+| **Device** | Sterilisator 20A — the SaMD you would ship (cycle, door lock, English UI) | `src/sterilisator_20a/` (including its unit tests) |
+| **Harness** | Cadence — wraps the product so you can sync requirements, gate PRs, and write a Release Record | `certhub/`, `sphinx/`, root `tests/`, `.github/workflows/` |
+
+Layout detail: [docs/architecture.md](docs/architecture.md).
+
+## What the harness does
+
+The harness shows **both** patterns companies use when software engineering sits
 outside CertHub. You can adopt either or both.
 
 | | What | When CertHub is written |
 |---|---|---|
-| **1. Linking requirements** | Sync the V-model into Sphinx-Needs, tag design output / verification on source and tests, build an evidence pack | Never — PRs and `make show` stay read-only |
-| **2. Pushing evidence** | On a full `vX.Y.Z` tag, POST one **Release Record** (commit, gate result, evidence URL) | **Yes** — controlled write-back |
+| **1. Sync / link requirements** | Pull the V-model into Sphinx-Needs, tag design output / verification on source and tests, build an evidence pack | Never — PRs and `make show` stay read-only |
+| **2. Push the evidence pack** | On a full `vX.Y.Z` tag, POST one **Release Record** (commit, gate result, evidence URL) | **Yes** — controlled write-back |
 
-Companies usually need **pushing evidence** more: a green PR artifact is
-engineering proof, not a regulatory record. The Release Record is the controlled
-row. Cadence demonstrates the full loop so you can see both ends in one repo.
+Most teams need **pushing evidence** more: a green PR artifact is engineering
+proof, not a regulatory record. The Release Record is the controlled row.
+Cadence demonstrates the full loop so you can see both ends in one repo.
 
 ```mermaid
 flowchart LR
-  subgraph link [1 Linking requirements]
+  subgraph link [1 Sync requirements]
     CertHub[CertHub SoR] -->|make sync| Needs[Sphinx-Needs]
     Needs --> Gate[pytest plus CodeLinks plus gate]
     Gate --> Pack[evidence pack]
   end
-  subgraph push [2 Pushing evidence]
+  subgraph push [2 Push evidence pack]
     Pack -->|full tag vX.Y.Z only| Record[CertHub Release Record]
   end
 ```
@@ -46,6 +57,8 @@ flowchart LR
 Open-source useblocks (Sphinx-Needs / CodeLinks / Test-Reports) builds the pack
 from real Git work. Commercial useblocks products (ubCode, ubTrace) are optional
 — same files, no migration. See [docs/ubcode.md](docs/ubcode.md).
+
+[![CertHub Cadence walkthrough](https://img.youtube.com/vi/9R5RELvVyeY/hqdefault.jpg)](https://www.youtube.com/watch?v=9R5RELvVyeY)
 
 ## Prerequisites
 
