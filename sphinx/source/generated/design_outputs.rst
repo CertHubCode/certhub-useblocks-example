@@ -4,13 +4,13 @@
 
 
 .. dout:: Sterilizer 20A
-   :id: DOUT_001
+   :id: DOUT_018
    :status: approved
    :source_system: CertHub
-   :external_id: 69ea0b0a89fe66ea2f5c65b6
+   :external_id: 6a86f56b41dd09bd2cb8a122
    :external_version: 0.1
-   :links: SYSREQ_001;CREQ_001;VERIF_001;VALID_001
+   :links: VERIF_001;VERIF_002;VERIF_003;VERIF_004;SYSREQ_001;CREQ_001;UNITREQ_001
 
-   Previous generation device with pre-vacuum and postvacuum drying, color touchscreen. Capacity: 8 trays; network connectivity
+   Sterilisator 20A cycle-control SaMD for a tabletop steam sterilizer: software evaluates sterilization cycle temperature and duration, enforces door interlock while running, and presents English operator status (idle, running, complete, fault). Not a hardware catalog entry.
 
-Pre-vacuum and postvacuum drying; color touchscreen
+Implementation in src/sterilisator_20a/ (cycle/controller.py, safety/door.py, ui/messages.py). CodeLinks markers: # @need-ids: DOUT_018.

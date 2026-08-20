@@ -9,10 +9,10 @@
    :source_system: CertHub
    :external_id: 69c2d6826406f437042965f4
    :external_version: 0.1
-   :links: SYSREQ_001;SYSREQ_004;DOUT_001
-   :verifies: SYSREQ_001;SYSREQ_004
+   :links: SYSREQ_001;CREQ_001;UNITREQ_001;DOUT_018
+   :verifies: SYSREQ_001;CREQ_001;UNITREQ_001
 
-   Run standard cycle and record thermocouple data
+   Execute automated test test_sterilization_temperature_accuracy (@pytest.mark.certhub_test("VERIF_001")) in src/sterilisator_20a/tests/test_sterilisator.py.
 
 .. verif:: Cycle time test
    :id: VERIF_002
@@ -20,29 +20,29 @@
    :source_system: CertHub
    :external_id: 69c2d6826406f437042965f5
    :external_version: 0.1
-   :links: SYSREQ_002
-   :verifies: SYSREQ_002
+   :links: SYSREQ_002;CREQ_001;UNITREQ_002;DOUT_018
+   :verifies: SYSREQ_002;CREQ_001;UNITREQ_002
 
-   Run full cycle and record duration
+   Execute automated test test_sterilization_cycle_time (@pytest.mark.certhub_test("VERIF_002")) in src/sterilisator_20a/tests/test_sterilisator.py. This is the Cadence make break / make fix demo target.
 
-.. verif:: UI readability test
+.. verif:: Door interlock test
    :id: VERIF_003
    :status: approved
    :source_system: CertHub
    :external_id: 69c2d6826406f437042965f6
    :external_version: 0.1
-   :links: SYSREQ_003
-   :verifies: SYSREQ_003
+   :links: SYSREQ_003;CREQ_002;UNITREQ_004;DOUT_018
+   :verifies: SYSREQ_003;CREQ_002;UNITREQ_004
 
-   Inspect display under ambient lighting
+   Execute automated test test_door_interlock (@pytest.mark.certhub_test("VERIF_003")).
 
-.. verif:: Footprint compatibility test
+.. verif:: English UI test
    :id: VERIF_004
    :status: approved
    :source_system: CertHub
    :external_id: 69c2d6826406f437042965f7
    :external_version: 0.1
-   :links: SYSREQ_003;SYSREQ_004
-   :verifies: SYSREQ_003;SYSREQ_004
+   :links: SYSREQ_004;CREQ_003;UNITREQ_005;DOUT_018
+   :verifies: SYSREQ_004;CREQ_003;UNITREQ_005
 
-   Place unit on standard clinical trolley
+   Execute automated test test_user_interface_labeling (@pytest.mark.certhub_test("VERIF_004")).

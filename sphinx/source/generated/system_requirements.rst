@@ -3,62 +3,55 @@
 .. Overwritten on every sync from CertHub APIs.
 
 
-.. sysreq:: Sterilization temperature range is better
+.. sysreq:: Sterilization temperature range
    :id: SYSREQ_001
    :status: approved
    :source_system: CertHub
-   :external_id: 69c2d6756406f437042965e5
+   :external_id: 6a86f51c41dd09bd2cb8a115
    :external_version: 0.1
    :req_type: functional
-   :priority: medium
-   :source: Functional & Performance Requirements
-   :justification: Ensures effective microbial inactivation
+   :priority: high
+   :justification: Ensures effective microbial inactivation.
    :concerning: Equipment
-   :links: CREQ_001;CREQ_002;VERIF_001
+   :links: VERIF_001;UREQ_001;CREQ_001
 
-   Device shall achieve and maintain sterilization temperature of 121°C ± 2°C
+   Device shall achieve and maintain sterilization temperature of 121°C ± 2°C.
 
 .. sysreq:: Sterilization cycle time
    :id: SYSREQ_002
    :status: approved
    :source_system: CertHub
-   :external_id: 69c2d6756406f437042965e6
+   :external_id: 6a86f51c41dd09bd2cb8a116
    :external_version: 0.1
    :req_type: functional
-   :priority: medium
-   :source: Functional & Performance Requirements
-   :justification: Optimizes throughput for clinical operations
-   :concerning: Monitoring and Measurement
-   :links: CREQ_002;CREQ_004;VERIF_002
+   :priority: high
+   :justification: Optimizes throughput for clinical operations.
+   :links: VERIF_002;UREQ_002;CREQ_001
 
-   Total cycle time shall not exceed 60 minutes
+   Total cycle time shall not exceed 60 minutes.
 
-.. sysreq:: User interface labeling
+.. sysreq:: Door interlock
    :id: SYSREQ_003
    :status: approved
    :source_system: CertHub
-   :external_id: 69c2d6756406f437042965e7
+   :external_id: 6a86f51c41dd09bd2cb8a117
    :external_version: 0.1
-   :req_type: regulatory
+   :req_type: functional
    :priority: high
-   :source: Other
-   :justification: Compliance with MDR user information standards
-   :concerning: Other
-   :links: CREQ_003;VERIF_003;VERIF_004
+   :justification: Prevents operator exposure and incomplete sterilization from door opening during an active cycle.
+   :links: VERIF_003;UREQ_001;CREQ_002
 
-   User interface shall display cycle status and alerts in English
+   A sterilization cycle shall not start unless the chamber door is closed. The door shall remain locked while the cycle is running.
 
-.. sysreq:: Device footprint
+.. sysreq:: English cycle status
    :id: SYSREQ_004
    :status: approved
    :source_system: CertHub
-   :external_id: 69c2d6756406f437042965e8
+   :external_id: 6a86f51c41dd09bd2cb8a118
    :external_version: 0.1
-   :req_type: Physical
-   :priority: low
-   :source: User Needs
-   :justification: Accommodates limited workspace in clinics
-   :concerning: Equipment
-   :links: CREQ_004;VERIF_001;VERIF_004
+   :req_type: regulatory
+   :priority: high
+   :justification: Compliance with MDR user-information expectations; clinic staff must read status without translation.
+   :links: VERIF_004;UREQ_002;CREQ_003
 
-   Overall external dimensions shall not exceed 50 cm x 40 cm x 35 cm
+   The user interface shall display cycle state and alerts in English, covering idle, running, complete, fault, and door-locked conditions.

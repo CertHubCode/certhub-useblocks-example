@@ -3,39 +3,22 @@
 .. Overwritten on every sync from CertHub APIs.
 
 
-.. valid:: Temperature validation
+.. valid:: Intended-use sterilization
    :id: VALID_001
    :status: approved
    :source_system: CertHub
-   :external_id: 69c2d6846406f437042965f9
+   :external_id: 6a86f59341dd09bd2cb8a123
    :external_version: 0.1
-   :links: DOUT_001
+   :links: UREQ_001
 
-   Conduct 10 consecutive cycles with data logging
+   Ten consecutive intended-use sterilization cycles with independent temperature logging and observed door behaviour.
 
-.. valid:: Cycle time validation
+.. valid:: Clinic operability
    :id: VALID_002
    :status: approved
    :source_system: CertHub
-   :external_id: 69c2d6846406f437042965fa
+   :external_id: 6a86f59341dd09bd2cb8a124
    :external_version: 0.1
+   :links: UREQ_002
 
-   Run 10 cycles and record times
-
-.. valid:: UI validation
-   :id: VALID_003
-   :status: approved
-   :source_system: CertHub
-   :external_id: 69c2d6846406f437042965fb
-   :external_version: 0.1
-
-   Simulate error and normal cycles
-
-.. valid:: Footprint validation
-   :id: VALID_004
-   :status: approved
-   :source_system: CertHub
-   :external_id: 69c2d6846406f437042965fc
-   :external_version: 0.1
-
-   Place units in 5 different clinical carts
+   Ten consecutive full cycles timed end-to-end; operators identify cycle states from the English UI using normal and fault scripts.

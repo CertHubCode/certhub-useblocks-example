@@ -25,8 +25,9 @@ _IMPL_MAP = {
         "src/sterilisator_20a/cycle/controller.py:def temperature_within_range(peak_temperature_c: float) -> bool:",
         "src/sterilisator_20a/cycle/controller.py:def reported_cycle_duration_minutes(measured_minutes: float) -> float:",
         "src/sterilisator_20a/cycle/controller.py:def cycle_within_time_budget(duration_minutes: float) -> bool:",
-        "src/sterilisator_20a/ui/messages.py:def ui_messages() -> dict[str, str]:",
-        "src/sterilisator_20a/enclosure/footprint.py:def device_dimensions_cm() -> DimensionsCm:",
+        "src/sterilisator_20a/cycle/controller.py:def start_cycle(*, door_closed: bool, peak_temperature_c: float, duration_minutes: float) -> CycleResult:",
+        "src/sterilisator_20a/safety/door.py:def door_must_lock(state: CycleState) -> bool:",
+        "src/sterilisator_20a/ui/messages.py:def ui_messages() -> dict[str, dict[str, str]]:",
     ],
     "VERIF_001": [
         "src/sterilisator_20a/tests/test_sterilisator.py:def test_sterilization_temperature_accuracy() -> None:"
@@ -35,10 +36,10 @@ _IMPL_MAP = {
         "src/sterilisator_20a/tests/test_sterilisator.py:def test_sterilization_cycle_time() -> None:"
     ],
     "VERIF_003": [
-        "src/sterilisator_20a/tests/test_sterilisator.py:def test_user_interface_labeling() -> None:"
+        "src/sterilisator_20a/tests/test_sterilisator.py:def test_door_interlock() -> None:"
     ],
     "VERIF_004": [
-        "src/sterilisator_20a/tests/test_sterilisator.py:def test_device_footprint() -> None:"
+        "src/sterilisator_20a/tests/test_sterilisator.py:def test_user_interface_labeling() -> None:"
     ],
 }
 
@@ -47,8 +48,8 @@ def test_pick_implementation_matches_verif_domain() -> None:
     cases = {
         "VERIF_001": "temperature_within_range",
         "VERIF_002": "reported_cycle_duration_minutes",
-        "VERIF_003": "messages.py",
-        "VERIF_004": "footprint.py",
+        "VERIF_003": "door.py",
+        "VERIF_004": "messages.py",
     }
     for verif_id, needle in cases.items():
         _dout, impl = _pick_implementation(_IMPL_MAP, ["DOUT_018"], [verif_id])
@@ -78,8 +79,8 @@ def _minimal_export() -> CertHubExport:
     mapping = (
         ("SYSREQ_001", "VERIF_001", "temperature"),
         ("SYSREQ_002", "VERIF_002", "cycle time"),
-        ("SYSREQ_003", "VERIF_003", "english UI"),
-        ("SYSREQ_004", "VERIF_004", "footprint"),
+        ("SYSREQ_003", "VERIF_003", "door interlock"),
+        ("SYSREQ_004", "VERIF_004", "english UI"),
     )
     for sys_id, ver_id, title in mapping:
         sysreqs.append(
@@ -161,8 +162,8 @@ def test_verify_report_cites_matching_source_files(tmp_path: Path) -> None:
     expected = {
         "SYSREQ_001": "temperature_within_range",
         "SYSREQ_002": "reported_cycle_duration_minutes",
-        "SYSREQ_003": "messages.py",
-        "SYSREQ_004": "footprint.py",
+        "SYSREQ_003": "door.py",
+        "SYSREQ_004": "messages.py",
     }
     by_id = {v.requirement_id: v.implementation or "" for v in report.requirements}
     for sys_id, needle in expected.items():
@@ -251,6 +252,64 @@ def test_gate_missing_dout(tmp_path: Path) -> None:
     )
     assert report.certification_status == CertificationStatus.BLOCKED
     assert report.requirements[0].status == ReqStatus.MISSING_DOUT
+
+
+def test_gate_uses_product_dout_fallback(tmp_path: Path) -> None:
+    """DOUT_018 may only list one SYSREQ in CertHub; other SYSREQs still use it."""
+    export = CertHubExport(
+        project=ProjectInfo(id="demo", name="Sterilisator 20A", version="0.1"),
+        user_requirements=[],
+        system_requirements=[
+            SystemRequirement(
+                id="SYSREQ_002",
+                title="cycle time",
+                description="≤ 60 min",
+                status="approved",
+            )
+        ],
+        component_requirements=[],
+        unit_requirements=[],
+        design_outputs=[
+            DesignOutput(
+                id="DOUT_018",
+                title="Sterilizer 20A",
+                description="product",
+                status="approved",
+                links=[],  # CertHub DO→SR single-select may omit other SYSREQs
+            )
+        ],
+        verifications=[
+            Verification(
+                id="VERIF_002",
+                title="cycle time",
+                description="d",
+                status="approved",
+                verifies=["SYSREQ_002"],
+            )
+        ],
+        validations=[],
+    )
+    analysis = tmp_path / "codelinks.json"
+    analysis.write_text(
+        __import__("json").dumps(
+            [
+                {
+                    "filepath": "src/sterilisator_20a/cycle/controller.py",
+                    "need_ids": ["DOUT_018"],
+                    "tagged_scope": "def reported_cycle_duration_minutes",
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
+    report = verify_certification(
+        export,
+        codelinks_path=analysis,
+        junit=_junit_xml(tmp_path, "VERIF_002"),
+    )
+    assert report.certification_status == CertificationStatus.VERIFIED
+    assert report.requirements[0].design_output == "DOUT_018"
+    assert "reported_cycle_duration_minutes" in (report.requirements[0].implementation or "")
 
 
 def test_gate_not_implemented(tmp_path: Path) -> None:

@@ -77,28 +77,37 @@ UNITREQ / VALID are in the catalog and do not close the gate.
 
 | Requirement | Intent | Design output | Implementation | Verification | Test |
 |-------------|--------|---------------|----------------|--------------|------|
-| SYSREQ_001 | Chamber 121°C ± 2°C | DOUT_018 | `src/sterilisator_20a/cycle/controller.py` — `temperature_within_range` | VERIF_001 | `test_sterilization_temperature_accuracy` |
+| SYSREQ_001 | Chamber 121°C ± 2°C | DOUT_018 | `src/sterilisator_20a/cycle/controller.py` — `temperature_within_range` / `start_cycle` | VERIF_001 | `test_sterilization_temperature_accuracy` |
 | SYSREQ_002 | Cycle ≤ 60 minutes | DOUT_018 | `src/sterilisator_20a/cycle/controller.py` — `reported_cycle_duration_minutes` / `cycle_within_time_budget` | VERIF_002 | `test_sterilization_cycle_time` |
-| SYSREQ_003 | English UI labels | DOUT_018 | `src/sterilisator_20a/ui/messages.py` | VERIF_003 | `test_user_interface_labeling` |
-| SYSREQ_004 | Enclosure ≤ 50×40×35 cm | DOUT_018 | `src/sterilisator_20a/enclosure/footprint.py` | VERIF_004 | `test_device_footprint` |
+| SYSREQ_003 | Door interlock | DOUT_018 | `src/sterilisator_20a/safety/door.py` — `may_start_cycle` / `door_must_lock` | VERIF_003 | `test_door_interlock` |
+| SYSREQ_004 | English cycle status | DOUT_018 | `src/sterilisator_20a/ui/messages.py` — state-keyed labels | VERIF_004 | `test_user_interface_labeling` |
 
 `make break` mutates `reported_cycle_duration_minutes()` so VERIF_002 / SYSREQ_002
 go RED. `make fix` restores GREEN.
+
+## Catalog layers (synced, not gated)
+
+| Layer | Showcase count | Role |
+|-------|----------------|------|
+| UREQ | 2 | User needs (safety+efficacy; clinic workflow) — validated by VALID_* |
+| SYSREQ | 4 | Gate root |
+| CREQ | 3 | Cycle engine, door safety, operator UI |
+| UNITREQ | 5 | Function-level specs under the three components |
+| DOUT | 1 | `DOUT_018` Sterilizer 20A (CodeLinks target) |
+| VERIF | 4 | Automated pytest |
+| VALID | 2 | Manual intended-use protocols → UREQ |
 
 ## What is not in the gate
 
 | Layer | In Sphinx pack? | Closes gate? |
 |-------|-----------------|--------------|
 | UREQ / CREQ / UNITREQ | Synced from CertHub (Job 1 catalog) | No |
-| DOUT_001–004 (procedures) | In the catalog; needflow keeps the sterilizer chain readable | No CodeLinks on product source — on purpose |
-| VALID_001–004 | Synced; dashboard KPI is **manual / N/A** | No — intended-use evidence stays in CertHub |
+| VALID_001–002 | Synced; dashboard KPI is **manual / N/A** | No — intended-use evidence stays in CertHub |
 
 ## Showcase limitations
 
-- One product design output (`DOUT_018`) covers all four SYSREQs. A real
-  product would split feature-level DOUTs in CertHub, then split the
-  `@need-ids:` markers. Do not retag procedure DOUTs (`DOUT_001`–`004`) as
-  software.
+- One product design output (`DOUT_018`) covers all four SYSREQs (CertHub DO
+  form may only relate to one SYSREQ; the gate falls back to `DOUT_018`).
 - CodeLinks `needextend` lists **all** marker URLs per need; the certification
   report cites the **domain-matching** implementation, not always the first hit.
 - Source comments are one method for GPSV’s last hop. The standards require

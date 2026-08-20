@@ -52,8 +52,8 @@ key is bound to your email. See the ubCode section in the README.
 
 ## Gate VERIFIED but the implementation column looks wrong
 
-Each SYSREQ should cite the **matching** source file (temperature →
-`cycle/controller.py`, UI → `ui/messages.py`, footprint → `enclosure/footprint.py`).
+Each SYSREQ should cite the **matching** source file (temperature / cycle →
+`cycle/controller.py`, door → `safety/door.py`, English UI → `ui/messages.py`).
 If every row shows the same function, re-run `make show` on a tree that includes
 the current `verify.py` picker. See [traceability map](traceability-map.md).
 

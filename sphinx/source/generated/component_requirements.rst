@@ -3,42 +3,32 @@
 .. Overwritten on every sync from CertHub APIs.
 
 
-.. creq:: Temperature control rationale
+.. creq:: Cycle engine
    :id: CREQ_001
    :status: approved
    :source_system: CertHub
-   :external_id: 69c2d67b6406f437042965ea
+   :external_id: 6a86f53b41dd09bd2cb8a11a
    :external_version: 0.1
-   :links: SYSREQ_001
+   :links: VERIF_001;VERIF_002;SYSREQ_001;SYSREQ_002;UNITREQ_001;UNITREQ_002;UNITREQ_003
 
-   Necessary to eliminate heat-resistant microorganisms
+   The cycle-control software component shall run a sterilization cycle (idle → running → complete or fault), evaluate chamber peak temperature against 121°C ± 2°C, and accept a cycle only when total duration is ≤ 60 minutes.
 
-.. creq:: Cycle time efficiency rationale
+.. creq:: Door safety
    :id: CREQ_002
    :status: approved
    :source_system: CertHub
-   :external_id: 69c2d67b6406f437042965eb
+   :external_id: 6a86f53b41dd09bd2cb8a11b
    :external_version: 0.1
-   :links: SYSREQ_001;SYSREQ_002
+   :links: VERIF_003;SYSREQ_003;UNITREQ_004
 
-   Determines throughput for clinical workflow
+   The door-safety software component shall inhibit cycle start when the door is open and require the door to remain locked while cycle state is running.
 
-.. creq:: Labeling rationale
+.. creq:: Operator UI
    :id: CREQ_003
    :status: approved
    :source_system: CertHub
-   :external_id: 69c2d67b6406f437042965ec
+   :external_id: 6a86f53b41dd09bd2cb8a11c
    :external_version: 0.1
-   :links: SYSREQ_003
+   :links: VERIF_004;SYSREQ_004;UNITREQ_005
 
-   Ensures user clarity on cycle status
-
-.. creq:: Footprint rationale
-   :id: CREQ_004
-   :status: approved
-   :source_system: CertHub
-   :external_id: 69c2d67b6406f437042965ed
-   :external_version: 0.1
-   :links: SYSREQ_002;SYSREQ_004
-
-   Limits space usage in small treatment rooms
+   The UI software component shall expose English status and alert strings for each cycle state (idle, running, complete, fault) and door-locked conditions.

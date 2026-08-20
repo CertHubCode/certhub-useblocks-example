@@ -4,10 +4,22 @@
 
 # Cadence — CertHub SaMD Engineering Loop
 
+## The product — Sterilisator 20A
+
+This repository is the engineering twin of a fictional **tabletop steam
+sterilizer** for small clinics. Staff load reusable instruments, close the
+chamber door, and start a cycle. The software under test
+(`src/sterilisator_20a/`) evaluates whether the chamber reached **121°C ± 2°C**,
+whether the cycle finished within **60 minutes**, keeps the **door locked** while
+the cycle is running, and shows **English** status (idle, running, complete,
+fault). Controlled requirements live in CertHub; this repo syncs them, links
+them to that sterilizer code and its tests, and builds the evidence pack.
+**Cadence is the loop; Sterilisator 20A is what the loop is about.**
+
 Cadence is CertHub’s public example of an **engineering evidence loop**:
 controlled requirements stay in CertHub; this repo syncs them into Sphinx-Needs;
 open-source useblocks (Sphinx-Needs / CodeLinks / Test-Reports) builds an
-evidence pack from real Git work on the fictional **Sterilisator 20A** SaMD.
+evidence pack from real Git work on that SaMD.
 Commercial useblocks products (ubCode, ubTrace) are optional — same files, no
 migration.
 
@@ -119,12 +131,12 @@ SYSREQ ←Tracer→ VERIF_00N →  # @need-ids: VERIF_00N + pytest.mark.certhub_
 |--------|--------------------------|-------------------------|
 | SYSREQ_001 temperature | `src/sterilisator_20a/cycle/controller.py` | VERIF_001 |
 | SYSREQ_002 cycle time | `src/sterilisator_20a/cycle/controller.py` | VERIF_002 |
-| SYSREQ_003 English UI | `src/sterilisator_20a/ui/messages.py` | VERIF_003 |
-| SYSREQ_004 footprint | `src/sterilisator_20a/enclosure/footprint.py` | VERIF_004 |
+| SYSREQ_003 door interlock | `src/sterilisator_20a/safety/door.py` | VERIF_003 |
+| SYSREQ_004 English UI | `src/sterilisator_20a/ui/messages.py` | VERIF_004 |
 
 UREQ / CREQ / UNITREQ / VALID sync into the Sphinx catalog. They are not
-marked in `src/`. Unlinked rows stay visible (completeness). Wrong-product
-text is cleaned in CertHub, not by syncing fewer topics.
+marked in `src/`. The showcase V-model is **2 user needs → 4 system specs →
+3 components → 5 unit specs → 1 design output; 4 verifications + 2 validations**.
 
 Why this split, with citations:
 [V-model guide](https://docs.certhub.de/1.5%20Implementation%20Guides/v-model-software-outside-certhub)

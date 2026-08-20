@@ -2,3 +2,27 @@
 ..
 .. Overwritten on every sync from CertHub APIs.
 
+
+.. ureq:: Safe and effective instrument sterilization
+   :id: UREQ_001
+   :status: approved
+   :source_system: CertHub
+   :external_id: 6a86f4ad41dd09bd2cb8a112
+   :external_version: 0.1
+   :priority: high
+   :source: Fucntional
+   :links: SYSREQ_001;SYSREQ_003;VALID_001
+
+   The operator shall be able to steam-sterilize reusable instruments so that heat-resistant microorganisms are inactivated during intended use, without unloading while the chamber is in an unsafe (in-progress) state.
+
+.. ureq:: Operable in a clinic workflow
+   :id: UREQ_002
+   :status: approved
+   :source_system: CertHub
+   :external_id: 6a86f4ad41dd09bd2cb8a113
+   :external_version: 0.1
+   :priority: high
+   :source: Fucntional
+   :links: SYSREQ_002;SYSREQ_004;VALID_002
+
+   Clinic staff shall finish a sterilization cycle within a treatment-room timebox and understand cycle status and alerts in English.

@@ -53,7 +53,10 @@ KPIs
 ================ ============================================================
 Measure          Value
 ================ ============================================================
+User Reqs        :need_count:`type == "ureq" and is_need`
 System Reqs      :need_count:`type == "sysreq" and is_need`
+Component Reqs   :need_count:`type == "creq" and is_need`
+Unit Reqs        :need_count:`type == "unitreq" and is_need`
 Design Output    :need_count:`type == "dout" and is_need`
 Verification     :need_count:`type == "verif" and is_need`
 Validation       :need_count:`type == "valid" and is_need`
@@ -84,19 +87,20 @@ Artifact inventory
 ------------------
 
 .. needbar:: Needs by type
-   :xlabels: sysreq, dout, verif, valid
+   :xlabels: ureq, sysreq, creq, unitreq, dout, verif, valid
    :ylabels: count
    :legend:
 
-   type == "sysreq", type == "dout", type == "verif", type == "valid"
+   type == "ureq", type == "sysreq", type == "creq", type == "unitreq", type == "dout", type == "verif", type == "valid"
 
 Traceability flow
 -----------------
 
-System Requirement → Design Output → Verification (``links`` / ``verifies``).
+User → System → Component → Unit → Design Output → Verification;
+Validation → User Requirement.
 
 .. needflow:: V-model excerpt
-   :filter: type in ["sysreq", "dout", "verif", "valid"]
+   :filter: type in ["ureq", "sysreq", "creq", "unitreq", "dout", "verif", "valid"]
    :link_types: links, verifies, validates
    :show_link_names:
    :show_legend:

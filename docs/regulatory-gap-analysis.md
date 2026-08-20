@@ -89,15 +89,15 @@ Legend: **Done** = Cadence can show it for Sterilisator 20A · **Partial** = pre
 
 | Item | Status | Notes |
 |---|---|---|
-| User needs / UREQ | Partial | Synced; tenant may still hold non-sterilizer UREQ text |
-| System requirements (SoR) | Done | Gate root; `SYSREQ_001`–`004` |
-| Component / unit requirements | Partial | Synced; not in gate |
-| Design outputs | Done | DOUT catalog + links; product DO `DOUT_018` |
-| Implementation ↔ DOUT | Done | CodeLinks to `src/sterilisator_20a/` |
+| User needs / UREQ | Done | `UREQ_001`–`002` sterilizer needs; VALID links to UREQ |
+| System requirements (SoR) | Done | Gate root; `SYSREQ_001`–`004` (temp, time, door, English UI) |
+| Component / unit requirements | Done | 3 CREQ + 5 UNITREQ synced; not in gate |
+| Design outputs | Done | Product DO `DOUT_018` + CodeLinks |
+| Implementation ↔ DOUT | Done | CodeLinks to `src/sterilisator_20a/` (cycle, safety, UI) |
 | Architecture / detailed design docs | Gap | Thin simulation code; no formal SW architecture KT in pack |
 | Design reviews | CertHub | Not in evidence pack |
-| Verification protocols + results | Partial / Done | VERIF content in CertHub; execution in pytest/JUnit/Sphinx |
-| Validation protocols + results | Partial | VALID synced; **not in the engineering gate** (manual / N/A KPI on the dashboard); often linked to SYSREQ not UREQ |
+| Verification protocols + results | Done | VERIF in CertHub; execution in pytest/JUnit/Sphinx |
+| Validation protocols + results | Done (manual) | `VALID_001`–`002` → UREQ; **not in the engineering gate** |
 | Traceability matrix | Done | Sphinx matrices + (after fix) needflow graph + ubCode chain report |
 | Risk ↔ requirements | CertHub | Keep in CertHub; optional future: show risk IDs as links only |
 
