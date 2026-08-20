@@ -1,5 +1,7 @@
 # Walkthrough — Cadence (CertHub SaMD Engineering Loop)
 
+[![CertHub Cadence walkthrough](https://img.youtube.com/vi/9R5RELvVyeY/hqdefault.jpg)](https://www.youtube.com/watch?v=9R5RELvVyeY)
+
 Run from the repository root.
 
 Local walkthroughs print a polished CertHub CLI (Rich banners / status). CI stays plain (`CI=1` / non-TTY).
@@ -10,13 +12,13 @@ Tenant URLs, KT revision ids, and dashboard history ids live in committed [`cert
 
 ```bash
 cp .env.example .env
-# set CERTHUB_API_KEY=… in .env  (the only secret; prod key for the showcase tenant)
+# set CERTHUB_API_KEY=… — generate yours: https://docs.certhub.de/api/getting-started
 ```
 
 | Where | What |
 |-------|------|
 | `certhub.toml` | Tech Doc / Records / Tracer base URLs, seven content KT revision ids + Release Record, dashboard URL fields |
-| `.env` / GitHub secret `CERTHUB_API_KEY` | API key (`X-API-Key`) |
+| `.env` / GitHub secret `CERTHUB_API_KEY` | API key (`X-API-Key`) — [create one](https://docs.certhub.de/api/getting-started) |
 
 `make sync` requires `CERTHUB_API_KEY` (no mock fallback). Product / KU revision for write-back are resolved from Tech Doc at push time (from the Release Record KT). The SoR is **System Requirements** (sterilizer content).
 
@@ -82,7 +84,7 @@ make evidence
 Same gate as `show`, no browser. Writes `evidence/` (gitignored), including Sphinx HTML under `evidence/docs/` (open `docs/dashboard.html` after downloading the CI artifact).  
 This is what every PR uploads as a GitHub artifact — still **no** CertHub write.
 
-### 6. Prove CertHub write-back (optional, needs API key)
+### 6. Prove CertHub write-back (optional, needs an [API key](https://docs.certhub.de/api/getting-started))
 
 ```bash
 make confirm BASELINE=0.0.99
@@ -166,16 +168,16 @@ Show the Sphinx twin updated. No new Release Record was created — engineering 
 
 ---
 
-## What to say in the walkthrough
+## What this demonstrates
 
 1. **CertHub** holds the V-model *records* and Tracer matrix (ISO 13485 7.3.2(e)).
 2. **This repo** tags only the last hop: `DOUT_*` on source, `VERIF_*` on tests
    (FDA GPSV §5.2.4). `SYSREQ` is not on functions; the gate walks Tracer.
 3. **Cadence** is the SaMD engineering loop: Git twin + evidence gate + release write-back.
 4. **useblocks** turns Git work into an evidence pack.
-5. **PRs** prove engineering quality (artifact), they do not create regulatory records.
+5. **PRs** prove engineering quality (artifact); they do not create regulatory records.
 6. **RC tags** rehearse the same gate and store the pack on the run; they do not write CertHub.
 7. **Release tags** close the loop: one Release Record in CertHub for that baseline.
-8. **Open the printed CertHub URL** so the audience sees the controlled row.
-9. **Edit a requirement in CertHub**, re-sync — engineering follows the SoR. Unlinked
+8. After a release or `make confirm`, open the printed CertHub URL to see the controlled row.
+9. Edit a requirement in CertHub, then re-sync — engineering follows the SoR. Unlinked
    catalog rows stay; leftover product text is cleaned in CertHub, not by syncing less.

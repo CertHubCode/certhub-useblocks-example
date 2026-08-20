@@ -61,7 +61,7 @@ unless a maintainer runs the evidence workflow with the secret.
 Records and dashboard ids are **not** interchangeable. Mixing them produces 404s
 or empty syncs.
 
-4. Put a matching API key in `.env`.
+4. Put a matching API key in `.env` ([create one](https://docs.certhub.de/api/getting-started)).
 5. `make sync && make show`.
 
 If sync succeeds but the gate is empty, the KTs probably still hold a different

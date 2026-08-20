@@ -9,7 +9,7 @@ full release tag writes one Release Record back.
 ```mermaid
 flowchart TB
   subgraph certhub [CertHub SoR]
-    KTs[UREQ SYSREQ CREQ DOUT VERIF VALID]
+    KTs[UREQ SYSREQ CREQ UNITREQ DOUT VERIF VALID]
     RR[Release Record KT]
   end
   subgraph repo [This repository]
@@ -88,4 +88,6 @@ Pydantic from `datamodel-code-generator`. Wrappers never return attrs types.
 
 - [Onboarding](onboarding.md)
 - [Traceability map](traceability-map.md)
-- [Regulatory gap analysis](regulatory-gap-analysis.md)
+- [Walkthrough](walkthrough.md)
+- [Troubleshooting](troubleshooting.md)
+- [ubCode / ubTrace](ubcode.md)

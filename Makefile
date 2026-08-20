@@ -46,6 +46,7 @@ TRACER_MODEL_DIR = $(MODEL_DIR)/tracer
 help:
 	@echo "Cadence — CertHub SaMD Engineering Loop"
 	@echo ""
+	@echo "Learner"
 	@echo "  make sync                         Sync CertHub → Sphinx-Needs"
 	@echo "  make show                         Tests + CodeLinks + verify + open dashboard"
 	@echo "  make evidence                     CI evidence pack under evidence/ (no browser)"
@@ -59,7 +60,10 @@ help:
 	@echo "  make test-connector               Connector tests only"
 	@echo "  make test-samd                    SaMD verification tests only"
 	@echo "  make break / make fix             RED/GREEN gate"
-	@echo "  make clean / make install / make generate-api"
+	@echo "  make clean / make install"
+	@echo ""
+	@echo "Maintainer"
+	@echo "  make generate-api                 DEV ONLY — regenerate OpenAPI clients"
 
 install:
 	$(UV) sync

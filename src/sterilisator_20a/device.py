@@ -1,7 +1,8 @@
 """Sterilisator 20A — example SaMD product under test.
 
-Need IDs follow CertHub-synced V-Model types (SYSREQ / DOUT / VERIF).
-CodeLinks markers target the Sterilizer 20A Design Output (``DOUT_018``).
+Source CodeLinks markers target the Sterilizer 20A Design Output (``DOUT_018``).
+Tests tag ``VERIF_*``. System requirements close the gate via Tracer, not via
+comments on functions.
 """
 
 from sterilisator_20a.constants import (
