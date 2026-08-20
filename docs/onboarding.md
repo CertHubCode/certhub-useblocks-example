@@ -66,7 +66,9 @@ or empty syncs.
 
 If sync succeeds but the gate is empty, the KTs probably still hold a different
 product’s content. Cadence maps whatever CertHub returns; it does not invent
-Sterilisator requirements.
+Sterilisator requirements. Wrong-product or leftover rows are cleaned in
+CertHub, not by omitting knowledge topics from the sync. What to mark in
+code: [traceability map](traceability-map.md).
 
 ## Related
 

@@ -36,13 +36,16 @@ cp .env.example .env
 
 ## Walkthrough script
 
-### 1. Pull requirements into the repo
+### 1. Pull the V-model into the repo
 
 ```bash
 make sync
 ```
 
-Loads requirements from CertHub (Tech Doc + Records + Tracer use-case links) into Sphinx-Needs.
+Loads the seven V-model knowledge topics plus Tracer use-case edges into
+Sphinx-Needs (the design-control matrix). Source comments do not change.
+`SYSREQ` is in the catalog so the gate can walk Tracer links to `DOUT` /
+`VERIF`; it is not stamped on functions.
 
 ### 2. Show the engineering gate (GREEN)
 
@@ -165,11 +168,14 @@ Show the Sphinx twin updated. No new Release Record was created — engineering 
 
 ## What to say in the walkthrough
 
-1. **CertHub** is the system of record for requirements.  
-2. **Cadence** is the SaMD Engineering Loop: Git twin + evidence gate + release write-back.  
-3. **useblocks** turns Git work into an evidence pack.  
-4. **PRs** prove engineering quality (artifact), they do not create regulatory records.  
-5. **RC tags** rehearse the same gate and store the pack on the run; they do not write CertHub.  
-6. **Release tags** close the loop: one Release Record in CertHub for that baseline.  
-7. **Open the printed CertHub URL** so the audience sees the controlled row.  
-8. **Edit a requirement in CertHub**, re-sync — engineering follows the SoR.
+1. **CertHub** holds the V-model *records* and Tracer matrix (ISO 13485 7.3.2(e)).
+2. **This repo** tags only the last hop: `DOUT_*` on source, `VERIF_*` on tests
+   (FDA GPSV §5.2.4). `SYSREQ` is not on functions; the gate walks Tracer.
+3. **Cadence** is the SaMD engineering loop: Git twin + evidence gate + release write-back.
+4. **useblocks** turns Git work into an evidence pack.
+5. **PRs** prove engineering quality (artifact), they do not create regulatory records.
+6. **RC tags** rehearse the same gate and store the pack on the run; they do not write CertHub.
+7. **Release tags** close the loop: one Release Record in CertHub for that baseline.
+8. **Open the printed CertHub URL** so the audience sees the controlled row.
+9. **Edit a requirement in CertHub**, re-sync — engineering follows the SoR. Unlinked
+   catalog rows stay; leftover product text is cleaned in CertHub, not by syncing less.

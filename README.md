@@ -104,18 +104,31 @@ Forks do not inherit that secret; offline tests still run. Details:
 
 ## Traceability model
 
+Two jobs, not one annotation scheme. CertHub holds the design-control
+**matrix** (ISO 13485 7.3.2(e): outputs traced to inputs). This repo tags only
+the last hop FDA GPSV §5.2.4 names for source: **design output** on
+implementation, **verification** on tests. System requirements still close the
+gate, via Tracer, not via extra comments.
+
 ```text
-SYSREQ → DOUT (product: DOUT_018) → @need-ids: on source → VERIF → pytest / JUnit
+SYSREQ ←Tracer→ DOUT_018  →  # @need-ids: DOUT_018 on source
+SYSREQ ←Tracer→ VERIF_00N →  # @need-ids: VERIF_00N + pytest.mark.certhub_test
 ```
 
-| SYSREQ | Code | Test |
-|--------|------|------|
+| SYSREQ | Code (tagged `DOUT_018`) | Test (tagged `VERIF_*`) |
+|--------|--------------------------|-------------------------|
 | SYSREQ_001 temperature | `src/sterilisator_20a/cycle/controller.py` | VERIF_001 |
 | SYSREQ_002 cycle time | `src/sterilisator_20a/cycle/controller.py` | VERIF_002 |
 | SYSREQ_003 English UI | `src/sterilisator_20a/ui/messages.py` | VERIF_003 |
 | SYSREQ_004 footprint | `src/sterilisator_20a/enclosure/footprint.py` | VERIF_004 |
 
-Full table and showcase limitations: [docs/traceability-map.md](docs/traceability-map.md).
+UREQ / CREQ / UNITREQ / VALID sync into the Sphinx catalog. They are not
+marked in `src/`. Unlinked rows stay visible (completeness). Wrong-product
+text is cleaned in CertHub, not by syncing fewer topics.
+
+Why this split, with citations:
+[V-model guide](https://docs.certhub.de/1.5%20Implementation%20Guides/v-model-software-outside-certhub)
+and the worked example in [docs/traceability-map.md](docs/traceability-map.md).
 
 After `make show`, open `sphinx/build/html/dashboard.html` and
 `traceability.html`:
@@ -128,9 +141,12 @@ After `make show`, open `sphinx/build/html/dashboard.html` and
 
 ## Showcase limitations
 
-- **One product design output.** Source markers use `DOUT_018`. Procedure DOUTs
-  in CertHub are filtered out of the Sphinx needflow graph.
-- **VALID is manual.** Validation protocols sync into the pack but do not close
+- **One product design output.** Source markers use `DOUT_018`. Procedure
+  DOUTs stay in the catalog without CodeLinks; they are not software. Other-
+  product or leftover rows are a CertHub SoR problem, not a reason to sync
+  fewer knowledge topics.
+- **VALID is manual.** Validation protocols sync into the pack (ISO 13485
+  7.3.7 / 21 CFR 820.30(g): user needs and intended use) but do not close
   the engineering gate.
 
 ## Boundary
@@ -146,9 +162,10 @@ After `make show`, open `sphinx/build/html/dashboard.html` and
 ## Customer-facing guides
 
 This repository is **not** a prescribed toolchain. You talk to CertHub through
-the API; how you implement the bottom of the V is your choice. Cadence is one
-reference implementation — replace the engineering stack with your own and keep
-the same export / write-back pattern.
+the API; how you implement the last hop into source is your choice. Cadence is
+one reference implementation — replace the engineering stack with your own and
+keep the same export / write-back pattern. The V-model *records* stay in
+CertHub; only design outputs and verification tests are tagged in code.
 
 - [Working example](https://docs.certhub.de/api/overview/working-example) — annotated V, your choices vs this example
 - [Where does the V-model live when you develop software?](https://docs.certhub.de/1.5%20Implementation%20Guides/v-model-software-outside-certhub)
@@ -159,6 +176,7 @@ the same export / write-back pattern.
 
 | Doc | What |
 |-----|------|
+| [docs/traceability-map.md](docs/traceability-map.md) | What to mark in code, why (GPSV / 13485), four-row map |
 | [docs/walkthrough.md](docs/walkthrough.md) | GREEN → RED → evidence → release → CertHub UI |
 | [docs/onboarding.md](docs/onboarding.md) | Showcase tenant vs your own KT ids |
 | [docs/architecture.md](docs/architecture.md) | Data flow |
@@ -340,7 +358,7 @@ ubTrace as a later plug-in when your team outgrows static HTML.
   - `verification_kt_id` → `VERIF_*`
   - `validation_kt_id` → `VALID_*`
 - Dashboard URLs use history ids (`*_kt_history_id`, `product_history_id`, `ku_history_id`) — not Records revision KT ids
-- Live path: Tech Doc KT metadata + seven Records lists + Tracer `POST /traces/batch/list` → Sphinx-Needs
+- Live path: Tech Doc KT metadata + seven Records lists + Tracer `POST /traces/batch/list` → Sphinx-Needs. That is the ISO 13485 7.3.2(e) matrix. Source only tags `DOUT_*`; tests tag `VERIF_*`. SYSREQ closes the gate through Tracer, not through extra comments.
 - Cross-need `links` / `verifies` from Tracer `connected_within_use_case` edges only (no keyword/title joins)
 - Responses parsed into Pydantic at the client boundary (Tech Doc + Records); Tracer uses generated attrs client models
 
