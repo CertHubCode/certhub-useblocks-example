@@ -1,8 +1,12 @@
 # Onboarding — showcase tenant vs your own CertHub
 
+**First run needs no API key.** Clone, `make install`, `make show` — the
+showcase catalogs and `certhub/generated/normalized_export.json` are already
+committed. Come back here when you want to talk to CertHub (refresh the
+showcase, or point Cadence at your own product).
+
 Cadence ships a **working showcase tenant** in committed [`certhub.toml`](../certhub.toml).
-That is the fastest first run. Real adopters later replace those IDs with their own
-CertHub product.
+Real adopters later replace those IDs with their own CertHub product.
 
 The API key is the only secret. Tenant URLs and knowledge-topic (KT) ids are
 configuration, not credentials.
@@ -11,7 +15,7 @@ configuration, not credentials.
 
 | Path | When | What you edit |
 |------|------|----------------|
-| **Showcase tenant** (default) | Clone, demo, CI against CertHub’s example Sterilisator 20A | `.env` only (`CERTHUB_API_KEY`) |
+| **Showcase tenant** (default) | Clone, demo, CI against CertHub’s example Sterilisator 20A | `.env` only (`CERTHUB_API_KEY`) for sync / write-back |
 | **Your own tenant** | Adopt Cadence on a real product | Copy [`certhub.toml.example`](../certhub.toml.example) → `certhub.toml` and fill every key |
 
 Create an API key in [Settings → API Keys](https://docs.certhub.de/api/getting-started).
@@ -20,7 +24,7 @@ prod API key that can access that product.
 
 ## Repository setup (GitHub Actions)
 
-Full evidence and release workflows need a repository secret:
+Full sync-on-PR and release workflows need a repository secret:
 
 1. GitHub → **Settings** → **Secrets and variables** → **Actions**
 2. New repository secret named `CERTHUB_API_KEY`
@@ -29,10 +33,12 @@ Full evidence and release workflows need a repository secret:
 Without that secret:
 
 - [`cadence-unit-tests.yml`](../.github/workflows/cadence-unit-tests.yml) still runs (no CertHub call)
-- [`cadence-evidence.yml`](../.github/workflows/cadence-evidence.yml) and [`cadence-release.yml`](../.github/workflows/cadence-release.yml) cannot `make sync`
+- [`cadence-evidence.yml`](../.github/workflows/cadence-evidence.yml) still builds the pack from the committed catalog; it skips `make sync`
+- [`cadence-release.yml`](../.github/workflows/cadence-release.yml) cannot `make sync` or push a Release Record
 
-Forks do not inherit secrets. Open a PR from a fork and expect unit tests only,
-unless a maintainer runs the evidence workflow with the secret.
+Forks do not inherit secrets. Open a PR from a fork and expect unit tests plus
+an evidence pack from committed content, unless a maintainer runs workflows with
+the secret.
 
 ## Bring-your-own tenant
 

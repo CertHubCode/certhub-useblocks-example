@@ -1,7 +1,7 @@
 # Optional: ubCode and ubTrace
 
-Cadence already works without commercial useblocks products: `make sync` /
-`make show` use open-source Sphinx-Needs, CodeLinks, and Test-Reports only.
+Cadence already works without commercial useblocks products: `make show` /
+`make evidence` use open-source Sphinx-Needs, CodeLinks, and Test-Reports only.
 Install the products below when you want live IDE feedback or a browser
 dashboard on the **same** RST / `ubproject.toml` / CodeLinks files.
 

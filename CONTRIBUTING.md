@@ -7,9 +7,11 @@ Sterilisator 20A loop understandable to someone cloning it cold.
 
 ```bash
 make install
-cp .env.example .env   # CERTHUB_API_KEY — https://docs.certhub.de/api/getting-started
+make show              # no API key — uses committed requirements + snapshot
 make test              # connector + SaMD tests (no CertHub required)
-make sync && make show # full loop
+# Optional: refresh from CertHub (needs API key)
+cp .env.example .env   # CERTHUB_API_KEY — https://docs.certhub.de/api/getting-started
+make sync && make show
 ```
 
 Python 3.12+ and [uv](https://docs.astral.sh/uv/) are required.
@@ -33,12 +35,14 @@ those IDs live in the CertHub matrix; Tracer already links them. See
 ## Pull requests
 
 - Keep diffs focused. Do not commit `.env`, `evidence/`, `sphinx/build/`,
-  `certhub/generated/`, or per-build Sphinx fragments
-  (`codelinks_needextend.rst`, `certification_summary.rst`).
+  raw CertHub dumps under `certhub/generated/` (except the tracked snapshot),
+  or per-build Sphinx fragments (`codelinks_needextend.rst`,
+  `certification_summary.rst`).
 - When showcase CertHub content changes, run `make sync` and **do** commit the
-  seven catalog RST files under `sphinx/source/generated/` (requirements,
-  design outputs, verifications, validations) so public clones stay browsable.
-- Offline tests must pass without an API key: `make test`.
+  seven catalog RST files under `sphinx/source/generated/` **and**
+  `certhub/generated/normalized_export.json` so public clones can run
+  `make show` without an API key.
+- Offline tests and `make show` must pass without an API key: `make test`.
 - If you change the SYSREQ → DOUT → code → VERIF chain, update
   [`docs/traceability-map.md`](docs/traceability-map.md) and
   `tests/test_verify_traceability.py`. Do not add SYSREQ comments on source.
