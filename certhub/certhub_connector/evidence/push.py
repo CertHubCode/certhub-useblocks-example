@@ -243,7 +243,7 @@ def push_evidence(
         evidence_url=evidence_url,
     )
     techdoc = TechDocClient(config)
-    kt = techdoc.get_kt(config.release_record_kt_id)
+    kt = techdoc.get_kt(config.tenant.release_record_kt_id)
     ku_revision_id = techdoc.get_ku_latest_revision_id(kt.knowledge_unit_history_id)
     key_map = certhub_key_map_from_schema(kt.knowledge_topic_schema)
     payload = build_record_create(
@@ -353,7 +353,7 @@ def confirm_evidence(
         preview = preview.rstrip() + "…"
     proof = ConfirmProof(
         record_id=pushed.record_id,
-        kt_id=config.release_record_kt_id,
+        kt_id=config.tenant.release_record_kt_id,
         release_number=pushed.fields.release_number,
         release_id=pushed.fields.release_id,
         generated_at=pushed.fields.generated_at,

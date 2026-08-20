@@ -39,6 +39,7 @@ TRACER_MODEL_DIR = $(MODEL_DIR)/tracer
 	tag-rc tag-release push-evidence confirm ensure-plantuml \
 	open-requirements open-release-record \
 	init-schemas fetch-techdoc-schema fetch-records-schema fetch-tracer-schema \
+	filter-techdoc-schema filter-records-schema filter-tracer-schema \
 	generate-techdoc-client generate-records-client generate-tracer-client \
 	generate-techdoc-models generate-records-models generate-api
 
@@ -184,7 +185,17 @@ fetch-tracer-schema: init-schemas install
 	@$(UV) run --group codegen openapi-spec-validator $(TRACER_SCHEMA_FILE) \
 		|| echo "WARNING: openapi-spec-validator failed for Tracer (continuing)"
 
-generate-techdoc-client: fetch-techdoc-schema
+# Keep only @public_api / x-public: true operations (same contract as CertHub docs).
+filter-techdoc-schema: fetch-techdoc-schema
+	$(UV) run python -m certhub_connector.api.filter_public $(TECHDOC_SCHEMA_FILE)
+
+filter-records-schema: fetch-records-schema
+	$(UV) run python -m certhub_connector.api.filter_public $(RECORDS_SCHEMA_FILE)
+
+filter-tracer-schema: fetch-tracer-schema
+	$(UV) run python -m certhub_connector.api.filter_public $(TRACER_SCHEMA_FILE)
+
+generate-techdoc-client: filter-techdoc-schema
 	rm -rf $(TECHDOC_CLIENT_DIR)
 	mkdir -p $(CLIENT_DIR)
 	$(UV) run --group codegen openapi-python-client generate \
@@ -193,7 +204,7 @@ generate-techdoc-client: fetch-techdoc-schema
 		--meta none \
 		--overwrite
 
-generate-records-client: fetch-records-schema
+generate-records-client: filter-records-schema
 	rm -rf $(RECORDS_CLIENT_DIR)
 	mkdir -p $(CLIENT_DIR)
 	$(UV) run --group codegen openapi-python-client generate \
@@ -202,7 +213,7 @@ generate-records-client: fetch-records-schema
 		--meta none \
 		--overwrite
 
-generate-tracer-client: fetch-tracer-schema
+generate-tracer-client: filter-tracer-schema
 	rm -rf $(TRACER_CLIENT_DIR)
 	mkdir -p $(CLIENT_DIR)
 	$(UV) run --group codegen openapi-python-client generate \
@@ -211,7 +222,7 @@ generate-tracer-client: fetch-tracer-schema
 		--meta none \
 		--overwrite
 
-generate-techdoc-models: fetch-techdoc-schema
+generate-techdoc-models: filter-techdoc-schema
 	mkdir -p $(TECHDOC_MODEL_DIR)
 	$(UV) run --group codegen python -m datamodel_code_generator \
 		--input $(TECHDOC_SCHEMA_FILE) \
@@ -224,7 +235,7 @@ generate-techdoc-models: fetch-techdoc-schema
 		--collapse-root-models \
 		--target-python-version 3.12
 
-generate-records-models: fetch-records-schema
+generate-records-models: filter-records-schema
 	mkdir -p $(RECORDS_MODEL_DIR)
 	$(UV) run --group codegen python -m datamodel_code_generator \
 		--input $(RECORDS_SCHEMA_FILE) \
@@ -240,8 +251,8 @@ generate-records-models: fetch-records-schema
 generate-api: generate-techdoc-client generate-records-client generate-tracer-client \
 	generate-techdoc-models generate-records-models
 	@echo ""
-	@echo "Generated TechDoc + Records + Tracer clients; TechDoc + Records Pydantic models."
-	@echo "  schemas: $(SCHEMA_DIR)/"
+	@echo "Generated public-only TechDoc + Records + Tracer clients; TechDoc + Records Pydantic models."
+	@echo "  schemas: $(SCHEMA_DIR)/  (x-public filtered)"
 	@echo "  clients: $(CLIENT_DIR)/"
 	@echo "  models:  $(MODEL_DIR)/ (no tracer Pydantic — attrs client models only)"
 	@rm -rf $(TRACER_MODEL_DIR)

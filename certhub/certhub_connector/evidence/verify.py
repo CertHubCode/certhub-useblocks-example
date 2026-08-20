@@ -16,6 +16,8 @@ from certhub_connector.config.paths import (
 )
 from certhub_connector.sync.models import CertHubExport, SystemRequirement
 
+# Sterilisator 20A showcase: DOUT that owns the product CodeLinks sites used as
+# fallback when a SYSREQ's linked DOUTs have no implementation hits.
 SAMMD_PRODUCT_DOUT_ID = "DOUT_018"
 
 
@@ -181,8 +183,8 @@ def _is_test_location(location: str) -> bool:
     return "/tests/" in f"/{path}/" or name.startswith("test_")
 
 
-# Domain hints so SYSREQ_002/003/004 do not all report temperature_within_range
-# (first CodeLinks hit on DOUT_018).
+# Sterilisator 20A showcase: domain hints so SYSREQ_002/003/004 do not all
+# report temperature_within_range (first CodeLinks hit on DOUT_018).
 _VERIF_HINTS: dict[str, tuple[str, ...]] = {
     "VERIF_001": ("temperature",),
     "VERIF_002": ("duration", "minutes", "reported"),

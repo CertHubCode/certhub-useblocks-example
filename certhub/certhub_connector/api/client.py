@@ -1,9 +1,14 @@
-"""Thin wrappers over generated OpenAPI clients; return Pydantic models only."""
+"""Thin wrappers over generated OpenAPI clients; return Pydantic models only.
+
+Generated ``api/clients/`` are attrs HTTP stubs (openapi-python-client).
+Validated responses use Pydantic models from ``api/api_models/``. Wrappers never
+return attrs types to the rest of Cadence.
+"""
 
 from __future__ import annotations
 
 import json
-from typing import Any
+from typing import Any, Protocol
 
 import httpx
 
@@ -28,7 +33,7 @@ from certhub_connector.api.clients.techdoc.api.knowledge_units import (
     get_ku_with_topics_by_version_or_latest_ku_knowledge_unit_history_id_get as get_ku_mod,
 )
 from certhub_connector.api.clients.techdoc.client import Client as TechDocHttpClient
-from certhub_connector.api.clients.tracer.api.default import (
+from certhub_connector.api.clients.tracer.api.traces import (
     batch_retrieve_traces_traces_batch_list_post as batch_list_mod,
 )
 from certhub_connector.api.clients.tracer.client import Client as TracerHttpClient
@@ -50,6 +55,11 @@ from certhub_connector.api.parse import (
 from certhub_connector.config import CerthubConfig
 
 
+class _StatusResponse(Protocol):
+    status_code: int
+    content: bytes
+
+
 def _x_api_key_headers(api_key: str) -> dict[str, str]:
     if not api_key:
         raise ValueError("Missing required field: 'api_key'")
@@ -59,17 +69,41 @@ def _x_api_key_headers(api_key: str) -> dict[str, str]:
     }
 
 
+def _raise_for_status(
+    response: _StatusResponse,
+    *,
+    service: str,
+    not_found: str | None = None,
+    error_context: str,
+    body_limit: int = 500,
+) -> None:
+    """Map HTTP status to PermissionError / FileNotFoundError / RuntimeError."""
+    if response.status_code == 401:
+        raise PermissionError(
+            f"CertHub {service} rejected the API key (401). "
+            "Check CERTHUB_API_KEY and that the key uses the X-API-Key header."
+        )
+    if response.status_code == 404 and not_found is not None:
+        raise FileNotFoundError(not_found)
+    if response.status_code >= 400:
+        body = response.content.decode("utf-8", errors="replace")[:body_limit]
+        raise RuntimeError(
+            f"CertHub {service} error {response.status_code} {error_context}: {body}"
+        )
+
+
 class TechDocClient:
     """Tech Doc wrapper: GET /kt/{id} and KU history → Pydantic models."""
 
     def __init__(self, config: CerthubConfig, *, timeout_s: float = 30.0) -> None:
         if not config:
             raise ValueError("Missing required field: 'config'")
-        if not config.techdoc_base_url:
+        base_url = config.tenant.techdoc_base_url
+        if not base_url:
             raise ValueError("Missing required field: 'techdoc_base_url'")
         self._config = config
         self._client = TechDocHttpClient(
-            base_url=config.techdoc_base_url,
+            base_url=base_url,
             headers=_x_api_key_headers(config.api_key),
             timeout=httpx.Timeout(timeout_s),
             raise_on_unexpected_status=False,
@@ -91,18 +125,12 @@ class TechDocClient:
         except httpx.HTTPError as exc:
             raise RuntimeError(f"CertHub Tech Doc request failed: {exc}") from exc
 
-        if response.status_code == 401:
-            raise PermissionError(
-                "CertHub Tech Doc rejected the API key (401). "
-                "Check CERTHUB_API_KEY and that the key uses the X-API-Key header."
-            )
-        if response.status_code == 404:
-            raise FileNotFoundError(f"Knowledge topic not found: {kt_id}")
-        if response.status_code >= 400:
-            body = response.content.decode("utf-8", errors="replace")[:500]
-            raise RuntimeError(
-                f"CertHub Tech Doc error {response.status_code} for /kt/{kt_id}: {body}"
-            )
+        _raise_for_status(
+            response,
+            service="Tech Doc",
+            not_found=f"Knowledge topic not found: {kt_id}",
+            error_context=f"for /kt/{kt_id}",
+        )
         return parse_knowledge_topic(response.content)
 
     def get_ku_latest_revision_id(self, knowledge_unit_history_id: str) -> str:
@@ -122,19 +150,12 @@ class TechDocClient:
         except httpx.HTTPError as exc:
             raise RuntimeError(f"CertHub Tech Doc KU request failed: {exc}") from exc
 
-        if response.status_code == 401:
-            raise PermissionError(
-                "CertHub Tech Doc rejected the API key (401). "
-                "Check CERTHUB_API_KEY and that the key uses the X-API-Key header."
-            )
-        if response.status_code == 404:
-            raise FileNotFoundError(f"Knowledge unit not found: {history_id}")
-        if response.status_code >= 400:
-            body = response.content.decode("utf-8", errors="replace")[:500]
-            raise RuntimeError(
-                f"CertHub Tech Doc error {response.status_code} "
-                f"for /ku/{history_id}: {body}"
-            )
+        _raise_for_status(
+            response,
+            service="Tech Doc",
+            not_found=f"Knowledge unit not found: {history_id}",
+            error_context=f"for /ku/{history_id}",
+        )
         ku = parse_model_json(FullKnowledgeUnitView, response.content)
         revision_id = (ku.id or "").strip()
         if not revision_id:
@@ -151,11 +172,12 @@ class RecordsClient:
     def __init__(self, config: CerthubConfig, *, timeout_s: float = 30.0) -> None:
         if not config:
             raise ValueError("Missing required field: 'config'")
-        if not config.records_base_url:
+        base_url = config.tenant.records_base_url
+        if not base_url:
             raise ValueError("Missing required field: 'records_base_url'")
         self._config = config
         self._client = RecordsHttpClient(
-            base_url=config.records_base_url,
+            base_url=base_url,
             headers=_x_api_key_headers(config.api_key),
             timeout=httpx.Timeout(timeout_s),
             raise_on_unexpected_status=False,
@@ -177,16 +199,11 @@ class RecordsClient:
         except httpx.HTTPError as exc:
             raise RuntimeError(f"CertHub Records request failed: {exc}") from exc
 
-        if response.status_code == 401:
-            raise PermissionError(
-                "CertHub Records rejected the API key (401). "
-                "Check CERTHUB_API_KEY and that the key uses the X-API-Key header."
-            )
-        if response.status_code >= 400:
-            body = response.content.decode("utf-8", errors="replace")[:500]
-            raise RuntimeError(
-                f"CertHub Records error {response.status_code} listing KT {kt_id}: {body}"
-            )
+        _raise_for_status(
+            response,
+            service="Records",
+            error_context=f"listing KT {kt_id}",
+        )
         return parse_records_list(response.content)
 
     def create_record(self, record: RecordCreate) -> Record:
@@ -203,16 +220,12 @@ class RecordsClient:
         except httpx.HTTPError as exc:
             raise RuntimeError(f"CertHub Records create failed: {exc}") from exc
 
-        if response.status_code == 401:
-            raise PermissionError(
-                "CertHub Records rejected the API key (401). "
-                "Check CERTHUB_API_KEY and that the key uses the X-API-Key header."
-            )
-        if response.status_code >= 400:
-            body_text = response.content.decode("utf-8", errors="replace")[:800]
-            raise RuntimeError(
-                f"CertHub Records create error {response.status_code}: {body_text}"
-            )
+        _raise_for_status(
+            response,
+            service="Records",
+            error_context="on create",
+            body_limit=800,
+        )
         return parse_model_json(Record, response.content)
 
     def get_record(self, record_id: str) -> Record:
@@ -227,18 +240,12 @@ class RecordsClient:
         except httpx.HTTPError as exc:
             raise RuntimeError(f"CertHub Records get failed: {exc}") from exc
 
-        if response.status_code == 401:
-            raise PermissionError(
-                "CertHub Records rejected the API key (401). "
-                "Check CERTHUB_API_KEY and that the key uses the X-API-Key header."
-            )
-        if response.status_code == 404:
-            raise FileNotFoundError(f"Record not found: {rid}")
-        if response.status_code >= 400:
-            body_text = response.content.decode("utf-8", errors="replace")[:500]
-            raise RuntimeError(
-                f"CertHub Records get error {response.status_code}: {body_text}"
-            )
+        _raise_for_status(
+            response,
+            service="Records",
+            not_found=f"Record not found: {rid}",
+            error_context=f"getting {rid}",
+        )
         return parse_model_json(Record, response.content)
 
 
@@ -248,11 +255,12 @@ class TracerClient:
     def __init__(self, config: CerthubConfig, *, timeout_s: float = 60.0) -> None:
         if not config:
             raise ValueError("Missing required field: 'config'")
-        if not config.tracer_base_url:
+        base_url = config.tenant.tracer_base_url
+        if not base_url:
             raise ValueError("Missing required field: 'tracer_base_url'")
         self._config = config
         self._client = TracerHttpClient(
-            base_url=config.tracer_base_url,
+            base_url=base_url,
             headers=_x_api_key_headers(config.api_key),
             timeout=httpx.Timeout(timeout_s),
             raise_on_unexpected_status=False,
@@ -286,17 +294,12 @@ class TracerClient:
         except httpx.HTTPError as exc:
             raise RuntimeError(f"CertHub Tracer request failed: {exc}") from exc
 
-        if response.status_code == 401:
-            raise PermissionError(
-                "CertHub Tracer rejected the API key (401). "
-                "Check CERTHUB_API_KEY and that the key uses the X-API-Key header."
-            )
-        if response.status_code >= 400:
-            body_text = response.content.decode("utf-8", errors="replace")[:800]
-            raise RuntimeError(
-                f"CertHub Tracer error {response.status_code} for "
-                f"/traces/batch/list: {body_text}"
-            )
+        _raise_for_status(
+            response,
+            service="Tracer",
+            error_context="for /traces/batch/list",
+            body_limit=800,
+        )
         payload = json.loads(response.content.decode("utf-8"))
         results = payload.get("results")
         if not isinstance(results, dict):

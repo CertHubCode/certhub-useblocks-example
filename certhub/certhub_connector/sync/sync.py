@@ -75,7 +75,6 @@ def _need_rst(
     *,
     directive: str,
     items: list[Any],
-    extra_options: list[tuple[str, Any]] | None = None,
 ) -> str:
     lines = [GENERATED_HEADER]
     for item in items:
@@ -125,12 +124,6 @@ def _need_rst(
             lines.extend(_optional_list_option("links", item.links))
         else:
             raise TypeError(f"Unsupported need type for RST: {type(item)!r}")
-        if extra_options:
-            for name, value in extra_options:
-                if isinstance(value, list):
-                    lines.extend(_optional_list_option(name, value))
-                else:
-                    lines.extend(_optional_option(name, str(value) if value else None))
         lines.extend(["", f"   {_escape_rst(item.description)}", ""])
     return "\n".join(lines)
 

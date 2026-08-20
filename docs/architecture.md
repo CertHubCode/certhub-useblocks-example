@@ -61,10 +61,15 @@ RC tags (`v*-rc*`) stop at the artifact.
 | Path | Role |
 |------|------|
 | `certhub/certhub_connector/` | Hand-written sync, verify, evidence, CLI |
-| `certhub/certhub_connector/api/clients/` | Generated OpenAPI HTTP clients — do not edit |
+| `certhub/certhub_connector/api/clients/` | Generated attrs HTTP clients — **public** (`x-public`) ops only; do not edit |
+| `certhub/certhub_connector/api/api_models/` | Generated Pydantic models for Tech Doc / Records JSON validation |
+| `certhub/certhub_connector/api/client.py` | Thin wrappers: attrs wire → Pydantic (or Tracer raw dict) |
 | `src/sterilisator_20a/` | Example SaMD under test |
 | `sphinx/source/` | Assurance pages + ubCode project |
 | `.github/workflows/` | Unit tests, evidence, release |
+
+Wire calls use attrs stubs from `openapi-python-client`. Domain code consumes
+Pydantic from `datamodel-code-generator`. Wrappers never return attrs types.
 
 ## Related
 

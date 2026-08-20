@@ -18,8 +18,10 @@ Python 3.12+ and [uv](https://docs.astral.sh/uv/) are required.
 
 - Product behaviour: `src/sterilisator_20a/` + `src/sterilisator_20a/tests/`
 - Connector / gate / evidence: `certhub/certhub_connector/` + `tests/`
-- Generated HTTP clients: `make generate-api` is **DEV ONLY** (can break
-  `api/client.py` imports after OpenAPI renames) — do not hand-edit `api/clients/`
+- Generated HTTP clients: `make generate-api` is **DEV ONLY** — fetches OpenAPI,
+  filters to `x-public` operations, regenerates `api/clients/` and
+  `api/api_models/` (can break `api/client.py` imports after OpenAPI renames).
+  Do not hand-edit generated trees.
 - Tenant IDs: `certhub.toml` (showcase) or `certhub.toml.example` (placeholders)
 
 ## Pull requests

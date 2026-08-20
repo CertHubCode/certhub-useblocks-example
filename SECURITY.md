@@ -20,5 +20,5 @@ not remove a leaked key from clones.
 ## Supply chain notes
 
 Dependencies are locked in `uv.lock`. `make generate-api` fetches OpenAPI specs
-from the URLs in `certhub.toml`. Treat those hosts as part of your trust
-boundary.
+from the URLs in `certhub.toml`, keeps only `x-public` operations, then
+regenerates clients. Treat those hosts as part of your trust boundary.

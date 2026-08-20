@@ -62,11 +62,13 @@ the current `verify.py` picker. See [traceability map](traceability-map.md).
 `make fix` restores `reported_cycle_duration_minutes()`. Do not commit the broken
 line.
 
-## Generated OpenAPI clients look huge
+## Generated OpenAPI clients
 
-That is expected. Hand-written code lives under
-`certhub/certhub_connector/{cli,config,api,sync,evidence}/` excluding
-`api/clients/`. `make generate-api` is **DEV ONLY** — not needed for Quickstart.
-Regenerating from live OpenAPI can rename Tracer (or other) client symbols and
-break imports in `api/client.py` until that wrapper is updated. Do not edit
-generated client files by hand.
+`make generate-api` fetches live OpenAPI, keeps only operations marked
+`x-public: true` (same public surface as the CertHub API docs), then regenerates
+`api/clients/` (attrs HTTP stubs) and `api/api_models/` (Pydantic for Tech Doc /
+Records). Hand-written code lives under
+`certhub/certhub_connector/{cli,config,api,sync,evidence}/` excluding those
+generated trees. Regeneration can rename client symbols and break imports in
+`api/client.py` until that wrapper is updated. Do not edit generated files by
+hand. Not needed for Quickstart.

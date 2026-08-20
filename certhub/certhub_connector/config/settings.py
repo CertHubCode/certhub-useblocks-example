@@ -11,32 +11,6 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationInfo, field_validat
 
 from certhub_connector.config.paths import project_root
 
-_TENANT_FIELD_NAMES = (
-    "techdoc_base_url",
-    "records_base_url",
-    "tracer_base_url",
-    "user_requirements_kt_id",
-    "system_requirements_kt_id",
-    "component_requirements_kt_id",
-    "unit_requirements_kt_id",
-    "design_output_kt_id",
-    "verification_kt_id",
-    "validation_kt_id",
-    "release_record_kt_id",
-    "dashboard_base_url",
-    "product_history_id",
-    "ku_history_id",
-    "product_version",
-    "user_requirements_kt_history_id",
-    "system_requirements_kt_history_id",
-    "component_requirements_kt_history_id",
-    "unit_requirements_kt_history_id",
-    "design_output_kt_history_id",
-    "verification_kt_history_id",
-    "validation_kt_history_id",
-    "release_record_kt_history_id",
-)
-
 
 def load_dotenv(path: Path | None = None) -> None:
     """Load KEY=VALUE pairs from .env into os.environ (does not override)."""
@@ -139,110 +113,23 @@ class TenantSettings(BaseModel):
         data = _read_toml_table(config_path)
         payload = {
             key: _require_toml_str(data, key, path=config_path)
-            for key in _TENANT_FIELD_NAMES
+            for key in cls.model_fields
         }
         return cls.model_validate(payload)
 
 
 class CerthubConfig(BaseModel):
-    """Authenticated config: API key + tenant settings from certhub.toml."""
+    """Authenticated config: API key + tenant settings from certhub.toml.
+
+    Access tenant fields via ``config.tenant.*`` (URLs, KT ids). The API key
+    lives only on this object so Makefile ``config-get`` can read tenant
+    settings without a secret.
+    """
 
     model_config = ConfigDict(frozen=True, extra="forbid")
 
     api_key: str = Field(..., min_length=1)
     tenant: TenantSettings
-
-    @property
-    def techdoc_base_url(self) -> str:
-        return self.tenant.techdoc_base_url
-
-    @property
-    def records_base_url(self) -> str:
-        return self.tenant.records_base_url
-
-    @property
-    def tracer_base_url(self) -> str:
-        return self.tenant.tracer_base_url
-
-    @property
-    def user_requirements_kt_id(self) -> str:
-        return self.tenant.user_requirements_kt_id
-
-    @property
-    def system_requirements_kt_id(self) -> str:
-        return self.tenant.system_requirements_kt_id
-
-    @property
-    def component_requirements_kt_id(self) -> str:
-        return self.tenant.component_requirements_kt_id
-
-    @property
-    def unit_requirements_kt_id(self) -> str:
-        return self.tenant.unit_requirements_kt_id
-
-    @property
-    def design_output_kt_id(self) -> str:
-        return self.tenant.design_output_kt_id
-
-    @property
-    def verification_kt_id(self) -> str:
-        return self.tenant.verification_kt_id
-
-    @property
-    def validation_kt_id(self) -> str:
-        return self.tenant.validation_kt_id
-
-    @property
-    def release_record_kt_id(self) -> str:
-        return self.tenant.release_record_kt_id
-
-    @property
-    def dashboard_base_url(self) -> str:
-        return self.tenant.dashboard_base_url
-
-    @property
-    def product_history_id(self) -> str:
-        return self.tenant.product_history_id
-
-    @property
-    def ku_history_id(self) -> str:
-        return self.tenant.ku_history_id
-
-    @property
-    def product_version(self) -> str:
-        return self.tenant.product_version
-
-    @property
-    def system_requirements_kt_history_id(self) -> str:
-        return self.tenant.system_requirements_kt_history_id
-
-    @property
-    def user_requirements_kt_history_id(self) -> str:
-        return self.tenant.user_requirements_kt_history_id
-
-    @property
-    def component_requirements_kt_history_id(self) -> str:
-        return self.tenant.component_requirements_kt_history_id
-
-    @property
-    def unit_requirements_kt_history_id(self) -> str:
-        return self.tenant.unit_requirements_kt_history_id
-
-    @property
-    def design_output_kt_history_id(self) -> str:
-        return self.tenant.design_output_kt_history_id
-
-    @property
-    def verification_kt_history_id(self) -> str:
-        return self.tenant.verification_kt_history_id
-
-    @property
-    def validation_kt_history_id(self) -> str:
-        return self.tenant.validation_kt_history_id
-
-    @property
-    def release_record_kt_history_id(self) -> str:
-        return self.tenant.release_record_kt_history_id
 
     @classmethod
     def load(

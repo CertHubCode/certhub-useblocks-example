@@ -97,22 +97,24 @@ class HttpKtExportSource:
         self.trace_neighbor_count: int = 0
 
     def load(self) -> CertHubExport:
-        cfg = self._config
+        tenant = self._config.tenant
         generated = certhub_generated_dir()
         generated.mkdir(parents=True, exist_ok=True)
 
         kt_specs = (
-            ("user", cfg.user_requirements_kt_id),
-            ("system", cfg.system_requirements_kt_id),
-            ("component", cfg.component_requirements_kt_id),
-            ("unit", cfg.unit_requirements_kt_id),
-            ("design_output", cfg.design_output_kt_id),
-            ("verification", cfg.verification_kt_id),
-            ("validation", cfg.validation_kt_id),
+            ("user", tenant.user_requirements_kt_id),
+            ("system", tenant.system_requirements_kt_id),
+            ("component", tenant.component_requirements_kt_id),
+            ("unit", tenant.unit_requirements_kt_id),
+            ("design_output", tenant.design_output_kt_id),
+            ("verification", tenant.verification_kt_id),
+            ("validation", tenant.validation_kt_id),
         )
 
         kts = {}
         schemas: dict[str, dict | None] = {}
+        records_by_label: dict[str, list] = {}
+        topic_by_external_id: dict[str, str] = {}
         for label, kt_id in kt_specs:
             kt = self._techdoc.get_kt(kt_id)
             kts[label] = kt
@@ -121,18 +123,6 @@ class HttpKtExportSource:
             _write_kt_snapshot(generated / f"{label}_kt_raw.json", kt)
             _write_schema_snapshot(generated / f"{label}_schema.json", schema)
 
-        record_specs = (
-            ("user", cfg.user_requirements_kt_id),
-            ("system", cfg.system_requirements_kt_id),
-            ("component", cfg.component_requirements_kt_id),
-            ("unit", cfg.unit_requirements_kt_id),
-            ("design_output", cfg.design_output_kt_id),
-            ("verification", cfg.verification_kt_id),
-            ("validation", cfg.validation_kt_id),
-        )
-        records_by_label: dict[str, list] = {}
-        topic_by_external_id: dict[str, str] = {}
-        for label, kt_id in record_specs:
             records = self._records.list_records_for_kt(kt_id)
             records_by_label[label] = records
             _write_records_snapshot(generated / f"{label}_records_raw.json", records)
@@ -170,7 +160,7 @@ class HttpKtExportSource:
             design_output_records=records_by_label["design_output"],
             verification_records=records_by_label["verification"],
             validation_records=records_by_label["validation"],
-            product_version=cfg.product_version,
+            product_version=tenant.product_version,
             usecase_neighbors=neighbors,
             topic_by_external_id=topic_by_external_id,
             link_warnings=warnings,

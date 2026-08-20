@@ -163,7 +163,7 @@ make fix && make show     # back to GREEN
 
 # DEV ONLY — not needed for Quickstart. Regenerating from live OpenAPI can rename
 # Tracer/other client symbols and break imports in certhub_connector/api/client.py.
-make generate-api         # fetch OpenAPI + regenerate clients; TechDoc/Records Pydantic models
+make generate-api         # fetch OpenAPI, keep x-public ops, regenerate clients + models
 ```
 
 `make sync` requires `CERTHUB_API_KEY` and pulls Tech Doc + Records + Tracer use-case links into Sphinx-Needs.
@@ -246,7 +246,8 @@ If activation fails with “Could not find license key”, confirm with useblock
 |------|------|
 | `certhub/` | Connector, sync snapshots, outbound JSON |
 | `certhub/certhub_connector/{cli,config,api,sync,evidence}/` | Hand-written Cadence connector (CLI, config, API wrappers, sync/transform, evidence) |
-| `certhub/certhub_connector/api/clients/` | Generated OpenAPI HTTP clients (`make generate-api` is **DEV ONLY** — can break `api/client.py` imports; do not edit by hand). Most endpoints are unused; Cadence calls a small wrapper in `api/client.py`. |
+| `certhub/certhub_connector/api/clients/` | Generated OpenAPI HTTP clients — **public endpoints only** (`x-public` / `@public_api`). `make generate-api` is **DEV ONLY** (can break `api/client.py` imports after OpenAPI renames); do not edit by hand. Cadence calls a small wrapper in `api/client.py`. |
+| `certhub/certhub_connector/api/api_models/` | Generated Pydantic models for Tech Doc / Records JSON (validated at the API boundary). |
 | `certhub/certhub-api.http` | Optional REST Client scratchpad against the showcase tenant |
 | `evidence/` | CI evidence pack (gitignored): result, junit, `docs/` (Sphinx HTML), MANIFEST |
 | `schemas/` | Fetched OpenAPI specs |
