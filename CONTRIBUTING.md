@@ -7,7 +7,7 @@ Sterilisator 20A loop understandable to someone cloning it cold.
 
 ```bash
 make install
-cp .env.example .env   # CERTHUB_API_KEY for sync only
+cp .env.example .env   # CERTHUB_API_KEY — https://docs.certhub.de/api/getting-started
 make test              # connector + SaMD tests (no CertHub required)
 make sync && make show # full loop
 ```

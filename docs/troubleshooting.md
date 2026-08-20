@@ -2,7 +2,8 @@
 
 ## `Missing required field: 'CERTHUB_API_KEY'`
 
-Create `.env` from the example and set the key:
+Create `.env` from the example and set the key. Generate the key yourself in
+CertHub: [Authentication / API Keys](https://docs.certhub.de/api/getting-started).
 
 ```bash
 cp .env.example .env

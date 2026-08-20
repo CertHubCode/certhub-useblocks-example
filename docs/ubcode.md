@@ -31,7 +31,7 @@ private use.
    [`sphinx/source/ubproject.toml`](../sphinx/source/ubproject.toml) (`needs_from_toml` in `conf.py`).
 
 4. The V-model catalog RST already ships under `sphinx/source/generated/`.
-   To refresh from CertHub (needs API key) and then refresh ubCode:
+   To refresh from CertHub (needs an [API key](https://docs.certhub.de/api/getting-started)) and then refresh ubCode:
 
    ```bash
    make sync

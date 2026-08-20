@@ -10,13 +10,13 @@ Tenant URLs, KT revision ids, and dashboard history ids live in committed [`cert
 
 ```bash
 cp .env.example .env
-# set CERTHUB_API_KEY=… in .env  (the only secret; prod key for the showcase tenant)
+# set CERTHUB_API_KEY=… — generate yours: https://docs.certhub.de/api/getting-started
 ```
 
 | Where | What |
 |-------|------|
 | `certhub.toml` | Tech Doc / Records / Tracer base URLs, seven content KT revision ids + Release Record, dashboard URL fields |
-| `.env` / GitHub secret `CERTHUB_API_KEY` | API key (`X-API-Key`) |
+| `.env` / GitHub secret `CERTHUB_API_KEY` | API key (`X-API-Key`) — [create one](https://docs.certhub.de/api/getting-started) |
 
 `make sync` requires `CERTHUB_API_KEY` (no mock fallback). Product / KU revision for write-back are resolved from Tech Doc at push time (from the Release Record KT). The SoR is **System Requirements** (sterilizer content).
 
@@ -82,7 +82,7 @@ make evidence
 Same gate as `show`, no browser. Writes `evidence/` (gitignored), including Sphinx HTML under `evidence/docs/` (open `docs/dashboard.html` after downloading the CI artifact).  
 This is what every PR uploads as a GitHub artifact — still **no** CertHub write.
 
-### 6. Prove CertHub write-back (optional, needs API key)
+### 6. Prove CertHub write-back (optional, needs an [API key](https://docs.certhub.de/api/getting-started))
 
 ```bash
 make confirm BASELINE=0.0.99

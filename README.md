@@ -85,7 +85,7 @@ loop:
 make tag-release VERSION=1.0.0   # v1.0.0 → evidence artifact + CertHub Release Record
 ```
 
-Or rehearse without tagging: `make confirm BASELINE=0.0.99` (needs API key).
+Or rehearse without tagging: `make confirm BASELINE=0.0.99` (needs an [API key](https://docs.certhub.de/api/getting-started)).
 Step-by-step: [docs/walkthrough.md](docs/walkthrough.md) §§6–8.
 
 | Workflow | When | CertHub write? |
@@ -149,7 +149,7 @@ pattern): [Working example](https://docs.certhub.de/api/overview/working-example
 ## Commands
 
 ```bash
-cp .env.example .env   # set CERTHUB_API_KEY; edit certhub.toml for your tenant
+cp .env.example .env   # set CERTHUB_API_KEY — https://docs.certhub.de/api/getting-started
 
 make test                 # connector + SaMD tests (no API key)
 make sync                 # CertHub → Sphinx-Needs
@@ -167,7 +167,7 @@ make break && make show   # RED — VERIF_002
 make fix && make show     # back to GREEN
 ```
 
-`make sync` requires `CERTHUB_API_KEY`. Layout, inbound sync details, and Release
-Record field mapping: [docs/architecture.md](docs/architecture.md). Regenerating
-OpenAPI clients (`make generate-api`) is maintainer-only — see
-[CONTRIBUTING.md](CONTRIBUTING.md).
+`make sync` requires [`CERTHUB_API_KEY`](https://docs.certhub.de/api/getting-started).
+Layout, inbound sync details, and Release Record field mapping:
+[docs/architecture.md](docs/architecture.md). Regenerating OpenAPI clients
+(`make generate-api`) is maintainer-only — see [CONTRIBUTING.md](CONTRIBUTING.md).
