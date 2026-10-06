@@ -4,7 +4,19 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    ignore:
+      # Major version bumps are opted into manually. `ignore` applies to
+      # security updates too, so a CVE whose only fix is a new major gets no
+      # Dependabot PR -- the alert still shows and is bumped by hand.
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    ignore:
+      # Major version bumps are opted into manually. `ignore` applies to
+      # security updates too, so a CVE whose only fix is a new major gets no
+      # Dependabot PR -- the alert still shows and is bumped by hand.
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
