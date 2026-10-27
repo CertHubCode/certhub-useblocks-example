@@ -40,6 +40,8 @@ exclude = ["src/sterilisator_20a/tests", "src/sterilisator_20a/tests/**"]
 [tool.uv]
 package = true
 default-groups = []
+# Security floor for transitive deps (Pillow via matplotlib / sphinx-needs[plotting]).
+constraint-dependencies = ["pillow>=13.0.0"]
 
 [tool.pytest.ini_options]
 testpaths = ["src/sterilisator_20a/tests", "tests"]
