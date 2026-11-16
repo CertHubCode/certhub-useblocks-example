@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.12"
 resolution-markers = [
     "python_full_version >= '3.15' and sys_platform != 'emscripten'",
@@ -115,12 +115,12 @@ name = "black"
 version = "26.10.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "click", marker = "python_full_version < '3.14' or sys_platform != 'emscripten'" },
-    { name = "mypy-extensions", marker = "python_full_version < '3.14' or sys_platform != 'emscripten'" },
-    { name = "packaging", marker = "python_full_version < '3.14' or sys_platform != 'emscripten'" },
-    { name = "pathspec", marker = "python_full_version < '3.14' or sys_platform != 'emscripten'" },
-    { name = "platformdirs", marker = "python_full_version < '3.14' or sys_platform != 'emscripten'" },
-    { name = "pytokens", marker = "python_full_version < '3.14' or sys_platform != 'emscripten'" },
+    { name = "click" },
+    { name = "mypy-extensions" },
+    { name = "packaging" },
+    { name = "pathspec" },
+    { name = "platformdirs" },
+    { name = "pytokens" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f8/65/a9611a6ec0a8c88d86e59385da02d68d9533f7e86a05913d20c67be54029/black-26.10.1.tar.gz", hash = "sha256:5f9f83beae62437e060dafd53d7f1fc327e3d3494f74d72ee5c2b73eb90fc4e7", size = 741979, upload-time = "2026-10-10T04:13:40.776Z" }
 wheels = [
@@ -146,6 +146,7 @@ wheels = [
 name = "certhub-cadence"
 version = "0.0.7"
 source = { editable = "." }
+default-groups = []
 dependencies = [
     { name = "attrs" },
     { name = "furo" },
@@ -289,7 +290,7 @@ resolution-markers = [
     "python_full_version < '3.13'",
 ]
 dependencies = [
-    { name = "python-magic", version = "0.4.24", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
+    { name = "python-magic", version = "0.4.24", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/76/cd/6e4c79d4a25e3b6542d1a3728b3e2b2c4650e3f8c3cde950aaecc6f64764/comment_parser-1.2.4.tar.gz", hash = "sha256:4e03c421c07d146f5a4d248423820347f3589f60d17acea55f7fb5683faffa22", size = 8350, upload-time = "2022-01-26T04:50:40.828Z" }
 
@@ -305,7 +306,7 @@ resolution-markers = [
     "python_full_version == '3.13.*'",
 ]
 dependencies = [
-    { name = "python-magic", version = "0.4.27", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.13'" },
+    { name = "python-magic", version = "0.4.27", source = { registry = "https://pypi.org/simple" } },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/37/6a/354d8e640b5f90996ac07c002189a552226a0ddaad85efd14863166aaa14/comment_parser-1.2.5.tar.gz", hash = "sha256:5606b769228cafce03d538e361472896581b386f3bc44bd62f4b61ff45ff05ec", size = 8852, upload-time = "2024-12-25T05:08:14.618Z" }
 wheels = [
@@ -396,15 +397,15 @@ resolution-markers = [
     "python_full_version >= '3.15' and sys_platform == 'emscripten'",
 ]
 dependencies = [
-    { name = "argcomplete", marker = "python_full_version >= '3.15'" },
-    { name = "black", marker = "python_full_version >= '3.15' and sys_platform != 'emscripten'" },
-    { name = "genson", marker = "python_full_version >= '3.15'" },
-    { name = "inflect", marker = "python_full_version >= '3.15'" },
-    { name = "isort", marker = "python_full_version >= '3.15' and sys_platform != 'emscripten'" },
-    { name = "jinja2", marker = "python_full_version >= '3.15'" },
-    { name = "pydantic", marker = "python_full_version >= '3.15'" },
-    { name = "pyyaml", marker = "python_full_version >= '3.15'" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.15'" },
+    { name = "argcomplete" },
+    { name = "black", marker = "sys_platform != 'emscripten'" },
+    { name = "genson" },
+    { name = "inflect" },
+    { name = "isort", marker = "sys_platform != 'emscripten'" },
+    { name = "jinja2" },
+    { name = "pydantic" },
+    { name = "pyyaml" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b5/64/4235e7e4e6ac6a6c76516f09cbb6a86269d7dc3891f2701a19478ea76693/datamodel_code_generator-0.84.0.tar.gz", hash = "sha256:bb3d44d8e4d89f2fc17c5af3f5b64eb662f46bdb10e4f126e62bd44e67d0d4bc", size = 5629988, upload-time = "2026-10-15T16:23:38.379Z" }
 wheels = [
@@ -422,15 +423,15 @@ resolution-markers = [
     "python_full_version < '3.13'",
 ]
 dependencies = [
-    { name = "argcomplete", marker = "python_full_version < '3.15'" },
-    { name = "black", marker = "python_full_version < '3.15' and sys_platform != 'emscripten'" },
-    { name = "genson", marker = "python_full_version < '3.15'" },
-    { name = "inflect", marker = "python_full_version < '3.15'" },
-    { name = "isort", marker = "python_full_version < '3.15' and sys_platform != 'emscripten'" },
-    { name = "jinja2", marker = "python_full_version < '3.15'" },
-    { name = "pydantic", marker = "python_full_version < '3.15'" },
-    { name = "pyyaml", marker = "python_full_version < '3.15'" },
-    { name = "typing-extensions", marker = "python_full_version < '3.15'" },
+    { name = "argcomplete" },
+    { name = "black", marker = "sys_platform != 'emscripten'" },
+    { name = "genson" },
+    { name = "inflect" },
+    { name = "isort", marker = "sys_platform != 'emscripten'" },
+    { name = "jinja2" },
+    { name = "pydantic" },
+    { name = "pyyaml" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/eb/19/3c2b71dbeea9e50f3d845cdee6aa46ea4629ae5f13ed534d41ef680bc633/datamodel_code_generator-0.87.0.tar.gz", hash = "sha256:fd1404cd3033d63e6c322bce5bd0682699f9597ff4a14fa062620121651f850c", size = 7713321, upload-time = "2026-10-28T14:43:54.467Z" }
 wheels = [
@@ -1836,11 +1837,11 @@ wheels = [
 
 [[package]]
 name = "soupsieve"
-version = "2.9.2"
+version = "4.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/69/99/a6ca3beb3ccacb41fb3321d8a60e5566f9e6467601ef8eba6a17e1b89778/soupsieve-2.9.2.tar.gz", hash = "sha256:4a55d8cf158a9c2e587fa4922f1bbb91d68ac829e2d6f25403a85747c71daf74", size = 122445, upload-time = "2026-08-07T00:57:24.801Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7d/5e/19b7c5d20bc2f226c44f33a9d9aab9740efed7555b96e656231fd564e514/soupsieve-4.0.tar.gz", hash = "sha256:ccd6470b256394ac44b08b86fd94b30a17d335a5335c8a3d15565f7b03d3c8cf", size = 151929, upload-time = "2026-11-03T14:28:55.388Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/eb/dc/ad025c1ee131eba60c69f4dd5779b18fcf1e6b21a343e2162a84d5d133c7/soupsieve-2.9.2-py3-none-any.whl", hash = "sha256:8089a26fd974ca7a1f30276d3d8492ab266ab15af581642dfe8aa162e0c1c823", size = 37370, upload-time = "2026-08-07T00:57:23.524Z" },
+    { url = "https://files.pythonhosted.org/packages/4f/18/d24df2f733ee0655c58717d51add4118a70e64692d0e47d403b9aac4cf98/soupsieve-4.0-py3-none-any.whl", hash = "sha256:5e7494bfce90e06676cfb4c5c2cf22243e98e5cf24646bb1ecdda46d318550a0", size = 50158, upload-time = "2026-11-03T14:28:53.988Z" },
 ]
 
 [[package]]
